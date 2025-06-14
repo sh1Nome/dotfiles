@@ -1,0 +1,12 @@
+[user]
+        name = name
+        email = email
+[core]
+        autocrlf = false
+        ignorecase = false
+        quotepath = false
+        editor = vi
+[pull]
+        rebase = false
+[color]
+        ui = auto
