@@ -1,0 +1,42 @@
+
+" -------------------------------
+" システム系
+" -------------------------------
+" 文字エンコード
+set fenc=utf-8
+" バックアップファイルを作成禁止
+set nobackup
+" スワップファイルを作成禁止
+set noswapfile
+" バックスペース有効化
+set backspace=indent,eol,start
+" システムクリップボードを利用
+set clipboard=unnamed
+
+" -------------------------------
+" 表示系
+" -------------------------------
+" コマンドを表示
+set showcmd
+" 行番号を表示
+set number
+" 対応する括弧をハイライト
+set showmatch
+" タブキー押下時の文字幅
+set softtabstop=4
+" タブ文字の表示幅
+set tabstop=4
+" インデント幅
+set shiftwidth=4
+" 不可視を表示
+set list
+
+" -------------------------------
+" 検索系
+" -------------------------------
+" 大文字小文字を区別しない
+set ignorecase
+" 入力中に検索開始
+set incsearch
+" 検索結果をハイライト
+set hlsearch
