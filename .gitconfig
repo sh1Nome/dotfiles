@@ -9,7 +9,3 @@
         ui = auto
 [include]
         path = .gitconfig.local
-# 以下の設定を`.gitconfig.local`に書いてください
-# [user]
-#         name = name
-#         email = email
