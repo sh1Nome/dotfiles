@@ -1,0 +1,11 @@
+[core]
+        autocrlf = false
+        ignorecase = false
+        quotepath = false
+        editor = vi
+[pull]
+        rebase = false
+[color]
+        ui = auto
+[include]
+        path = .gitconfig.local
