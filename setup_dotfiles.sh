@@ -18,6 +18,9 @@ EOF
 ln -sfn "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 ln -sfn "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 ln -sfn "$DOTFILES_DIR/.gitconfig.local" "$HOME/.gitconfig.local"
+mkdir -p "$HOME/.config/Code/User"
+ln -sfn "$DOTFILES_DIR/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
+ln -sfn "$DOTFILES_DIR/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
 
 # 完了メッセージを表示
 echo "シンボリックリンクを作成しました。"
