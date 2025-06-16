@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # dotfilesディレクトリの絶対パスを取得
-DOTFILES_DIR="$(cd "$(dirname "$0")"; pwd)"
+DOTFILES_DIR="$(cd "$(dirname "$0")/.."; pwd)"
 
 # Gitユーザー名とメールアドレスを対話的に取得
 read -p "Gitのユーザー名を入力してください: " git_user
