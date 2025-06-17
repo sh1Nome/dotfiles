@@ -39,6 +39,10 @@ set ruler
 set showmode
 " 常に3行のスクロールオフセットを確保
 set scrolloff=3
+" カーソル行をハイライト
+set cursorline
+" タブをスペースに変換
+set expandtab
 
 " -------------------------------
 " 検索系
