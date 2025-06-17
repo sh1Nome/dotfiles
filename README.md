@@ -37,6 +37,20 @@
 
 このリポジトリをルートに VSCode を開くと、`.vscode/extensions.json` に記載された推奨拡張機能のインストールを促す通知が表示されます。これにより、環境を簡単に統一できます。
 
+## シンボリックリンクの確認方法
+
+### Linux
+
+```bash
+find ~ -type l -exec ls -l {} + | grep 'dotfiles'
+```
+
+### Windows（PowerShell）
+
+```powershell
+Get-ChildItem -Path $HOME,$HOME\AppData\Roaming\Code\User -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target
+```
+
 ## 開発者向けガイド
 
-新しいツールや設定を dotfiles に追加する場合は、必ず Linux および Windows 向けの各種スクリプト（セットアップ・削除・アップデート用）を修正し、README にもその内容を反映してください。
+新しいツールや設定を dotfiles に追加する場合は、必ず Linux および Windows 向けの各種スクリプト（セットアップ・削除・アップデート用）を修正し、README にもその内容を反映させてください。

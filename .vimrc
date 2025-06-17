@@ -1,4 +1,3 @@
-
 " -------------------------------
 " システム系
 " -------------------------------
@@ -28,8 +27,22 @@ set softtabstop=4
 set tabstop=4
 " インデント幅
 set shiftwidth=4
-" 不可視を表示
+" 不可視文字を表示
 set list
+" 不可視文字の表示方法を設定（スペース、タブ、改行、ノーブレークスペース）
+set listchars=space:·,tab:▸\ ,eol:¬,nbsp:_
+" ステータスラインを常に表示
+set laststatus=2
+" ルーラー（カーソル位置）を表示
+set ruler
+" モード表示を有効化
+set showmode
+" 常に3行のスクロールオフセットを確保
+set scrolloff=3
+" カーソル行をハイライト
+set cursorline
+" タブをスペースに変換
+set expandtab
 
 " -------------------------------
 " 検索系
