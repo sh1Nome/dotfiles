@@ -1,11 +1,13 @@
 // 既定値を上書きするには、このファイル内にキー バインドを挿入します
 [
   {
+    // VSCodeの「ファイルをすばやく開く」（Ctrl+P）と競合するため無効化
     "key": "ctrl+p",
     "command": "-extension.vim_ctrl+p",
     "when": "editorTextFocus && vim.active && vim.use<C-p> && !inDebugRepl || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
   },
   {
+    // VSCodeの「プライマリサイドバーの表示／非表示の切り替え」（Ctrl+B）と競合するため無効化
     "key": "ctrl+b",
     "command": "-extension.vim_ctrl+b",
     "when": "editorTextFocus && vim.active && vim.use<C-b> && !inDebugRepl && vim.mode != 'Insert'"
