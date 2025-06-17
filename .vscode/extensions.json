@@ -1,0 +1,22 @@
+{
+    "recommendations": [
+        // コンテナ・リモート開発
+        "ms-azuretools.vscode-containers",
+        "docker.docker",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+        // GitHub・AI支援
+        "github.copilot",
+        // 日本語・Markdown関連
+        "ms-ceintl.vscode-language-pack-ja",
+        "yzhang.markdown-all-in-one",
+        "takumii.markdowntable",
+        // コード整形・補助
+        "esbenp.prettier-vscode",
+        "mechatroner.rainbow-csv",
+        // APIテスト・開発
+        "postman.postman-for-vscode",
+        // エディタ操作・ライブプレビュー
+        "vscodevim.vim",
+        "ritwickdey.liveserver"
+    ]
+}
