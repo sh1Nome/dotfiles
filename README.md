@@ -51,6 +51,10 @@ find ~ -type l -exec ls -l {} + | grep 'dotfiles'
 Get-ChildItem -Path $HOME,$HOME\AppData\Roaming\Code\User -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target
 ```
 
+## Tips
+
+Windows 環境と WSL 環境どちらでも使いたい場合、Windows 環境に dotfiles をクローンして、WSL 環境から`/mnt/c/`以下のクローンした dotfiles にシンボリックリンクを貼る運用がおすすめです。
+
 ## 開発者向けガイド
 
 新しいツールや設定を dotfiles に追加する場合は、必ず Linux および Windows 向けの各種スクリプト（セットアップ・削除・アップデート用）を修正し、README にもその内容を反映させてください。
