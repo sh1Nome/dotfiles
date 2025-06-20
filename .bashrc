@@ -27,11 +27,19 @@ case "$TERM" in
 esac
 
 if [ "$color_prompt" = yes ]; then
-    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\]\$ '
 else
-    PS1='\u@\h:\w\$ '
+    PS1='\u@\h:\w$(parse_git_branch)\$ '
 fi
 unset color_prompt force_color_prompt
+
+# Gitブランチ名を取得する関数
+parse_git_branch() {
+  branch=$(git branch --show-current 2>/dev/null)
+  if [ -n "$branch" ]; then
+    echo " (git:$branch)"
+  fi
+}
 
 # ls のカラーサポートを有効化し、エイリアスを追加
 if [ -x /usr/bin/dircolors ]; then
