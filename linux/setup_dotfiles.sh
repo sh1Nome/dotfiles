@@ -15,6 +15,7 @@ cat > "$DOTFILES_DIR/.gitconfig.local" <<EOF
 EOF
 
 # 各種設定ファイルのシンボリックリンクを作成
+ln -sfn "$DOTFILES_DIR/.bashrc" "$HOME/.bashrc"
 ln -sfn "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 ln -sfn "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 ln -sfn "$DOTFILES_DIR/.gitconfig.local" "$HOME/.gitconfig.local"
