@@ -31,7 +31,6 @@
   "workbench.list.smoothScrolling": true, // リストでスムーズスクロールを有効化
 
   // Zenモード設定
-  "zenMode.showTabs": "none", // Zenモード時にタブを非表示
   "zenMode.centerLayout": false, // Zenモード時にレイアウトを中央寄せにしない
   "zenMode.fullScreen": false, // Zenモード時にフルスクリーンにしない
   "zenMode.hideLineNumbers": false, // Zenモード時に行番号を非表示にしない
