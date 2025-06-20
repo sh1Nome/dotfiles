@@ -30,12 +30,6 @@
   // ワークベンチ設定
   "workbench.list.smoothScrolling": true, // リストでスムーズスクロールを有効化
 
-  // Zenモード設定
-  "zenMode.centerLayout": false, // Zenモード時にレイアウトを中央寄せにしない
-  "zenMode.fullScreen": false, // Zenモード時にフルスクリーンにしない
-  "zenMode.hideLineNumbers": false, // Zenモード時に行番号を非表示にしない
-  "zenMode.hideStatusBar": false, // Zenモード時にステータスバーを非表示にしない
-
   // ターミナルのスムーズスクロール
   "terminal.integrated.smoothScrolling": true, // ターミナルでスムーズスクロールを有効化
 
