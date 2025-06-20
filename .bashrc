@@ -1,6 +1,3 @@
-# ~/.bashrc: bash(1) の非ログインシェルで実行されます。
-# サンプルについては /usr/share/doc/bash/examples/startup-files (bash-doc パッケージ内) を参照してください。
-
 # 対話的でない場合は何もしません
 case $- in
     *i*) ;;
@@ -21,12 +18,6 @@ HISTFILESIZE=2000
 # 各コマンド実行後にウィンドウサイズを確認し、必要なら LINES と COLUMNS を更新
 shopt -s checkwinsize
 
-# パターン "**" をパス名展開で使用すると、すべてのファイルとディレクトリ・サブディレクトリにマッチ
-#shopt -s globstar
-
-# less を非テキスト入力ファイルでも使いやすくする
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 # 作業中の chroot を識別する変数を設定（プロンプトで使用）
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
@@ -38,7 +29,7 @@ case "$TERM" in
 esac
 
 # カラープロンプトを有効にするにはコメントを外す（デフォルトは無効）
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -56,41 +47,10 @@ else
 fi
 unset color_prompt force_color_prompt
 
-# xterm の場合はタイトルに user@host:dir を表示
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# ls のカラーサポートを有効化し、便利なエイリアスを追加
+# ls のカラーサポートを有効化し、エイリアスを追加
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
-fi
-
-# GCC の警告やエラーを色付きで表示
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# その他の ls エイリアス
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-
-# エイリアス定義
-# 追加は直接ここではなく、~/.bash_aliases など別ファイルに記載するのが推奨
-# 詳細は bash-doc パッケージの /usr/share/doc/bash-doc/examples を参照
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
 fi
 
 # プログラマブル補完機能を有効化

@@ -2,6 +2,7 @@
 
 # 削除対象のシンボリックリンク
 links="\
+    $HOME/.bashrc \
     $HOME/.vimrc \
     $HOME/.gitconfig \
     $HOME/.gitconfig.local \
