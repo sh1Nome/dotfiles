@@ -13,6 +13,8 @@
   "editor.smoothScrolling": true, // エディタでスムーズスクロールを有効化
   "editor.cursorSmoothCaretAnimation": "on", // カーソルのスムーズアニメーションを有効化
   "editor.guides.bracketPairs": "active", // アクティブな括弧ペアをハイライト
+  // ミニマップを無効化
+  "editor.minimap.enabled": false,
   "[markdown]": {
     "editor.wordWrap": "off" // マークダウンの折り返しを無効化
   },
