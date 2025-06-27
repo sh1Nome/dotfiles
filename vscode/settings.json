@@ -34,5 +34,8 @@
   "terminal.integrated.smoothScrolling": true, // ターミナルでスムーズスクロールを有効化
 
   // チャットエージェント設定
-  "chat.agent.enabled": true
+  "chat.agent.enabled": true,
+
+  // Markdown拡張機能の設定
+  "markdown.extension.toc.updateOnSave": false
 }
