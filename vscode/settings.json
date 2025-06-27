@@ -1,41 +1,41 @@
 {
-   // Linux用のターミナル設定
-   "terminal.integrated.profiles.linux": {
-     "bash": { "path": "bash" }
-   },
-   "terminal.integrated.defaultProfile.linux": "bash",
- 
-   // エディタ設定
-   "editor.renderWhitespace": "all", // すべての空白文字を表示
-   "editor.formatOnSave": false, // 保存時の自動フォーマットを無効化
-   "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッタをPrettierに設定
-   "editor.fontFamily": "\"BIZ UDゴシック\", Consolas, 'Courier New', monospace", // フォントファミリーにBIZ UDゴシックを追加
-   "editor.smoothScrolling": true, // エディタでスムーズスクロールを有効化
-   "editor.cursorSmoothCaretAnimation": "on", // カーソルのスムーズアニメーションを有効化
-   "editor.guides.bracketPairs": "active", // アクティブな括弧ペアをハイライト
-   // ミニマップを無効化
-   "editor.minimap.enabled": false,
-   "[markdown]": {
-     "editor.wordWrap": "off" // マークダウンの折り返しを無効化
-   },
- 
-   // 差分エディタ設定
-   "diffEditor.ignoreTrimWhitespace": false, // 差分エディタで先頭または末尾の空白文字の変更を無視しない
-   "diffEditor.renderSideBySide": false, // 差分エディタをサイドバイサイドで表示しない
- 
-   // Vim拡張機能の設定
-   "vim.useSystemClipboard": true, // Vimでシステムクリップボードの統合を有効化
-   "vim.vimrc.enable": true, // Vimrcの読み込みを有効化
- 
-   // ワークベンチ設定
-   "workbench.list.smoothScrolling": true, // リストでスムーズスクロールを有効化
- 
-   // ターミナルのスムーズスクロール
-   "terminal.integrated.smoothScrolling": true, // ターミナルでスムーズスクロールを有効化
- 
-   // チャットエージェント設定
-   "chat.agent.enabled": true,
- 
-   // Markdown拡張機能の設定
-   "markdown.extension.toc.updateOnSave": false
+  // Linux用のターミナル設定
+  "terminal.integrated.profiles.linux": {
+    "bash": { "path": "bash" }
+  },
+  "terminal.integrated.defaultProfile.linux": "bash",
+
+  // エディタ設定
+  "editor.renderWhitespace": "all", // すべての空白文字を表示
+  "editor.formatOnSave": false, // 保存時の自動フォーマットを無効化
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッタをPrettierに設定
+  "editor.fontFamily": "\"BIZ UDゴシック\", Consolas, 'Courier New', monospace", // フォントファミリーにBIZ UDゴシックを追加
+  "editor.smoothScrolling": true, // エディタでスムーズスクロールを有効化
+  "editor.cursorSmoothCaretAnimation": "on", // カーソルのスムーズアニメーションを有効化
+  "editor.guides.bracketPairs": "active", // アクティブな括弧ペアをハイライト
+  // ミニマップを無効化
+  "editor.minimap.enabled": false,
+  "[markdown]": {
+    "editor.wordWrap": "off" // マークダウンの折り返しを無効化
+  },
+
+  // 差分エディタ設定
+  "diffEditor.ignoreTrimWhitespace": false, // 差分エディタで先頭または末尾の空白文字の変更を無視しない
+  "diffEditor.renderSideBySide": false, // 差分エディタをサイドバイサイドで表示しない
+
+  // Vim拡張機能の設定
+  "vim.useSystemClipboard": true, // Vimでシステムクリップボードの統合を有効化
+  "vim.vimrc.enable": true, // Vimrcの読み込みを有効化
+
+  // ワークベンチ設定
+  "workbench.list.smoothScrolling": true, // リストでスムーズスクロールを有効化
+
+  // ターミナルのスムーズスクロール
+  "terminal.integrated.smoothScrolling": true, // ターミナルでスムーズスクロールを有効化
+
+  // チャットエージェント設定
+  "chat.agent.enabled": true,
+
+  // Markdown拡張機能の設定
+  "markdown.extension.toc.updateOnSave": false
 }
