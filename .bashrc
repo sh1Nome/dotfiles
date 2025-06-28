@@ -37,7 +37,7 @@ unset color_prompt force_color_prompt
 parse_git_branch() {
   branch=$(git branch --show-current 2>/dev/null)
   if [ -n "$branch" ]; then
-    echo " (git:$branch)"
+    echo "(git:$branch)"
   fi
 }
 
