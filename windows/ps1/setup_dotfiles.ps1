@@ -21,6 +21,7 @@ $git_email = Read-Host "Gitのメールアドレスを入力してください"
 New-Item -ItemType SymbolicLink -Path "$HOME\.vimrc" -Target "$DOTFILES_DIR\.vimrc" -Force | Out-Null  # Vimの設定
 New-Item -ItemType SymbolicLink -Path "$HOME\.gitconfig" -Target "$DOTFILES_DIR\.gitconfig" -Force | Out-Null  # Gitの設定
 New-Item -ItemType SymbolicLink -Path "$HOME\.gitconfig.local" -Target "$DOTFILES_DIR\.gitconfig.local" -Force | Out-Null  # Gitの個人設定
+New-Item -ItemType SymbolicLink -Path "$HOME\.bashrc" -Target "$DOTFILES_DIR\.bashrc" -Force | Out-Null  # bashrcの設定
 
 # VSCodeのユーザー設定ディレクトリのパスを作成
 $codeUserDir = "$HOME\AppData\Roaming\Code\User"

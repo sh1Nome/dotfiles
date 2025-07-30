@@ -5,7 +5,7 @@
 
 ## 管理しているツール
 
-- Bash（Linuxのみ）
+- Bash
 - Vim
 - Git
 - VSCode

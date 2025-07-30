@@ -13,8 +13,6 @@
         // コード整形・補助
         "esbenp.prettier-vscode",
         "mechatroner.rainbow-csv",
-        // APIテスト・開発
-        "postman.postman-for-vscode",
         // エディタ操作・ライブプレビュー
         "vscodevim.vim",
         "ritwickdey.liveserver"
