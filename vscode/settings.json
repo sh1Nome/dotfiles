@@ -20,6 +20,7 @@
   "editor.fontFamily": "\"BIZ UDゴシック\", Consolas, 'Courier New', monospace", // フォントファミリーにBIZ UDゴシックを追加
   "editor.smoothScrolling": true, // エディタでスムーズスクロールを有効化
   "editor.cursorSmoothCaretAnimation": "on", // カーソルのスムーズアニメーションを有効化
+  "editor.lineNumbers": "relative", // 相対行番号表示を有効化
   "editor.guides.bracketPairs": "active", // アクティブな括弧ペアをハイライト
   // ミニマップを無効化
   "editor.minimap.enabled": false,
@@ -49,7 +50,7 @@
 
   // GitHub Copilot設定
   "github.copilot.nextEditSuggestions.enabled": true, // 次回編集提案機能を有効化（コードの次の変更を予測して提案）
-  
+
   // Copilot Chatのコミットメッセージ生成ルール設定
   "github.copilot.chat.commitMessageGeneration.instructions": [
     { "text": "日本語で書いてください" },
