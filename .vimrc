@@ -19,6 +19,8 @@ set clipboard=unnamed
 set showcmd
 " 行番号を表示
 set number
+" 相対行番号を表示（現在行は絶対表示）
+set relativenumber
 " 対応する括弧をハイライト
 set showmatch
 " タブキー押下時の文字幅
@@ -53,3 +55,10 @@ set ignorecase
 set incsearch
 " 検索結果をハイライト
 set hlsearch
+
+" -------------------------------
+" キーマッピング
+" -------------------------------
+" バッファ移動
+nnoremap H :bprevious<CR>
+nnoremap L :bnext<CR>
