@@ -22,6 +22,9 @@ function Get-GitBranchName {
 
 # 'prompt' 関数は PowerShell のプロンプト文字列を定義します。
 function prompt {
+    # ウィンドウタイトルをカレントディレクトリ名に
+    $host.UI.RawUI.WindowTitle = Split-Path -Leaf (Get-Location).Path
+    # ANSIエスケープコードを使用してプロンプトの色を設定
     $esc = [char]27
     return "${esc}[01;32m$env:USERNAME@$env:COMPUTERNAME${esc}[0m:${esc}[01;34m$((Get-Location).Path)${esc}[0m${esc}[33m$(Get-GitBranchName)${esc}[0m> "
 }
