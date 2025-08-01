@@ -22,25 +22,6 @@ function Get-GitBranchName {
 
 # 'prompt' 関数は PowerShell のプロンプト文字列を定義します。
 function prompt {
-    # 色付けのためのANSIエスケープコード
-    $esc = "$([char]27)"
-    $reset = "$esc[0m"        # 全ての色をリセット
-    $green = "$esc[01;32m"    # 明るい緑
-    $blue = "$esc[01;34m"     # 明るい青
-    $yellow = "$esc[33m"      # 黄色
-
-    # プロンプトの構成要素
-    $userName = $env:USERNAME
-    $computerName = $env:COMPUTERNAME
-    $location = (Get-Location).Path
-    $gitBranch = Get-GitBranchName
-
-    # プロンプト文字列を組み立てる
-    $userAtHost = "$green$userName@$computerName$reset"
-    $currentPath = "$blue$location$reset"
-    $gitStatus = "$yellow$gitBranch$reset"
-    
-    # 注意: PowerShellのprompt関数は、最終的に1つの文字列を返す必要があります。
-    # 末尾のスペースは、入力との間に隙間を作るために重要です。
-    return "$userAtHost`:$currentPath$gitStatus`> "
+    $esc = [char]27
+    return "${esc}[01;32m$env:USERNAME@$env:COMPUTERNAME${esc}[0m:${esc}[01;34m$((Get-Location).Path)${esc}[0m${esc}[33m$(Get-GitBranchName)${esc}[0m> "
 }
