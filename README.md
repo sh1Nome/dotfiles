@@ -5,7 +5,8 @@
 
 ## 管理しているツール
 
-- Bash
+- Bash（Linux）
+- Powershell（Windows）
 - Vim
 - Git
 - VSCode
@@ -50,7 +51,7 @@ find ~ -type l -exec ls -l {} + | grep 'dotfiles'
 ### Windows（PowerShell）
 
 ```powershell
-Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target
+Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty, $PROFILE -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target
 ```
 
 ## Tips
@@ -59,4 +60,5 @@ Windows 環境と WSL 環境どちらでも使いたい場合、Windows 環境�
 
 ## 開発者向けガイド
 
-新しいツールや設定を dotfiles に追加する場合は、必ず Linux および Windows 向けの各種スクリプト（セットアップ・削除・アップデート用）を修正し、README にもその内容を反映させてください。
+新しいツールや設定を dotfiles に追加する場合は、必ず Linux および Windows 向けの各種スクリプト（セットアップ・削除・アップデート用）を修正し、README にもその内容を反映させてください。  
+**注意:** PowerShell 用の `.ps1` ファイルは、BOM (Byte Order Mark) 付きの UTF-8 で保存してください。BOM なしの場合、スクリプトが正しく動作しないことがあります。

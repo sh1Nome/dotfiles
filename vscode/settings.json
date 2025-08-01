@@ -6,12 +6,7 @@
   "terminal.integrated.defaultProfile.linux": "bash",
 
   // Windows用のターミナル設定
-  "terminal.integrated.profiles.windows": {
-    "Git Bash": {
-      "path": "C:/Program Files/Git/bin/bash.exe"
-    }
-  },
-  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
 
   // エディタ設定
   "editor.renderWhitespace": "all", // すべての空白文字を表示

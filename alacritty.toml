@@ -1,15 +1,10 @@
-# Alacritty Configuration File (TOML ひな形)
+# Alacritty Configuration File
 # 詳細は https://alacritty.org/config-alacritty.html を参照
 
 [window]
 # 起動時のウィンドウサイズ (カラム数, 行数)
-dimensions = { columns = 100, lines = 30 }
-# ウィンドウタイトル
-title = "Alacritty"
-# 透過度 (0.0-1.0)
-opacity = 1.0
+dimensions = { columns = 120, lines = 40 }
 
 [font]
 # 使用するフォントファミリー
 normal = { family = "BIZ UDゴシック", style = "Regular" }
-size = 12.0
