@@ -22,12 +22,12 @@
     // エディタにフォーカスしているときのみShift+Hで左のタブに移動
     "key": "shift+h",
     "command": "workbench.action.previousEditor",
-    "when": "editorTextFocus"
+    "when": "editorTextFocus && vim.mode != 'Insert'"
   },
   {
     // エディタにフォーカスしているときのみShift+Lで右のタブに移動
     "key": "shift+l",
     "command": "workbench.action.nextEditor",
-    "when": "editorTextFocus"
+    "when": "editorTextFocus && vim.mode != 'Insert'"
   }
 ]
