@@ -18,7 +18,18 @@ $git_email = Read-Host "Gitのメールアドレスを入力してください"
 
 # 各種設定ファイルのシンボリックリンク（ショートカットのようなもの）を作成します。
 # 既に存在していても強制的に上書きします。
-New-Item -ItemType SymbolicLink -Path "$HOME\.bashrc" -Target "$DOTFILES_DIR\.bashrc" -Force | Out-Null  # bashrcの設定
+
+# PowerShellプロファイルのディレクトリパスを作成
+$psProfileDir = Split-Path -Path $PROFILE -Parent
+# ディレクトリがなければ新規作成します。
+if (!(Test-Path $psProfileDir)) {
+    New-Item -ItemType Directory -Path $psProfileDir -Force | Out-Null
+}
+# PowerShellプロファイルのシンボリックリンクを作成
+New-Item -ItemType SymbolicLink -Path $PROFILE -Target "$DOTFILES_DIR\Microsoft.PowerShell_profile.ps1" -Force | Out-Null
+# このスクリプトを実行するには、PowerShellの実行ポリシーを RemoteSigned に設定する必要があります。
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
 New-Item -ItemType SymbolicLink -Path "$HOME\.vimrc" -Target "$DOTFILES_DIR\.vimrc" -Force | Out-Null  # Vimの設定
 New-Item -ItemType SymbolicLink -Path "$HOME\.gitconfig" -Target "$DOTFILES_DIR\.gitconfig" -Force | Out-Null  # Gitの設定
 New-Item -ItemType SymbolicLink -Path "$HOME\.gitconfig.local" -Target "$DOTFILES_DIR\.gitconfig.local" -Force | Out-Null  # Gitの個人設定

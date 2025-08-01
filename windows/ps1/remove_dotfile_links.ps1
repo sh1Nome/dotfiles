@@ -4,7 +4,7 @@
 # 削除したいシンボリックリンクのパスをリスト（配列）として定義します。
 # $HOMEはユーザーのホームディレクトリを表します。
 $links = @(
-    "$HOME\.bashrc",  # bashrc（Git Bash用）へのリンク
+    "$PROFILE", # PowerShellプロファイルへのリンク
     "$HOME\.vimrc",  # Vimの設定ファイルへのリンク
     "$HOME\.gitconfig",  # Gitの設定ファイルへのリンク
     "$HOME\.gitconfig.local",  # Gitの個人設定ファイルへのリンク
