@@ -4,12 +4,13 @@
 # 削除したいシンボリックリンクのパスをリスト（配列）として定義します。
 # $HOMEはユーザーのホームディレクトリを表します。
 $links = @(
+    "$HOME\.bashrc",  # bashrc（Git Bash用）へのリンク
     "$HOME\.vimrc",  # Vimの設定ファイルへのリンク
     "$HOME\.gitconfig",  # Gitの設定ファイルへのリンク
     "$HOME\.gitconfig.local",  # Gitの個人設定ファイルへのリンク
-    "$HOME\AppData\Roaming\Code\User\settings.json",  # VSCodeの設定ファイルへのリンク
-    "$HOME\AppData\Roaming\Code\User\keybindings.json",  # VSCodeのキーバインド設定ファイルへのリンク
-    "$HOME\.bashrc"  # bashrc（Git Bash用）へのリンク
+    "$env:APPDATA\Code\User\settings.json",  # VSCodeの設定ファイルへのリンク
+    "$env:APPDATA\Code\User\keybindings.json",  # VSCodeのキーバインド設定ファイルへのリンク
+    "$env:APPDATA\alacritty\alacritty.toml"  # Alacrittyの設定ファイルへのリンク
 )
  
 # $linksに入っている各パスについて、順番に処理します。
