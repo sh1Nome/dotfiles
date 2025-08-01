@@ -18,13 +18,13 @@ $git_email = Read-Host "Gitのメールアドレスを入力してください"
 
 # 各種設定ファイルのシンボリックリンク（ショートカットのようなもの）を作成します。
 # 既に存在していても強制的に上書きします。
+New-Item -ItemType SymbolicLink -Path "$HOME\.bashrc" -Target "$DOTFILES_DIR\.bashrc" -Force | Out-Null  # bashrcの設定
 New-Item -ItemType SymbolicLink -Path "$HOME\.vimrc" -Target "$DOTFILES_DIR\.vimrc" -Force | Out-Null  # Vimの設定
 New-Item -ItemType SymbolicLink -Path "$HOME\.gitconfig" -Target "$DOTFILES_DIR\.gitconfig" -Force | Out-Null  # Gitの設定
 New-Item -ItemType SymbolicLink -Path "$HOME\.gitconfig.local" -Target "$DOTFILES_DIR\.gitconfig.local" -Force | Out-Null  # Gitの個人設定
-New-Item -ItemType SymbolicLink -Path "$HOME\.bashrc" -Target "$DOTFILES_DIR\.bashrc" -Force | Out-Null  # bashrcの設定
 
 # VSCodeのユーザー設定ディレクトリのパスを作成
-$codeUserDir = "$HOME\AppData\Roaming\Code\User"
+$codeUserDir = "$env:APPDATA\Code\User"
 # ディレクトリがなければ新規作成します。
 if (!(Test-Path $codeUserDir)) {
     New-Item -ItemType Directory -Path $codeUserDir | Out-Null
@@ -32,6 +32,15 @@ if (!(Test-Path $codeUserDir)) {
 # VSCodeの設定ファイルのシンボリックリンクを作成します。
 New-Item -ItemType SymbolicLink -Path "$codeUserDir\settings.json" -Target "$DOTFILES_DIR\vscode\settings.json" -Force | Out-Null  # VSCodeの設定
 New-Item -ItemType SymbolicLink -Path "$codeUserDir\keybindings.json" -Target "$DOTFILES_DIR\vscode\keybindings.json" -Force | Out-Null  # VSCodeのキーバインド
+
+# Alacrittyのユーザー設定ディレクトリのパスを作成
+$alacrittyDir = "$env:APPDATA\alacritty"
+# ディレクトリがなければ新規作成します。
+if (!(Test-Path $alacrittyDir)) {
+    New-Item -ItemType Directory -Path $alacrittyDir | Out-Null
+}
+# Alacrittyの設定ファイルのシンボリックリンクを作成
+New-Item -ItemType SymbolicLink -Path "$alacrittyDir\alacritty.toml" -Target "$DOTFILES_DIR\alacritty.toml" -Force | Out-Null  # Alacrittyの設定
 
 # 全ての処理が終わったことをユーザーに伝えます。
 Write-Host "シンボリックリンクを作成しました。"

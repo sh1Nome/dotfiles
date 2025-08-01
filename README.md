@@ -9,6 +9,7 @@
 - Vim
 - Git
 - VSCode
+- Alacritty
 
 ## 各種スクリプトについて
 
@@ -49,7 +50,7 @@ find ~ -type l -exec ls -l {} + | grep 'dotfiles'
 ### Windows（PowerShell）
 
 ```powershell
-Get-ChildItem -Path $HOME,$HOME\AppData\Roaming\Code\User -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target
+Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target
 ```
 
 ## Tips

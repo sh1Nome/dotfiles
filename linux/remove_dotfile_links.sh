@@ -8,6 +8,7 @@ links="\
     $HOME/.gitconfig.local \
     $HOME/.config/Code/User/settings.json \
     $HOME/.config/Code/User/keybindings.json\
+    $HOME/.alacritty.toml\
 "
 
 # シンボリックリンクを削除
