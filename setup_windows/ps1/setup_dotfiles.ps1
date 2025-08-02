@@ -57,7 +57,51 @@ New-Item -ItemType SymbolicLink -Path "$alacrittyDir\alacritty.toml" -Target "$D
 # 全ての処理が終わったことをユーザーに伝えます。
 Write-Host "シンボリックリンクを作成しました。"
 # dotfilesのシンボリックリンク一覧を表示
+
+# シンボリックリンク検索対象ディレクトリを配列で管理
+$symlinkDirs = @(
+    $HOME,
+    "$env:APPDATA\Code\User",
+    "$env:APPDATA\alacritty",
+    $PROFILE
+)
+
+# シンボリックリンク一覧を取得
+$symlinks = Get-ChildItem -Path $symlinkDirs -Force |
+    Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' }
+
+# 表示順リスト（Nameで判定）
+$linkOrder = @(
+    'Microsoft.PowerShell_profile.ps1', # Powershell
+    '.vimrc',                           # Vim
+    '.gitconfig',                       # Git
+    '.gitconfig.local',                 # Git
+    'settings.json',                    # VSCode
+    'keybindings.json',                 # VSCode
+    'prompts',                          # VSCode
+    'alacritty.toml'                    # Alacritty
+)
+
 Write-Host "\n現在のdotfilesシンボリックリンク一覧:"
-Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty, $PROFILE -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target | Format-Table -AutoSize
+
+# 順番に表示しつつ、表示済みリンク名を記録
+$shownLinks = @()
+foreach ($name in $linkOrder) {
+    $found = $symlinks | Where-Object { $_.Name -eq $name }
+    foreach ($item in $found) {
+        Write-Host "$($item.Name) -> $($item.Target)"
+        $shownLinks += $item.Name
+    }
+}
+
+# 残りのリンクをまとめて表示
+$otherLinks = $symlinks | Where-Object { $shownLinks -notcontains $_.Name }
+if ($otherLinks.Count -gt 0) {
+    Write-Host "その他:"
+    foreach ($item in $otherLinks) {
+        Write-Host "$($item.Name) -> $($item.Target)"
+    }
+}
+
 # ユーザーがEnterキーを押すまで待機します。
 Read-Host -Prompt "Press Enter to exit"
