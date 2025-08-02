@@ -41,9 +41,15 @@ keybindings.json
 prompts
 .alacritty.toml
 "
-# 順番に表示
+# 順番に表示しつつ一時ファイルから削除
 for link in $links; do
   grep "^$link " /tmp/dotfiles_links_list
+  sed -i "/^$link /d" /tmp/dotfiles_links_list
 done
+# 残りをまとめて表示
+if [ -s /tmp/dotfiles_links_list ]; then
+  echo "その他:"
+  cat /tmp/dotfiles_links_list
+fi
 # 一時ファイル削除
 rm -f /tmp/dotfiles_links_list
