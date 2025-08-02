@@ -29,7 +29,7 @@ ln -sfn "$DOTFILES_DIR/alacritty.toml" "$HOME/.alacritty.toml"
 echo "シンボリックリンクを作成しました。"
 echo "\n現在のdotfilesシンボリックリンク一覧:"
 # findで取得したリンクを一時ファイルに保存
-find ~ -type l -lname "*dotfiles*" -exec bash -c 'echo "$(basename "$1") -> $(readlink -f "$1")"' _ {} \; > /tmp/dotfiles_links_list
+find ~ -type l -lname "*dotfiles*" -exec bash -c 'echo "$1 -> $(basename $(readlink -f "$1"))"' _ {} \; > /tmp/dotfiles_links_list
 # 表示順リスト
 links="\
 .bashrc
@@ -39,12 +39,12 @@ links="\
 settings.json
 keybindings.json
 prompts
-.alacritty.toml
+alacritty.toml
 "
 # 順番に表示しつつ一時ファイルから削除
 for link in $links; do
-  grep "^$link " /tmp/dotfiles_links_list
-  sed -i "/^$link /d" /tmp/dotfiles_links_list
+  grep " $link$" /tmp/dotfiles_links_list
+  sed -i "/ $link$/d" /tmp/dotfiles_links_list
 done
 # 残りをまとめて表示
 if [ -s /tmp/dotfiles_links_list ]; then
