@@ -10,8 +10,7 @@ $links = @(
     "$HOME\.gitconfig.local",  # Gitの個人設定ファイルへのリンク
     "$env:APPDATA\Code\User\settings.json",  # VSCodeの設定ファイルへのリンク
     "$env:APPDATA\Code\User\keybindings.json",  # VSCodeのキーバインド設定ファイルへのリンク
-    "$env:APPDATA\Code\User\prompts",  # VSCodeのプロンプト設定ディレクトリへのリンク
-    "$env:APPDATA\alacritty"  # Alacrittyの設定ディレクトリへのリンク
+    "$env:APPDATA\Code\User\prompts"  # VSCodeのプロンプト設定ディレクトリへのリンク
 )
  
 # $linksに入っている各パスについて、順番に処理します。

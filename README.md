@@ -10,7 +10,6 @@
 - Vim
 - Git
 - VSCode
-- Alacritty
 
 ## 各種スクリプトについて
 
