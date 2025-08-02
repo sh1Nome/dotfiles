@@ -65,9 +65,31 @@ $symlinkDirs = @(
     "$env:APPDATA\alacritty",
     $PROFILE
 )
-Write-Host "\n現在のdotfilesシンボリックリンク一覧:"
-Get-ChildItem -Path $symlinkDirs -Force |
-    Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } |
-    ForEach-Object { Write-Host "$($_.Name) -> $($_.Target)" }
+Write-Host "`n現在のdotfilesシンボリックリンク一覧:"
+# 管理しているツール順のパターンリスト
+$toolOrder = @(
+    @{ Name = "Bash"; Pattern = ".bashrc" },
+    @{ Name = "Powershell"; Pattern = "Microsoft.PowerShell_profile.ps1" },
+    @{ Name = "Vim"; Pattern = ".vimrc" },
+    @{ Name = "Git"; Pattern = ".gitconfig" },
+    @{ Name = "Git"; Pattern = ".gitconfig.local" },
+    @{ Name = "VSCode"; Pattern = "settings.json" },
+    @{ Name = "VSCode"; Pattern = "keybindings.json" },
+    @{ Name = "VSCode"; Pattern = "prompts" },
+    @{ Name = "Alacritty"; Pattern = "alacritty.toml" }
+)
+
+# シンボリックリンク一覧取得
+$symlinks = Get-ChildItem -Path $symlinkDirs -Force |
+    Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' }
+
+# ツール順でソートして表示
+foreach ($tool in $toolOrder) {
+    $pattern = $tool.Pattern
+    $links = $symlinks | Where-Object { $_.Name -eq $pattern }
+    foreach ($link in $links) {
+        Write-Host "$($link.Name) -> $($link.Target)"
+    }
+}
 # ユーザーがEnterキーを押すまで待機します。
 Read-Host -Prompt "Press Enter to exit"
