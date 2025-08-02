@@ -22,7 +22,10 @@ ln -sfn "$DOTFILES_DIR/.gitconfig.local" "$HOME/.gitconfig.local"
 mkdir -p "$HOME/.config/Code/User"
 ln -sfn "$DOTFILES_DIR/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
 ln -sfn "$DOTFILES_DIR/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
+ln -sfn "$DOTFILES_DIR/vscode/prompts" "$HOME/.config/Code/User/prompts"
 ln -sfn "$DOTFILES_DIR/alacritty.toml" "$HOME/.alacritty.toml"
 
 # 完了メッセージを表示
 echo "シンボリックリンクを作成しました。"
+echo "\n現在のdotfilesシンボリックリンク一覧:"
+find ~ -type l -exec ls -l {} + | grep 'dotfiles'

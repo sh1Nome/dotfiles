@@ -8,16 +8,17 @@ links="\
     $HOME/.gitconfig.local \
     $HOME/.config/Code/User/settings.json \
     $HOME/.config/Code/User/keybindings.json \
+    $HOME/.config/Code/User/prompts \
     $HOME/.alacritty.toml \
 "
 
 # シンボリックリンクを削除
 for link in $links; do
-    if [ -L "$link" ]; then
-        rm "$link"
+    if [ -L "$link" ] || [ -d "$link" ]; then
+        rm -rf "$link"
         echo "$link を削除しました。"
     else
-        echo "$link はシンボリックリンクではないか、存在しません。"
+        echo "$link はシンボリックリンクでもディレクトリでもないか、存在しません。"
     fi
 done
 

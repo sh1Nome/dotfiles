@@ -43,6 +43,7 @@ if (!(Test-Path $codeUserDir)) {
 # VSCodeの設定ファイルのシンボリックリンクを作成します。
 New-Item -ItemType SymbolicLink -Path "$codeUserDir\settings.json" -Target "$DOTFILES_DIR\vscode\settings.json" -Force | Out-Null  # VSCodeの設定
 New-Item -ItemType SymbolicLink -Path "$codeUserDir\keybindings.json" -Target "$DOTFILES_DIR\vscode\keybindings.json" -Force | Out-Null  # VSCodeのキーバインド
+New-Item -ItemType SymbolicLink -Path "$codeUserDir\prompts" -Target "$DOTFILES_DIR\vscode\prompts" -Force | Out-Null  # VSCodeのプロンプトディレクトリ
 
 # Alacrittyのユーザー設定ディレクトリのパスを作成
 $alacrittyDir = "$env:APPDATA\alacritty"
@@ -55,5 +56,8 @@ New-Item -ItemType SymbolicLink -Path "$alacrittyDir\alacritty.toml" -Target "$D
 
 # 全ての処理が終わったことをユーザーに伝えます。
 Write-Host "シンボリックリンクを作成しました。"
+# dotfilesのシンボリックリンク一覧を表示
+Write-Host "\n現在のdotfilesシンボリックリンク一覧:"
+Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty, $PROFILE -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target | Format-Table -AutoSize
 # ユーザーがEnterキーを押すまで待機します。
 Read-Host -Prompt "Press Enter to exit"
