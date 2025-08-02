@@ -14,6 +14,7 @@ links="\
 
 # シンボリックリンクを削除
 for link in $links; do
+    # シンボリックリンクかディレクトリであるかを確認
     if [ -L "$link" ] || [ -d "$link" ]; then
         rm -rf "$link"
         echo "$link を削除しました。"
