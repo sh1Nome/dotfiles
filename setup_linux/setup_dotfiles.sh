@@ -28,4 +28,22 @@ ln -sfn "$DOTFILES_DIR/alacritty.toml" "$HOME/.alacritty.toml"
 # 完了メッセージを表示
 echo "シンボリックリンクを作成しました。"
 echo "\n現在のdotfilesシンボリックリンク一覧:"
-find ~ -type l -lname "*dotfiles*" -exec bash -c 'echo "$(basename "$1") -> $(readlink -f "$1")"' _ {} \;
+# findで取得したリンクを一時ファイルに保存
+find ~ -type l -lname "*dotfiles*" -exec bash -c 'echo "$(basename "$1") -> $(readlink -f "$1")"' _ {} \; > /tmp/dotfiles_links_list
+# 表示順リスト
+links="\
+.bashrc
+.vimrc
+.gitconfig
+.gitconfig.local
+settings.json
+keybindings.json
+prompts
+.alacritty.toml
+"
+# 順番に表示
+for link in $links; do
+  grep "^$link " /tmp/dotfiles_links_list
+done
+# 一時ファイル削除
+rm -f /tmp/dotfiles_links_list
