@@ -10,7 +10,8 @@ $links = @(
     "$HOME\.gitconfig.local",  # Gitの個人設定ファイルへのリンク
     "$env:APPDATA\Code\User\settings.json",  # VSCodeの設定ファイルへのリンク
     "$env:APPDATA\Code\User\keybindings.json",  # VSCodeのキーバインド設定ファイルへのリンク
-    "$env:APPDATA\alacritty\alacritty.toml"  # Alacrittyの設定ファイルへのリンク
+    "$env:APPDATA\Code\User\prompts",  # VSCodeのプロンプト設定ディレクトリへのリンク
+    "$env:APPDATA\alacritty"  # Alacrittyの設定ディレクトリへのリンク
 )
  
 # $linksに入っている各パスについて、順番に処理します。
@@ -18,14 +19,12 @@ foreach ($link in $links) {
     if (Test-Path $link) {
         # ファイルやディレクトリの情報を取得します。
         $item = Get-Item $link -Force
-        # そのアイテムがシンボリックリンクかどうかを調べます。
-        if ($item.LinkType -eq 'SymbolicLink') {
-            # シンボリックリンクなら削除します。
-            Remove-Item $link -Force
+        # シンボリックリンクまたはディレクトリの場合は削除
+        if ($item.LinkType -eq 'SymbolicLink' -or $item.PSIsContainer) {
+            Remove-Item $link -Force -Recurse
             Write-Host "$link を削除しました。"
         } else {
-            # シンボリックリンクでなければ、その旨を表示します。
-            Write-Host "$link はシンボリックリンクではないか、存在しません。"
+            Write-Host "$link はシンボリックリンクでもディレクトリでもありません。"
         }
     } else {
         # ファイルやディレクトリが存在しない場合のメッセージを表示します。
