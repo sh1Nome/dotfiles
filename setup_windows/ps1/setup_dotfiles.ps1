@@ -58,6 +58,8 @@ New-Item -ItemType SymbolicLink -Path "$alacrittyDir\alacritty.toml" -Target "$D
 Write-Host "シンボリックリンクを作成しました。"
 # dotfilesのシンボリックリンク一覧を表示
 Write-Host "\n現在のdotfilesシンボリックリンク一覧:"
-Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty, $PROFILE -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target | Format-Table -AutoSize
+Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty, $PROFILE -Force |
+    Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } |
+    ForEach-Object { Write-Host "$($_.Name) -> $($_.Target)" }
 # ユーザーがEnterキーを押すまで待機します。
 Read-Host -Prompt "Press Enter to exit"

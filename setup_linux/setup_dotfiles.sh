@@ -28,4 +28,4 @@ ln -sfn "$DOTFILES_DIR/alacritty.toml" "$HOME/.alacritty.toml"
 # 完了メッセージを表示
 echo "シンボリックリンクを作成しました。"
 echo "\n現在のdotfilesシンボリックリンク一覧:"
-find ~ -type l -exec ls -l {} + | grep 'dotfiles'
+find ~ -type l -lname "*dotfiles*" -exec bash -c 'echo "$(basename "$1") -> $(readlink -f "$1")"' _ {} \;
