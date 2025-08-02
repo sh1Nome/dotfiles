@@ -65,30 +65,43 @@ $symlinkDirs = @(
     "$env:APPDATA\alacritty",
     $PROFILE
 )
-Write-Host "`n現在のdotfilesシンボリックリンク一覧:"
-# 管理しているツール順のパターンリスト
-$toolOrder = @(
-    @{ Name = "Powershell"; Pattern = "Microsoft.PowerShell_profile.ps1" },
-    @{ Name = "Vim"; Pattern = ".vimrc" },
-    @{ Name = "Git"; Pattern = ".gitconfig" },
-    @{ Name = "Git"; Pattern = ".gitconfig.local" },
-    @{ Name = "VSCode"; Pattern = "settings.json" },
-    @{ Name = "VSCode"; Pattern = "keybindings.json" },
-    @{ Name = "VSCode"; Pattern = "prompts" },
-    @{ Name = "Alacritty"; Pattern = "alacritty.toml" }
-)
 
-# シンボリックリンク一覧取得
+# シンボリックリンク一覧を取得
 $symlinks = Get-ChildItem -Path $symlinkDirs -Force |
     Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' }
 
-# ツール順でソートして表示
-foreach ($tool in $toolOrder) {
-    $pattern = $tool.Pattern
-    $links = $symlinks | Where-Object { $_.Name -eq $pattern }
-    foreach ($link in $links) {
-        Write-Host "$($link.Name) -> $($link.Target)"
+# 表示順リスト（Nameで判定）
+$linkOrder = @(
+    'Microsoft.PowerShell_profile.ps1', # Powershell
+    '.vimrc',                           # Vim
+    '.gitconfig',                       # Git
+    '.gitconfig.local',                 # Git
+    'settings.json',                    # VSCode
+    'keybindings.json',                 # VSCode
+    'prompts',                          # VSCode
+    'alacritty.toml'                    # Alacritty
+)
+
+Write-Host "\n現在のdotfilesシンボリックリンク一覧:"
+
+# 順番に表示しつつ、表示済みリンク名を記録
+$shownLinks = @()
+foreach ($name in $linkOrder) {
+    $found = $symlinks | Where-Object { $_.Name -eq $name }
+    foreach ($item in $found) {
+        Write-Host "$($item.Name) -> $($item.Target)"
+        $shownLinks += $item.Name
     }
 }
+
+# 残りのリンクをまとめて表示
+$otherLinks = $symlinks | Where-Object { $shownLinks -notcontains $_.Name }
+if ($otherLinks.Count -gt 0) {
+    Write-Host "その他:"
+    foreach ($item in $otherLinks) {
+        Write-Host "$($item.Name) -> $($item.Target)"
+    }
+}
+
 # ユーザーがEnterキーを押すまで待機します。
 Read-Host -Prompt "Press Enter to exit"
