@@ -40,6 +40,11 @@
   // チャットエージェント設定
   "chat.agent.enabled": true,
 
+  // Copilot Chatの暗黙的コンテキストを無効化
+  "chat.implicitContext.enabled": {
+    "panel": "never"
+  },
+
   // Markdown拡張機能の設定
   "markdown.extension.toc.updateOnSave": false,
 
@@ -59,5 +64,5 @@
   // --- 一時的な対処: VSCodeVimが動作しない問題の回避策 ---
   // 詳細: https://github.com/VSCodeVim/Vim/issues/9672
   // この設定は将来的に不要になる可能性があります
-  "editor.experimentalEditContextEnabled": false
+  "editor.editContext": false
 }

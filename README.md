@@ -16,7 +16,7 @@
 
 ### Linux 用スクリプト
 
-`linux/` ディレクトリには、以下のスクリプトが含まれています。
+`setup_linux/` ディレクトリには、以下のスクリプトが含まれています。
 
 - セットアップ用: `setup_dotfiles.sh`
 - 削除用: `remove_dotfile_links.sh`
@@ -24,13 +24,13 @@
 
 ### Windows 用スクリプト
 
-`windows/` ディレクトリには、以下のスクリプトが含まれています。
+`setup_windows/` ディレクトリには、以下のスクリプトが含まれています。
 
 - セットアップ用: `setup_dotfiles.bat`
 - 削除用: `remove_dotfile_links.bat`
 - アップデート用: `update_dotfiles.bat`
 
-また、`windows/ps1/` には PowerShell 用の同様のスクリプトも用意されています。
+また、`setup_windows/ps1/` には PowerShell 用の同様のスクリプトも用意されています。
 
 ## VSCode の拡張機能
 
