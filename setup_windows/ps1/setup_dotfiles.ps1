@@ -89,7 +89,7 @@ $shownLinks = @()
 foreach ($name in $linkOrder) {
     $found = $symlinks | Where-Object { $_.Name -eq $name }
     foreach ($item in $found) {
-        Write-Host "$($item.Name) -> $($item.Target)"
+        Write-Host "$($item.FullName) -> $($item.Name)"
         $shownLinks += $item.Name
     }
 }
@@ -99,7 +99,7 @@ $otherLinks = $symlinks | Where-Object { $shownLinks -notcontains $_.Name }
 if ($otherLinks.Count -gt 0) {
     Write-Host "その他:"
     foreach ($item in $otherLinks) {
-        Write-Host "$($item.Name) -> $($item.Target)"
+        Write-Host "$($item.FullName) -> $($item.Name)"
     }
 }
 
