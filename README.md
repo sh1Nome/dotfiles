@@ -40,20 +40,6 @@
 
 このリポジトリをルートに VSCode を開くと、`.vscode/extensions.json` に記載された推奨拡張機能のインストールを促す通知が表示されます。これにより、環境を簡単に統一できます。
 
-## シンボリックリンクの確認方法
-
-### Linux
-
-```bash
-find ~ -type l -exec ls -l {} + | grep 'dotfiles'
-```
-
-### Windows（PowerShell）
-
-```powershell
-Get-ChildItem -Path $HOME,$env:APPDATA\Code\User, $env:APPDATA\alacritty, $PROFILE -Force | Where-Object { $_.LinkType -eq 'SymbolicLink' -and $_.Target -match 'dotfiles' } | Select-Object FullName,Target
-```
-
 ## Tips
 
 Windows 環境と WSL 環境どちらでも使いたい場合、Windows 環境に dotfiles をクローンして、WSL 環境から`/mnt/c/`以下のクローンした dotfiles にシンボリックリンクを貼る運用がおすすめです。
