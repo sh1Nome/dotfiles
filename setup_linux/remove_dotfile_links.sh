@@ -9,7 +9,6 @@ links="\
     $HOME/.config/Code/User/settings.json \
     $HOME/.config/Code/User/keybindings.json \
     $HOME/.config/Code/User/prompts \
-    $HOME/.alacritty.toml \
 "
 
 # シンボリックリンクを削除

@@ -45,15 +45,6 @@ New-Item -ItemType SymbolicLink -Path "$codeUserDir\settings.json" -Target "$DOT
 New-Item -ItemType SymbolicLink -Path "$codeUserDir\keybindings.json" -Target "$DOTFILES_DIR\vscode\keybindings.json" -Force | Out-Null  # VSCodeのキーバインド
 New-Item -ItemType SymbolicLink -Path "$codeUserDir\prompts" -Target "$DOTFILES_DIR\vscode\prompts" -Force | Out-Null  # VSCodeのプロンプトディレクトリ
 
-# Alacrittyのユーザー設定ディレクトリのパスを作成
-$alacrittyDir = "$env:APPDATA\alacritty"
-# ディレクトリがなければ新規作成します。
-if (!(Test-Path $alacrittyDir)) {
-    New-Item -ItemType Directory -Path $alacrittyDir | Out-Null
-}
-# Alacrittyの設定ファイルのシンボリックリンクを作成
-New-Item -ItemType SymbolicLink -Path "$alacrittyDir\alacritty.toml" -Target "$DOTFILES_DIR\alacritty.toml" -Force | Out-Null  # Alacrittyの設定
-
 # 全ての処理が終わったことをユーザーに伝えます。
 Write-Host "シンボリックリンクを作成しました。"
 # dotfilesのシンボリックリンク一覧を表示
@@ -62,7 +53,6 @@ Write-Host "シンボリックリンクを作成しました。"
 $symlinkDirs = @(
     $HOME,
     "$env:APPDATA\Code\User",
-    "$env:APPDATA\alacritty",
     $PROFILE
 )
 
@@ -78,8 +68,7 @@ $linkOrder = @(
     '.gitconfig.local',                 # Git
     'settings.json',                    # VSCode
     'keybindings.json',                 # VSCode
-    'prompts',                          # VSCode
-    'alacritty.toml'                    # Alacritty
+    'prompts'                           # VSCode
 )
 
 Write-Host "\n現在のdotfilesシンボリックリンク一覧:"

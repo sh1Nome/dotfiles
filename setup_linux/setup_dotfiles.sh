@@ -23,7 +23,6 @@ mkdir -p "$HOME/.config/Code/User"
 ln -sfn "$DOTFILES_DIR/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
 ln -sfn "$DOTFILES_DIR/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
 ln -sfn "$DOTFILES_DIR/vscode/prompts" "$HOME/.config/Code/User/"
-ln -sfn "$DOTFILES_DIR/alacritty.toml" "$HOME/.alacritty.toml"
 
 # 完了メッセージを表示
 echo "シンボリックリンクを作成しました。"
@@ -39,7 +38,6 @@ links="\
 settings.json
 keybindings.json
 prompts
-alacritty.toml
 "
 # 順番に表示しつつ一時ファイルから削除
 for link in $links; do
