@@ -68,7 +68,6 @@ $symlinkDirs = @(
 Write-Host "`n現在のdotfilesシンボリックリンク一覧:"
 # 管理しているツール順のパターンリスト
 $toolOrder = @(
-    @{ Name = "Bash"; Pattern = ".bashrc" },
     @{ Name = "Powershell"; Pattern = "Microsoft.PowerShell_profile.ps1" },
     @{ Name = "Vim"; Pattern = ".vimrc" },
     @{ Name = "Git"; Pattern = ".gitconfig" },
