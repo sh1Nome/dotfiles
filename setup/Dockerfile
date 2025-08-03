@@ -21,7 +21,12 @@ COPY ./src/hello.go ./
 RUN mkdir bin && \
     for f in *.go; do \
         name=$(basename "$f" .go); \
-        go build -o "bin/$name" "$f"; \
+        # Linux amd64
+        GOOS=linux GOARCH=amd64 go build -o "bin/${name}-linux-amd64" "$f"; \
+        # Linux arm64
+        GOOS=linux GOARCH=arm64 go build -o "bin/${name}-linux-arm64" "$f"; \
+        # Windows amd64
+        GOOS=windows GOARCH=amd64 go build -o "bin/${name}-windows-amd64.exe" "$f"; \
     done
 
 # コンテナを起動し続けるためのコマンド

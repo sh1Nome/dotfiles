@@ -17,7 +17,8 @@ set -e
 IMAGE_NAME=dotfiles-golang-setup
 CONTAINER_NAME=dotfiles-golang-setup-container
 
-# setup/binディレクトリ作成
+# setup/binディレクトリのクリーン
+rm -rf ./bin
 mkdir -p ./bin
 
 # Dockerイメージをビルド
