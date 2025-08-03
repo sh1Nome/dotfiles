@@ -1,0 +1,17 @@
+services:
+  golang:
+    image: golang:1.24.5
+    # コンテナを起動し続けるためのコマンド
+    command: tail -f /dev/null
+    # インタラクティブモードとTTYを有効化
+    tty: true
+    # PID1にinitプロセスを設定
+    init: true
+    # # ホストのディレクトリをマウント
+    # volumes:
+    #   - ./mount:/root
+    # ホストのUIDとGIDをコンテナに渡す
+    # docker_compose_xxx.shで設定
+    user: "${MYUID}:${MYGID}"
+    # 作業ディレクトリを指定
+    working_dir: /tmp
