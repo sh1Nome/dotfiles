@@ -11,25 +11,10 @@
 - Git
 - VSCode
 
-## 各種スクリプトについて
+## セットアップ
 
-### Linux 用スクリプト
-
-`setup_linux/` ディレクトリには、以下のスクリプトが含まれています。
-
-- セットアップ用: `setup_dotfiles.sh`
-- 削除用: `remove_dotfile_links.sh`
-- アップデート用: `update_dotfiles.sh`
-
-### Windows 用スクリプト
-
-`setup_windows/` ディレクトリには、以下のスクリプトが含まれています。
-
-- セットアップ用: `setup_dotfiles.bat`
-- 削除用: `remove_dotfile_links.bat`
-- アップデート用: `update_dotfiles.bat`
-
-また、`setup_windows/ps1/` には PowerShell 用の同様のスクリプトも用意されています。
+各環境に合わせて`setup/bin`配下のバイナリを実行してください。  
+注意：dotfiles リポジトリの設定ファイルを相対パスで参照しているので、バイナリは移動しないでください。
 
 ### 補足
 
@@ -54,3 +39,14 @@ Windows 環境と WSL 環境どちらでも使いたい場合、Windows 環境�
 
 新しいツールや設定を dotfiles に追加する場合は、必ず Linux および Windows 向けの各種スクリプト（セットアップ・削除・アップデート用）を修正し、README にもその内容を反映させてください。  
 **注意:** PowerShell 用の `.ps1` ファイルは、BOM (Byte Order Mark) 付きの UTF-8 で保存してください。BOM なしの場合、スクリプトが正しく動作しないことがあります。
+
+ビルド済みバイナリをテストするには以下のコマンドをご使用ください。
+
+```bash
+docker run --rm -it \
+  --user $(id -u):$(id -g) \
+  -v "$(pwd)":/home/tmp/dotfiles \
+  --workdir /home/tmp \
+  -e HOME=/home/tmp \
+  debian bash -c 'chmod 755 $HOME/dotfiles/setup/bin/* && exec bash'
+```
