@@ -13,6 +13,9 @@
 # エラーが起きたらその時点で終了
 set -e
 
+# スクリプトのあるディレクトリ（setup/）に移動
+cd "$(dirname "$0")"
+
 # イメージ名とコンテナ名
 IMAGE_NAME=dotfiles-golang-setup
 CONTAINER_NAME=dotfiles-golang-setup-container
