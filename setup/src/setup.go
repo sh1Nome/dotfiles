@@ -16,7 +16,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "実行ファイルのパス取得に失敗: %v\n", err)
 		os.Exit(1)
 	}
-	dotfilesDir := filepath.Dir(filepath.Dir(exePath))
+	dotfilesDir := filepath.Dir(filepath.Dir(filepath.Dir(exePath)))
 
 	// Gitユーザー名とメールアドレスを対話的に取得
 	reader := bufio.NewReader(os.Stdin)
@@ -36,8 +36,17 @@ func main() {
 	}
 
 	// 各種設定ファイルのシンボリックリンクを作成
-	usr, _ := user.Current()
-	home := usr.HomeDir
+	usr, err := user.Current()
+	var home string
+	if err != nil || usr == nil {
+		home = os.Getenv("HOME")
+		if home == "" {
+			fmt.Fprintln(os.Stderr, "ホームディレクトリが取得できません")
+			os.Exit(1)
+		}
+	} else {
+		home = usr.HomeDir
+	}
 	links := []struct{ src, dst string }{
 		{filepath.Join(dotfilesDir, ".bashrc"), filepath.Join(home, ".bashrc")},
 		{filepath.Join(dotfilesDir, ".vimrc"), filepath.Join(home, ".vimrc")},
@@ -58,9 +67,9 @@ func main() {
 	fmt.Println("シンボリックリンクを作成しました。\n\n現在のdotfilesシンボリックリンク一覧:")
 	showDotfilesLinks(home)
 
-    fmt.Println("Enterを押して終了します...")
-    var input string
-    fmt.Scanln(&input)
+	fmt.Println("Enterを押して終了します...")
+	var input string
+	fmt.Scanln(&input)
 }
 
 func showDotfilesLinks(home string) {

@@ -48,9 +48,13 @@ Windows 環境と WSL 環境どちらでも使いたい場合、Windows 環境�
 
 ```bash
 docker run --rm -it \
-  --user $(id -u):$(id -g) \
-  -v "$(pwd)":/home/tmp/dotfiles \
-  --workdir /home/tmp \
-  -e HOME=/home/tmp \
-  debian bash -c 'chmod 755 $HOME/dotfiles/setup/bin/* && exec bash'
+  -v "$(pwd)":/home/testuser/dotfiles \
+  debian bash -c "\
+    groupadd -g $(id -g) testgroup && \
+    useradd -u $(id -u) -g $(id -g) -m testuser && \
+    chsh -s /bin/bash testuser && \
+    chown -R $(id -u):$(id -g) /home/testuser && \
+    cd /home/testuser && \
+    su - testuser \
+  "
 ```
