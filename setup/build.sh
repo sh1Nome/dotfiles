@@ -39,3 +39,6 @@ docker rm "$CONTAINER_NAME"
 
 # イメージを削除
 docker rmi "$IMAGE_NAME"
+
+# bin以下のファイルに実行権限を付与
+chmod +x ./bin/*
