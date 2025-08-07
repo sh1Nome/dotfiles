@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/user"
 	"path/filepath"
+	dotfileslib "github.com/sh1Nome/dotfiles/setup/dotfileslib"
 )
 
 func main() {
@@ -22,15 +23,7 @@ func main() {
 	}
 
 	// 削除対象のリンク一覧
-	links := []string{
-		filepath.Join(home, ".bashrc"),
-		filepath.Join(home, ".vimrc"),
-		filepath.Join(home, ".gitconfig"),
-		filepath.Join(home, ".gitconfig.local"),
-		filepath.Join(home, ".config/Code/User/settings.json"),
-		filepath.Join(home, ".config/Code/User/keybindings.json"),
-		filepath.Join(home, ".config/Code/User/prompts"),
-	}
+	links := dotfileslib.ManagedDotfileDests(home)
 
 	// 削除処理
 	for _, link := range links {

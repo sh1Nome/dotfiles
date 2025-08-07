@@ -7,6 +7,8 @@ import (
 	"os/user"
 	"path/filepath"
 	"strings"
+
+	dotfileslib "github.com/sh1Nome/dotfiles/setup/dotfileslib"
 )
 
 func main() {
@@ -48,15 +50,14 @@ func main() {
 		home = usr.HomeDir
 	}
 
-	// 各種設定ファイルのシンボリックリンクを定義
-	links := []struct{ src, dst string }{
-		{filepath.Join(dotfilesDir, ".bashrc"), filepath.Join(home, ".bashrc")},
-		{filepath.Join(dotfilesDir, ".vimrc"), filepath.Join(home, ".vimrc")},
-		{filepath.Join(dotfilesDir, ".gitconfig"), filepath.Join(home, ".gitconfig")},
-		{gitconfigLocalPath, filepath.Join(home, ".gitconfig.local")},
-		{filepath.Join(dotfilesDir, "vscode/settings.json"), filepath.Join(home, ".config/Code/User/settings.json")},
-		{filepath.Join(dotfilesDir, "vscode/keybindings.json"), filepath.Join(home, ".config/Code/User/keybindings.json")},
-		{filepath.Join(dotfilesDir, "vscode/prompts"), filepath.Join(home, ".config/Code/User/prompts")},
+	// 管理しているdotfilesリストを取得
+	// .gitconfig.localはsetup時に内容を生成するため、srcを上書きする
+	links := dotfileslib.ManagedDotfiles(dotfilesDir, home)
+	// .gitconfig.localのsrcだけは生成したパスに差し替え
+	for i, l := range links {
+			if filepath.Base(l.dst) == ".gitconfig.local" {
+					links[i].src = gitconfigLocalPath
+			}
 	}
 
 	// 必要なディレクトリの作成
@@ -86,12 +87,12 @@ func showDotfilesLinks(home string) {
 		".bashrc", ".vimrc", ".gitconfig", ".gitconfig.local", "settings.json", "keybindings.json", "prompts",
 	}
 	found := map[string]string{}
-    // ホームディレクトリ以下を全部調べて、dotfilesへのシンボリックリンクを見つける
+	// ホームディレクトリ以下を全部調べて、dotfilesへのシンボリックリンクを見つける
 	filepath.Walk(home, func(path string, info os.FileInfo, err error) error {
 		if err != nil || info == nil {
 			return nil
 		}
-        // シンボリックリンクかつリンク先に"dotfiles"が含まれていれば記録
+		// シンボリックリンクかつリンク先に"dotfiles"が含まれていれば記録
 		if info.Mode()&os.ModeSymlink != 0 {
 			link, err := os.Readlink(path)
 			if err == nil && strings.Contains(link, "dotfiles") {
@@ -101,14 +102,14 @@ func showDotfilesLinks(home string) {
 		}
 		return nil
 	})
-    // orderの順番で見つかったリンクを表示
+	// orderの順番で見つかったリンクを表示
 	for _, k := range order {
 		if v, ok := found[k]; ok {
 			fmt.Println(v)
 			delete(found, k)
 		}
 	}
-    // order以外のリンクがあれば「その他」として表示
+	// order以外のリンクがあれば「その他」として表示
 	if len(found) > 0 {
 		fmt.Println("その他:")
 		for _, v := range found {

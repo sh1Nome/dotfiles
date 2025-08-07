@@ -19,7 +19,7 @@ COPY ./src/* ./
 
 # Goファイルをビルドしてbinに配置する
 RUN mkdir bin && \
-    for f in *.go; do \
+    for f in setup.go remove.go; do \
         name=$(basename "$f" .go); \
         # Linux amd64
         GOOS=linux GOARCH=amd64 go build -o "bin/${name}-linux-amd64" "$f"; \
