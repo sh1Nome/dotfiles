@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/user"
-	"path/filepath"
 	dotfileslib "github.com/sh1Nome/dotfiles/setup/dotfileslib"
 )
 

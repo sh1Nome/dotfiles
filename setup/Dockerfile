@@ -15,7 +15,7 @@ FROM golang:1.24.5
 WORKDIR /workspace
 
 # Goのソースコードをコンテナにコピー
-COPY ./src/* ./
+COPY ./src/ ./
 
 # Goファイルをビルドしてbinに配置する
 RUN mkdir bin && \

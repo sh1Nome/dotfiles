@@ -55,9 +55,9 @@ func main() {
 	links := dotfileslib.ManagedDotfiles(dotfilesDir, home)
 	// .gitconfig.localのsrcだけは生成したパスに差し替え
 	for i, l := range links {
-			if filepath.Base(l.dst) == ".gitconfig.local" {
-					links[i].src = gitconfigLocalPath
-			}
+		if filepath.Base(l.Dst) == ".gitconfig.local" {
+			links[i].Src = gitconfigLocalPath
+		}
 	}
 
 	// 必要なディレクトリの作成
@@ -65,9 +65,9 @@ func main() {
 
 	// シンボリックリンクの作成
 	for _, l := range links {
-		_ = os.Remove(l.dst)
-		if err := os.Symlink(l.src, l.dst); err != nil {
-			fmt.Fprintf(os.Stderr, "リンク作成失敗: %s -> %s: %v\n", l.src, l.dst, err)
+		_ = os.Remove(l.Dst)
+		if err := os.Symlink(l.Src, l.Dst); err != nil {
+			fmt.Fprintf(os.Stderr, "リンク作成失敗: %s -> %s: %v\n", l.Src, l.Dst, err)
 		}
 	}
 

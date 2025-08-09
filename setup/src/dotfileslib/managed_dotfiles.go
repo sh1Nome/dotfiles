@@ -4,8 +4,8 @@ import "path/filepath"
 
 // dotfiles管理ファイルの情報
 type dotfileEntry struct {
-    srcRel string // dotfilesディレクトリからの相対パス
-    dstRel string // ホームディレクトリからの相対パス
+    SrcRel string // dotfilesディレクトリからの相対パス
+    DstRel string // ホームディレクトリからの相対パス
 }
 
 // 管理しているdotfilesのエントリ一覧
@@ -20,12 +20,12 @@ var managedDotfileEntries = []dotfileEntry{
 }
 
 // 管理しているdotfilesのsrc/dst絶対パスリストを返す
-func ManagedDotfiles(dotfilesDir, home string) []struct{ src, dst string } {
-    out := make([]struct{ src, dst string }, 0, len(managedDotfileEntries))
+func ManagedDotfiles(dotfilesDir, home string) []struct{ Src, Dst string } {
+    out := make([]struct{ Src, Dst string }, 0, len(managedDotfileEntries))
     for _, e := range managedDotfileEntries {
-        out = append(out, struct{ src, dst string }{
-            filepath.Join(dotfilesDir, e.srcRel),
-            filepath.Join(home, e.dstRel),
+        out = append(out, struct{ Src, Dst string }{
+            filepath.Join(dotfilesDir, e.SrcRel),
+            filepath.Join(home, e.DstRel),
         })
     }
     return out
@@ -35,7 +35,7 @@ func ManagedDotfiles(dotfilesDir, home string) []struct{ src, dst string } {
 func ManagedDotfileDests(home string) []string {
     out := make([]string, 0, len(managedDotfileEntries))
     for _, e := range managedDotfileEntries {
-        out = append(out, filepath.Join(home, e.dstRel))
+        out = append(out, filepath.Join(home, e.DstRel))
     }
     return out
 }
