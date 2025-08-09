@@ -10,63 +10,26 @@ import (
 
 // dotfiles管理ファイルの情報
 type dotfileEntry struct {
+    Name   string // ファイル名
     SrcRel string // dotfilesディレクトリからの相対パス
     DstRel string // ホームディレクトリからの相対パス
 }
 
 // 管理しているdotfilesのエントリ一覧
 var managedDotfileEntries = []dotfileEntry{
-    {".bashrc", ".bashrc"},
-    {".vimrc", ".vimrc"},
-    {".gitconfig", ".gitconfig"},
-    {".gitconfig.local", ".gitconfig.local"},
-    {"vscode/settings.json", ".config/Code/User/settings.json"},
-    {"vscode/keybindings.json", ".config/Code/User/keybindings.json"},
-    {"vscode/prompts", ".config/Code/User/prompts"},
+    {Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
+    {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+    {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
+    {Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
+    {Name: "settings.json", SrcRel: "vscode/settings.json", DstRel: ".config/Code/User/settings.json"},
+    {Name: "keybindings.json", SrcRel: "vscode/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
+    {Name: "prompts", SrcRel: "vscode/prompts", DstRel: ".config/Code/User/prompts"},
 }
 
 // DotfilesManager クラス（Goのstruct）
 type DotfilesManager struct {
     DotfilesDir string
     Home        string
-}
-
-// dotfilesのリンク情報を表示するメソッド
-func (m *DotfilesManager) ShowDotfilesLinks() {
-	fmt.Println("現在のdotfilesシンボリックリンク一覧:")
-    order := []string{
-        ".bashrc", ".vimrc", ".gitconfig", ".gitconfig.local", "settings.json", "keybindings.json", "prompts",
-    }
-    found := map[string]string{}
-    // ホームディレクトリ以下を全部調べて、dotfilesへのシンボリックリンクを見つける
-    filepath.Walk(m.Home, func(path string, info os.FileInfo, err error) error {
-        if err != nil || info == nil {
-            return nil
-        }
-        // シンボリックリンクかつリンク先に"dotfiles"が含まれていれば記録
-        if info.Mode()&os.ModeSymlink != 0 {
-            link, err := os.Readlink(path)
-            if err == nil && strings.Contains(link, "dotfiles") {
-                base := filepath.Base(path)
-                found[base] = fmt.Sprintf("%s -> %s", path, filepath.Base(link))
-            }
-        }
-        return nil
-    })
-    // orderの順番で見つかったリンクを表示
-    for _, k := range order {
-        if v, ok := found[k]; ok {
-            fmt.Println(v)
-            delete(found, k)
-        }
-    }
-    // order以外のリンクがあれば「その他」として表示
-    if len(found) > 0 {
-        fmt.Println("その他:")
-        for _, v := range found {
-            fmt.Println(v)
-        }
-    }
 }
 
 // コンストラクタ
@@ -110,4 +73,44 @@ func (m *DotfilesManager) ManagedDotfileDests() []string {
         out = append(out, filepath.Join(m.Home, e.DstRel))
     }
     return out
+}
+
+// dotfilesのリンク情報を表示するメソッド
+func (m *DotfilesManager) ShowDotfilesLinks() {
+    fmt.Println("現在のdotfilesシンボリックリンク一覧:")
+    // 管理しているdotfilesの設定ファイル名を取得
+    order := make([]string, 0, len(managedDotfileEntries))
+    for _, entry := range managedDotfileEntries {
+        order = append(order, entry.Name)
+    }
+    found := map[string]string{}
+    // ホームディレクトリ以下を全部調べて、dotfilesへのシンボリックリンクを見つける
+    filepath.Walk(m.Home, func(path string, info os.FileInfo, err error) error {
+        if err != nil || info == nil {
+            return nil
+        }
+        // シンボリックリンクかつリンク先に"dotfiles"が含まれていれば記録
+        if info.Mode()&os.ModeSymlink != 0 {
+            link, err := os.Readlink(path)
+            if err == nil && strings.Contains(link, "dotfiles") {
+                base := filepath.Base(path)
+                found[base] = fmt.Sprintf("%s -> %s", path, filepath.Base(link))
+            }
+        }
+        return nil
+    })
+    // orderの順番で見つかったリンクを表示
+    for _, k := range order {
+        if v, ok := found[k]; ok {
+            fmt.Println(v)
+            delete(found, k)
+        }
+    }
+    // order以外のリンクがあれば「その他」として表示
+    if len(found) > 0 {
+        fmt.Println("その他:")
+        for _, v := range found {
+            fmt.Println(v)
+        }
+    }
 }
