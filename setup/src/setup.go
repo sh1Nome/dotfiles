@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"os/user"
 	"path/filepath"
 	"strings"
 
@@ -12,13 +11,8 @@ import (
 )
 
 func main() {
-	// dotfilesディレクトリの絶対パス取得
-	exePath, err := os.Executable()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "実行ファイルのパス取得に失敗: %v\n", err)
-		os.Exit(1)
-	}
-	dotfilesDir := filepath.Dir(filepath.Dir(filepath.Dir(exePath)))
+	// DotfilesManagerの初期化
+	manager := dotfileslib.NewDotfilesManager()
 
 	// Gitユーザー名とメールアドレスを対話的に取得
 	reader := bufio.NewReader(os.Stdin)
@@ -30,29 +24,15 @@ func main() {
 	gitEmail = strings.TrimSpace(gitEmail)
 
 	// .gitconfig.local を作成・更新
-	gitconfigLocalPath := filepath.Join(dotfilesDir, ".gitconfig.local")
+	gitconfigLocalPath := filepath.Join(manager.DotfilesDir, ".gitconfig.local")
 	gitconfigLocalContent := fmt.Sprintf("[user]\n    name = %s\n    email = %s\n", gitUser, gitEmail)
 	if err := os.WriteFile(gitconfigLocalPath, []byte(gitconfigLocalContent), 0644); err != nil {
 		fmt.Fprintf(os.Stderr, ".gitconfig.localの作成に失敗: %v\n", err)
 		os.Exit(1)
 	}
 
-	// ホームディレクトリの取得
-	usr, err := user.Current()
-	var home string
-	if err != nil || usr == nil {
-		home = os.Getenv("HOME")
-		if home == "" {
-			fmt.Fprintln(os.Stderr, "ホームディレクトリが取得できません")
-			os.Exit(1)
-		}
-	} else {
-		home = usr.HomeDir
-	}
-
 	// 管理しているdotfilesリストを取得
-	// .gitconfig.localはsetup時に内容を生成するため、srcを上書きする
-	links := dotfileslib.ManagedDotfiles(dotfilesDir, home)
+	links := manager.ManagedDotfiles()
 	// .gitconfig.localのsrcだけは生成したパスに差し替え
 	for i, l := range links {
 		if filepath.Base(l.Dst) == ".gitconfig.local" {
@@ -61,7 +41,7 @@ func main() {
 	}
 
 	// 必要なディレクトリの作成
-	_ = os.MkdirAll(filepath.Join(home, ".config/Code/User"), 0755)
+	_ = os.MkdirAll(filepath.Join(manager.Home, ".config/Code/User"), 0755)
 
 	// シンボリックリンクの作成
 	for _, l := range links {
@@ -73,7 +53,7 @@ func main() {
 
 	// シンボリックリンクの一覧表示
 	fmt.Println("シンボリックリンクを作成しました。\n\n現在のdotfilesシンボリックリンク一覧:")
-	showDotfilesLinks(home)
+	showDotfilesLinks(manager.Home)
 
 	// 完了メッセージ
 	fmt.Println("Enterを押して終了します...")

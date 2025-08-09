@@ -3,26 +3,15 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/user"
 	dotfileslib "github.com/sh1Nome/dotfiles/setup/dotfileslib"
 )
 
 func main() {
-	// ホームディレクトリの取得
-	usr, err := user.Current()
-	var home string
-	if err != nil || usr == nil {
-		home = os.Getenv("HOME")
-		if home == "" {
-			fmt.Fprintln(os.Stderr, "ホームディレクトリが取得できません")
-			os.Exit(1)
-		}
-	} else {
-		home = usr.HomeDir
-	}
+	// DotfilesManagerの初期化
+	manager := dotfileslib.NewDotfilesManager()
 
 	// 削除対象のリンク一覧
-	links := dotfileslib.ManagedDotfileDests(home)
+	links := manager.ManagedDotfileDests()
 
 	// 削除処理
 	for _, link := range links {
