@@ -33,19 +33,18 @@ func main() {
 
 	// 管理しているdotfilesリストを取得
 	links := manager.ManagedDotfiles()
-	// .gitconfig.localのsrcだけは生成したパスに差し替え
-	for i, l := range links {
-		if filepath.Base(l.Dst) == ".gitconfig.local" {
-			links[i].Src = gitconfigLocalPath
-		}
-	}
-
-	// 必要なディレクトリの作成
-	_ = os.MkdirAll(filepath.Join(manager.Home, ".config/Code/User"), 0755)
 
 	// シンボリックリンクの作成
 	for _, l := range links {
 		_ = os.Remove(l.Dst)
+		// リンク先ディレクトリが存在しない場合は作成
+		dstDir := filepath.Dir(l.Dst)
+		if _, err := os.Stat(dstDir); os.IsNotExist(err) {
+			if err := os.MkdirAll(dstDir, 0755); err != nil {
+				fmt.Fprintf(os.Stderr, "ディレクトリ作成失敗: %s: %v\n", dstDir, err)
+				continue
+			}
+		}
 		if err := os.Symlink(l.Src, l.Dst); err != nil {
 			fmt.Fprintf(os.Stderr, "リンク作成失敗: %s -> %s: %v\n", l.Src, l.Dst, err)
 		}
