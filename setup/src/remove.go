@@ -31,5 +31,12 @@ func main() {
 		}
 	}
 
-	fmt.Println("シンボリックリンクの削除が完了しました。")
+	// シンボリックリンクの一覧表示
+	fmt.Println("シンボリックリンクを削除しました。")
+	manager.ShowDotfilesLinks()
+
+	// 完了メッセージ
+	fmt.Println("Enterを押して終了します...")
+	var input string
+	fmt.Scanln(&input)
 }
