@@ -18,15 +18,16 @@ WORKDIR /workspace
 COPY ./src/ ./
 
 # Goファイルをビルドしてbinに配置する
-RUN mkdir bin && \
+RUN set -e; \
+    mkdir bin; \
     for f in setup.go remove.go; do \
         name=$(basename "$f" .go); \
-        # Linux amd64
-        GOOS=linux GOARCH=amd64 go build -o "bin/${name}-linux-amd64" "$f"; \
-        # Linux arm64
-        GOOS=linux GOARCH=arm64 go build -o "bin/${name}-linux-arm64" "$f"; \
-        # Windows amd64
-        GOOS=windows GOARCH=amd64 go build -o "bin/${name}-windows-amd64.exe" "$f"; \
+        echo "Building $f for linux/amd64..."; \
+        GOOS=linux GOARCH=amd64 go build -v -o "bin/${name}-linux-amd64" "$f"; \
+        echo "Building $f for linux/arm64..."; \
+        GOOS=linux GOARCH=arm64 go build -v -o "bin/${name}-linux-arm64" "$f"; \
+        echo "Building $f for windows/amd64..."; \
+        GOOS=windows GOARCH=amd64 go build -v -o "bin/${name}-windows-amd64.exe" "$f"; \
     done
 
 # コンテナを起動し続けるためのコマンド

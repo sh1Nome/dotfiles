@@ -1,11 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
 	dotfileslib "github.com/sh1Nome/dotfiles/setup/dotfileslib"
 )
@@ -14,20 +12,8 @@ func main() {
 	// DotfilesManagerの初期化
 	manager := dotfileslib.NewDotfilesManager()
 
-	// Gitユーザー名とメールアドレスを対話的に取得
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Gitのユーザー名を入力してください: ")
-	gitUser, _ := reader.ReadString('\n')
-	gitUser = strings.TrimSpace(gitUser)
-	fmt.Print("Gitのメールアドレスを入力してください: ")
-	gitEmail, _ := reader.ReadString('\n')
-	gitEmail = strings.TrimSpace(gitEmail)
-
-	// .gitconfig.local を作成・更新
-	gitconfigLocalPath := filepath.Join(manager.DotfilesDir, ".gitconfig.local")
-	gitconfigLocalContent := fmt.Sprintf("[user]\n    name = %s\n    email = %s\n", gitUser, gitEmail)
-	if err := os.WriteFile(gitconfigLocalPath, []byte(gitconfigLocalContent), 0644); err != nil {
-		fmt.Fprintf(os.Stderr, ".gitconfig.localの作成に失敗: %v\n", err)
+	// Gitユーザー名・メールアドレス取得と.gitconfig.local作成
+	if err := manager.SetupGitConfigInteractive(); err != nil {
 		os.Exit(1)
 	}
 

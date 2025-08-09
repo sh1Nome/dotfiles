@@ -25,7 +25,7 @@ rm -rf ./bin
 mkdir -p ./bin
 
 # Dockerイメージをビルド
-docker build -t "$IMAGE_NAME" .
+docker build --no-cache -t "$IMAGE_NAME" .
 
 # コンテナを起動（バックグラウンドで）
 docker run -d --init --name "$CONTAINER_NAME" "$IMAGE_NAME"

@@ -1,6 +1,7 @@
 package dotfileslib
 
 import (
+	"bufio"
     "fmt"
     "os"
     "os/user"
@@ -28,8 +29,26 @@ var managedDotfileEntries = []dotfileEntry{
 
 // DotfilesManager クラス（Goのstruct）
 type DotfilesManager struct {
-    DotfilesDir string
-    Home        string
+    dotfilesDir string
+    home        string
+}
+// Gitユーザー名・メールアドレスを対話的に取得し.gitconfig.localを作成する
+func (m *DotfilesManager) SetupGitConfigInteractive() error {
+    reader := bufio.NewReader(os.Stdin)
+    fmt.Print("Gitのユーザー名を入力してください: ")
+    gitUser, _ := reader.ReadString('\n')
+    gitUser = strings.TrimSpace(gitUser)
+    fmt.Print("Gitのメールアドレスを入力してください: ")
+    gitEmail, _ := reader.ReadString('\n')
+    gitEmail = strings.TrimSpace(gitEmail)
+
+    gitconfigLocalPath := filepath.Join(m.dotfilesDir, ".gitconfig.local")
+    gitconfigLocalContent := fmt.Sprintf("[user]\n    name = %s\n    email = %s\n", gitUser, gitEmail)
+    if err := os.WriteFile(gitconfigLocalPath, []byte(gitconfigLocalContent), 0644); err != nil {
+        fmt.Fprintf(os.Stderr, ".gitconfig.localの作成に失敗: %v\n", err)
+        return err
+    }
+    return nil
 }
 
 // コンストラクタ
@@ -49,8 +68,8 @@ func NewDotfilesManager() *DotfilesManager {
         home = usr.HomeDir
     }
     return &DotfilesManager{
-        DotfilesDir: dotfilesDir,
-        Home:        home,
+        dotfilesDir: dotfilesDir,
+        home:        home,
     }
 }
 
@@ -59,8 +78,8 @@ func (m *DotfilesManager) ManagedDotfiles() []struct{ Src, Dst string } {
     out := make([]struct{ Src, Dst string }, 0, len(managedDotfileEntries))
     for _, e := range managedDotfileEntries {
         out = append(out, struct{ Src, Dst string }{
-            filepath.Join(m.DotfilesDir, e.SrcRel),
-            filepath.Join(m.Home, e.DstRel),
+            filepath.Join(m.dotfilesDir, e.SrcRel),
+            filepath.Join(m.home, e.DstRel),
         })
     }
     return out
@@ -70,7 +89,7 @@ func (m *DotfilesManager) ManagedDotfiles() []struct{ Src, Dst string } {
 func (m *DotfilesManager) ManagedDotfileDests() []string {
     out := make([]string, 0, len(managedDotfileEntries))
     for _, e := range managedDotfileEntries {
-        out = append(out, filepath.Join(m.Home, e.DstRel))
+        out = append(out, filepath.Join(m.home, e.DstRel))
     }
     return out
 }
@@ -85,7 +104,7 @@ func (m *DotfilesManager) ShowDotfilesLinks() {
     }
     found := map[string]string{}
     // ホームディレクトリ以下を全部調べて、dotfilesへのシンボリックリンクを見つける
-    filepath.Walk(m.Home, func(path string, info os.FileInfo, err error) error {
+    filepath.Walk(m.home, func(path string, info os.FileInfo, err error) error {
         if err != nil || info == nil {
             return nil
         }
