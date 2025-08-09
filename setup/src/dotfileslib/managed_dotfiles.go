@@ -1,7 +1,7 @@
 package dotfileslib
 
 import (
-	"bufio"
+    "bufio"
     "fmt"
     "os"
     "os/user"
@@ -31,24 +31,6 @@ var managedDotfileEntries = []dotfileEntry{
 type DotfilesManager struct {
     dotfilesDir string
     home        string
-}
-// Gitユーザー名・メールアドレスを対話的に取得し.gitconfig.localを作成する
-func (m *DotfilesManager) SetupGitConfigInteractive() error {
-    reader := bufio.NewReader(os.Stdin)
-    fmt.Print("Gitのユーザー名を入力してください: ")
-    gitUser, _ := reader.ReadString('\n')
-    gitUser = strings.TrimSpace(gitUser)
-    fmt.Print("Gitのメールアドレスを入力してください: ")
-    gitEmail, _ := reader.ReadString('\n')
-    gitEmail = strings.TrimSpace(gitEmail)
-
-    gitconfigLocalPath := filepath.Join(m.dotfilesDir, ".gitconfig.local")
-    gitconfigLocalContent := fmt.Sprintf("[user]\n    name = %s\n    email = %s\n", gitUser, gitEmail)
-    if err := os.WriteFile(gitconfigLocalPath, []byte(gitconfigLocalContent), 0644); err != nil {
-        fmt.Fprintf(os.Stderr, ".gitconfig.localの作成に失敗: %v\n", err)
-        return err
-    }
-    return nil
 }
 
 // コンストラクタ
@@ -92,6 +74,40 @@ func (m *DotfilesManager) ManagedDotfileDests() []string {
         out = append(out, filepath.Join(m.home, e.DstRel))
     }
     return out
+}
+
+// Gitユーザー名・メールアドレスを対話的に取得し.gitconfig.localを作成する
+func (m *DotfilesManager) SetupGitConfigInteractive() error {
+    reader := bufio.NewReader(os.Stdin)
+    fmt.Print("Gitのユーザー名を入力してください: ")
+    gitUser, _ := reader.ReadString('\n')
+    gitUser = strings.TrimSpace(gitUser)
+    fmt.Print("Gitのメールアドレスを入力してください: ")
+    gitEmail, _ := reader.ReadString('\n')
+    gitEmail = strings.TrimSpace(gitEmail)
+
+    gitconfigLocalPath := filepath.Join(m.dotfilesDir, ".gitconfig.local")
+    gitconfigLocalContent := fmt.Sprintf("[user]\n    name = %s\n    email = %s\n", gitUser, gitEmail)
+    if err := os.WriteFile(gitconfigLocalPath, []byte(gitconfigLocalContent), 0644); err != nil {
+        fmt.Fprintf(os.Stderr, ".gitconfig.localの作成に失敗: %v\n", err)
+        return err
+    }
+    return nil
+}
+
+// .gitconfig.local を削除するメソッド
+func (m *DotfilesManager) RemoveGitConfigLocal() error {
+    gitconfigLocalPath := filepath.Join(m.dotfilesDir, ".gitconfig.local")
+    if err := os.Remove(gitconfigLocalPath); err != nil {
+        if os.IsNotExist(err) {
+            fmt.Fprintf(os.Stderr, ".gitconfig.localは存在しません\n")
+            return nil
+        }
+        fmt.Fprintf(os.Stderr, ".gitconfig.localの削除に失敗: %v\n", err)
+        return err
+    }
+    fmt.Println(".gitconfig.localを削除しました")
+    return nil
 }
 
 // dotfilesのリンク情報を表示するメソッド

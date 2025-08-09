@@ -31,6 +31,11 @@ func main() {
 		}
 	}
 
+	// .gitconfig.localの削除
+	if err := manager.RemoveGitConfigLocal(); err != nil {
+		os.Exit(1)
+	}
+
 	// シンボリックリンクの一覧表示
 	fmt.Println("シンボリックリンクを削除しました。")
 	manager.ShowDotfilesLinks()
