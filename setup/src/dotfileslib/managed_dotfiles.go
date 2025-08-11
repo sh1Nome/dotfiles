@@ -110,6 +110,45 @@ func (m *DotfilesManager) RemoveGitConfigLocal() error {
     return nil
 }
 
+// dotfilesのシンボリックリンクを作成するメソッド
+func (m *DotfilesManager) CreateDotfileLinks() {
+    links := m.ManagedDotfiles()
+    for _, l := range links {
+        _ = os.Remove(l.Dst)
+        dstDir := filepath.Dir(l.Dst)
+        if _, err := os.Stat(dstDir); os.IsNotExist(err) {
+            if err := os.MkdirAll(dstDir, 0755); err != nil {
+                fmt.Fprintf(os.Stderr, "ディレクトリ作成失敗: %s: %v\n", dstDir, err)
+                continue
+            }
+        }
+        if err := os.Symlink(l.Src, l.Dst); err != nil {
+            fmt.Fprintf(os.Stderr, "リンク作成失敗: %s -> %s: %v\n", l.Src, l.Dst, err)
+        }
+    }
+}
+
+// 管理しているdotfilesのリンクを削除するメソッド
+func (m *DotfilesManager) RemoveDotfileLinks() {
+    links := m.ManagedDotfileDests()
+    for _, link := range links {
+        info, err := os.Lstat(link)
+        if err != nil {
+            fmt.Printf("%s は存在しません。\n", link)
+            continue
+        }
+        if info.Mode()&os.ModeSymlink != 0 || info.IsDir() {
+            if err := os.RemoveAll(link); err != nil {
+                fmt.Printf("%s の削除に失敗しました: %v\n", link, err)
+            } else {
+                fmt.Printf("%s を削除しました。\n", link)
+            }
+        } else {
+            fmt.Printf("%s はシンボリックリンクでもディレクトリでもありません。\n", link)
+        }
+    }
+}
+
 // dotfilesのリンク情報を表示するメソッド
 func (m *DotfilesManager) ShowDotfilesLinks() {
     fmt.Println("現在のdotfilesシンボリックリンク一覧:")
