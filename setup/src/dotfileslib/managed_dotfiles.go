@@ -7,6 +7,7 @@ import (
     "os/user"
     "path/filepath"
     "strings"
+    "runtime"
 )
 
 // dotfiles管理ファイルの情報
@@ -50,10 +51,30 @@ func NewDotfilesManager() *DotfilesManager {
     } else {
         home = usr.HomeDir
     }
+
+    // OS判定
+    osType := ""
+    switch os := runtime.GOOS; os {
+    case "linux":
+        osType = "linux"
+    case "windows":
+        osType = "windows"
+    default:
+        panic("サポートされていないOSです: " + os)
+    }
+
+    // OSによってシンボリックリンクの管理エントリを設定
+    var managedDotfileEntries []dotfileEntry
+    if osType == "linux" {
+        managedDotfileEntries = defaultManagedDotfileEntries
+    } else if osType == "windows" {
+        managedDotfileEntries = nil // 必要ならwindows用のエントリを追加
+    }
+
     return &DotfilesManager{
         dotfilesDir:           dotfilesDir,
         home:                  home,
-        managedDotfileEntries: defaultManagedDotfileEntries,
+        managedDotfileEntries: managedDotfileEntries,
     }
 }
 
