@@ -16,8 +16,8 @@ type dotfileEntry struct {
     DstRel string // ホームディレクトリからの相対パス
 }
 
-// 管理しているdotfilesのエントリ一覧
-var managedDotfileEntries = []dotfileEntry{
+// デフォルトのdotfilesエントリ一覧
+var defaultManagedDotfileEntries = []dotfileEntry{
     {Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
     {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
     {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
@@ -29,8 +29,9 @@ var managedDotfileEntries = []dotfileEntry{
 
 // DotfilesManager クラス（Goのstruct）
 type DotfilesManager struct {
-    dotfilesDir string
-    home        string
+    dotfilesDir           string
+    home                  string
+    managedDotfileEntries []dotfileEntry
 }
 
 // コンストラクタ
@@ -50,15 +51,16 @@ func NewDotfilesManager() *DotfilesManager {
         home = usr.HomeDir
     }
     return &DotfilesManager{
-        dotfilesDir: dotfilesDir,
-        home:        home,
+        dotfilesDir:           dotfilesDir,
+        home:                  home,
+        managedDotfileEntries: defaultManagedDotfileEntries,
     }
 }
 
 // 管理しているdotfilesのsrc/dst絶対パスリストを返す
 func (m *DotfilesManager) ManagedDotfiles() []struct{ Src, Dst string } {
-    out := make([]struct{ Src, Dst string }, 0, len(managedDotfileEntries))
-    for _, e := range managedDotfileEntries {
+    out := make([]struct{ Src, Dst string }, 0, len(m.managedDotfileEntries))
+    for _, e := range m.managedDotfileEntries {
         out = append(out, struct{ Src, Dst string }{
             filepath.Join(m.dotfilesDir, e.SrcRel),
             filepath.Join(m.home, e.DstRel),
@@ -69,8 +71,8 @@ func (m *DotfilesManager) ManagedDotfiles() []struct{ Src, Dst string } {
 
 // 管理しているdotfilesのdst（リンク先）一覧のみを返す
 func (m *DotfilesManager) ManagedDotfileDests() []string {
-    out := make([]string, 0, len(managedDotfileEntries))
-    for _, e := range managedDotfileEntries {
+    out := make([]string, 0, len(m.managedDotfileEntries))
+    for _, e := range m.managedDotfileEntries {
         out = append(out, filepath.Join(m.home, e.DstRel))
     }
     return out
@@ -153,8 +155,8 @@ func (m *DotfilesManager) RemoveDotfileLinks() {
 func (m *DotfilesManager) ShowDotfilesLinks() {
     fmt.Println("現在のdotfilesシンボリックリンク一覧:")
     // 管理しているdotfilesの設定ファイル名を取得
-    order := make([]string, 0, len(managedDotfileEntries))
-    for _, entry := range managedDotfileEntries {
+    order := make([]string, 0, len(m.managedDotfileEntries))
+    for _, entry := range m.managedDotfileEntries {
         order = append(order, entry.Name)
     }
     found := map[string]string{}
