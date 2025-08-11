@@ -57,27 +57,6 @@ func NewDotfilesManager() *DotfilesManager {
     }
 }
 
-// 管理しているdotfilesのsrc/dst絶対パスリストを返す
-func (m *DotfilesManager) ManagedDotfiles() []struct{ Src, Dst string } {
-    out := make([]struct{ Src, Dst string }, 0, len(m.managedDotfileEntries))
-    for _, e := range m.managedDotfileEntries {
-        out = append(out, struct{ Src, Dst string }{
-            filepath.Join(m.dotfilesDir, e.SrcRel),
-            filepath.Join(m.home, e.DstRel),
-        })
-    }
-    return out
-}
-
-// 管理しているdotfilesのdst（リンク先）一覧のみを返す
-func (m *DotfilesManager) ManagedDotfileDests() []string {
-    out := make([]string, 0, len(m.managedDotfileEntries))
-    for _, e := range m.managedDotfileEntries {
-        out = append(out, filepath.Join(m.home, e.DstRel))
-    }
-    return out
-}
-
 // Gitユーザー名・メールアドレスを対話的に取得し.gitconfig.localを作成する
 func (m *DotfilesManager) SetupGitConfigInteractive() error {
     reader := bufio.NewReader(os.Stdin)
@@ -114,26 +93,27 @@ func (m *DotfilesManager) RemoveGitConfigLocal() error {
 
 // dotfilesのシンボリックリンクを作成するメソッド
 func (m *DotfilesManager) CreateDotfileLinks() {
-    links := m.ManagedDotfiles()
-    for _, l := range links {
-        _ = os.Remove(l.Dst)
-        dstDir := filepath.Dir(l.Dst)
+    for _, e := range m.managedDotfileEntries {
+        src := filepath.Join(m.dotfilesDir, e.SrcRel)
+        dst := filepath.Join(m.home, e.DstRel)
+        _ = os.Remove(dst)
+        dstDir := filepath.Dir(dst)
         if _, err := os.Stat(dstDir); os.IsNotExist(err) {
             if err := os.MkdirAll(dstDir, 0755); err != nil {
                 fmt.Fprintf(os.Stderr, "ディレクトリ作成失敗: %s: %v\n", dstDir, err)
                 continue
             }
         }
-        if err := os.Symlink(l.Src, l.Dst); err != nil {
-            fmt.Fprintf(os.Stderr, "リンク作成失敗: %s -> %s: %v\n", l.Src, l.Dst, err)
+        if err := os.Symlink(src, dst); err != nil {
+            fmt.Fprintf(os.Stderr, "リンク作成失敗: %s -> %s: %v\n", src, dst, err)
         }
     }
 }
 
 // 管理しているdotfilesのリンクを削除するメソッド
 func (m *DotfilesManager) RemoveDotfileLinks() {
-    links := m.ManagedDotfileDests()
-    for _, link := range links {
+    for _, e := range m.managedDotfileEntries {
+        link := filepath.Join(m.home, e.DstRel)
         info, err := os.Lstat(link)
         if err != nil {
             fmt.Printf("%s は存在しません。\n", link)
