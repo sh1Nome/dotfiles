@@ -23,7 +23,7 @@
 
 このリポジトリのセットアップは、`$PROFILE`および`$APPDATA`のパスを変更していないことが前提です。  
 これらのパスを変更している場合は、dotfiles のリンク先や動作に問題が生じる可能性があります。  
-なお、Windows環境でsetupスクリプトを実行すると、PowerShellの実行ポリシーが自動でRemoteSignedに変更されます。
+なお、Windows 環境で setup スクリプトを実行すると、PowerShell の実行ポリシーが自動で RemoteSigned に変更されます。
 
 ### 補足
 
