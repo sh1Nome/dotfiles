@@ -197,11 +197,41 @@ func (m *DotfilesManager) ShowDotfilesLinks() {
     for _, entry := range m.managedDotfileEntries {
         order = append(order, entry.Name)
     }
+
+    // Windows環境のみ、一部ディレクトリを除外（性能向上のため）
+    skipDirs := map[string]struct{}{}
+    if m.osType == "windows" {
+        skipList := []string{
+            "AppData/Local",
+            "AppData/LocalLow",
+            "AppData/LineCall",
+            "Pictures",
+            "Videos",
+            "Downloads",
+            "Music",
+            "3D Objects",
+            "Saved Games",
+            "Contacts",
+            "Links",
+            "Searches",
+            "Favorites",
+        }
+        for _, d := range skipList {
+            skipDirs[filepath.Join(m.home, d)] = struct{}{}
+        }
+    }
+
     found := map[string]string{}
     // ホームディレクトリ以下を全部調べて、dotfilesへのシンボリックリンクを見つける
     filepath.Walk(m.home, func(path string, info os.FileInfo, err error) error {
         if err != nil || info == nil {
             return nil
+        }
+        // Windowsの場合のみ、不要なディレクトリをスキップ
+        if m.osType == "windows" && info.IsDir() {
+            if _, ok := skipDirs[path]; ok {
+                return filepath.SkipDir
+            }
         }
         // シンボリックリンクかつリンク先に"dotfiles"が含まれていれば記録
         if info.Mode()&os.ModeSymlink != 0 {
