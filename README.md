@@ -1,7 +1,7 @@
 # dotfiles
 
 このリポジトリは、Linux および Windows 環境で利用できる各種設定ファイル（dotfiles）を管理しています。  
-また、それらのシンボリックリンクを自動で作成・削除・更新するスクリプトが含まれています。
+また、それらのシンボリックリンクを自動で作成・削除するバイナリが含まれています。
 
 ## 管理しているツール
 
@@ -11,29 +11,22 @@
 - Git
 - VSCode
 
-## 各種スクリプトについて
+## セットアップ
 
-### Linux 用スクリプト
+各環境に合わせて`setup/bin`配下のバイナリを実行してください。  
+注意：dotfiles リポジトリの設定ファイルを相対パスで参照しているので、バイナリは移動しないでください。
 
-`setup_linux/` ディレクトリには、以下のスクリプトが含まれています。
+- setup：シンボリックリンクの作成（ツールのインストールは未対応）
+- remove：シンボリックリンクの削除
 
-- セットアップ用: `setup_dotfiles.sh`
-- 削除用: `remove_dotfile_links.sh`
-- アップデート用: `update_dotfiles.sh`
+### Windows 環境の注意
 
-### Windows 用スクリプト
-
-`setup_windows/` ディレクトリには、以下のスクリプトが含まれています。
-
-- セットアップ用: `setup_dotfiles.bat`
-- 削除用: `remove_dotfile_links.bat`
-- アップデート用: `update_dotfiles.bat`
-
-また、`setup_windows/ps1/` には PowerShell 用の同様のスクリプトも用意されています。
+このリポジトリのセットアップは、`$PROFILE`および`$APPDATA`のパスを変更していないことが前提です。  
+これらのパスを変更している場合は、dotfiles のリンク先や動作に問題が生じる可能性があります。
 
 ### 補足
 
-`setup_dotfiles`スクリプトを実行すると、「現在の dotfiles シンボリックリンク一覧」が表示されます。  
+`setup`スクリプトを実行すると、「現在の dotfiles シンボリックリンク一覧」が表示されます。  
 dotfiles で管理していないシンボリックリンクは「その他」として区別されます。  
 「その他」に表示された不要なシンボリックリンクは、手動で削除してください。  
 なお、不要かどうかの判断はご自身の責任で行ってください。
@@ -52,5 +45,23 @@ Windows 環境と WSL 環境どちらでも使いたい場合、Windows 環境�
 
 ## 開発者向けガイド
 
-新しいツールや設定を dotfiles に追加する場合は、必ず Linux および Windows 向けの各種スクリプト（セットアップ・削除・アップデート用）を修正し、README にもその内容を反映させてください。  
-**注意:** PowerShell 用の `.ps1` ファイルは、BOM (Byte Order Mark) 付きの UTF-8 で保存してください。BOM なしの場合、スクリプトが正しく動作しないことがあります。
+### ビルド方法
+
+`setup/build.sh`を実行してください。`docker`コマンドを`sudo`なしで実行できる必要があります。
+
+### テスト
+
+ビルド済みバイナリをテストするには以下のコマンドをご使用ください。
+
+```bash
+docker run --rm -it \
+  -v "$(pwd)":/home/testuser/dotfiles \
+  debian bash -c "\
+    groupadd -g $(id -g) testgroup && \
+    useradd -u $(id -u) -g $(id -g) -m testuser && \
+    chsh -s /bin/bash testuser && \
+    chown -R $(id -u):$(id -g) /home/testuser && \
+    cd /home/testuser && \
+    su - testuser \
+  "
+```
