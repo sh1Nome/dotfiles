@@ -11,6 +11,11 @@ func main() {
 	// DotfilesManagerの初期化
 	manager := dotfileslib.NewDotfilesManager()
 
+	// Windowsの場合はPowerShellの実行ポリシーを設定
+	if err := manager.SetPowerShellExecutionPolicy(); err != nil {
+		os.Exit(1)
+	}
+
 	// Gitユーザー名・メールアドレス取得と.gitconfig.local作成
 	if err := manager.SetupGitConfigInteractive(); err != nil {
 		os.Exit(1)
