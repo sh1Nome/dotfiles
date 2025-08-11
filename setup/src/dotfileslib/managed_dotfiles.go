@@ -17,15 +17,34 @@ type dotfileEntry struct {
     DstRel string // ホームディレクトリからの相対パス
 }
 
-// デフォルトのdotfilesエントリ一覧
-var defaultManagedDotfileEntries = []dotfileEntry{
+// Linux用のdotfilesエントリ一覧
+var linuxManagedDotfileEntries = []dotfileEntry{
+    // bash
     {Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
+    // vim
     {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+    // git
     {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
     {Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
+    // vscode
     {Name: "settings.json", SrcRel: "vscode/settings.json", DstRel: ".config/Code/User/settings.json"},
     {Name: "keybindings.json", SrcRel: "vscode/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
     {Name: "prompts", SrcRel: "vscode/prompts", DstRel: ".config/Code/User/prompts"},
+}
+
+// Windows用のdotfilesエントリ一覧
+var windowsManagedDotfileEntries = []dotfileEntry{
+    // powershell
+    {Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/PowerShell/Microsoft.PowerShell_profile.ps1"},
+    // vim
+    {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+    // git
+    {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
+    {Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
+    // vscode
+    {Name: "settings.json", SrcRel: "vscode/settings.json", DstRel: "AppData/Roaming/Code/User/settings.json"},
+    {Name: "keybindings.json", SrcRel: "vscode/keybindings.json", DstRel: "AppData/Roaming/Code/User/keybindings.json"},
+    {Name: "prompts", SrcRel: "vscode/prompts", DstRel: "AppData/Roaming/Code/User/prompts"},
 }
 
 // DotfilesManager クラス（Goのstruct）
@@ -66,9 +85,9 @@ func NewDotfilesManager() *DotfilesManager {
     // OSによってシンボリックリンクの管理エントリを設定
     var managedDotfileEntries []dotfileEntry
     if osType == "linux" {
-        managedDotfileEntries = defaultManagedDotfileEntries
+        managedDotfileEntries = linuxManagedDotfileEntries
     } else if osType == "windows" {
-        managedDotfileEntries = nil // 必要ならwindows用のエントリを追加
+        managedDotfileEntries = windowsManagedDotfileEntries
     }
 
     return &DotfilesManager{
