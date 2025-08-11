@@ -8,8 +8,10 @@ Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
 # 現在のGitブランチ名を取得する関数
 function Get-GitBranchName {
     try {
-        # git branch --show-current を実行し、エラーは無視する
+        $originalEncoding = [Console]::OutputEncoding
+        [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
         $branch = git branch --show-current 2>$null
+        [Console]::OutputEncoding = $originalEncoding
         if ($null -ne $branch -and $branch.Length -gt 0) {
             return "(git:$branch)"
         }
