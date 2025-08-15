@@ -20,6 +20,8 @@ type dotfileEntry struct {
 
 // Linux用のdotfilesエントリ一覧
 var linuxManagedDotfileEntries = []dotfileEntry{
+    // alacritty
+    {Name: "alacritty.toml", SrcRel: "alacritty.toml", DstRel: ".config/alacritty/alacritty.toml"},
     // bash
     {Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
     // vim
@@ -35,6 +37,8 @@ var linuxManagedDotfileEntries = []dotfileEntry{
 
 // Windows用のdotfilesエントリ一覧
 var windowsManagedDotfileEntries = []dotfileEntry{
+    // alacritty
+    {Name: "alacritty.toml", SrcRel: "alacritty.toml", DstRel: "AppData/Roaming/alacritty/alacritty.toml"},
     // powershell
     {Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
     // vim
