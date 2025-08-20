@@ -7,27 +7,27 @@
     "when": "editorTextFocus && vim.active && vim.use<C-p> && !inDebugRepl || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
   },
   {
-    // ターミナルがアクティブなときにCtrl+[でターミナルの表示/非表示を切り替え
+    // ターミナルがアクティブなときにCtrl+@でターミナルの表示/非表示を切り替え
     "key": "ctrl+[BracketLeft]",
     "command": "workbench.action.terminal.toggleTerminal",
-    "when": "terminal.active"
-  },
-  {
-    // ターミナルがアクティブなときにCtrl+Shift+[でターミナルの表示/非表示切り替えを無効化
-    "key": "ctrl+shift+[BracketLeft]",
-    "command": "-workbench.action.terminal.toggleTerminal",
     "when": "terminal.active"
   },
   {
     // エディタにフォーカスしているときのみShift+Hで左のタブに移動
     "key": "shift+h",
     "command": "workbench.action.previousEditor",
-    "when": "editorTextFocus && vim.mode != 'Insert'"
+    "when": "editorTextFocus && vim.mode != 'Insert' && vim.mode != 'CommandlineInProgress'"
   },
   {
     // エディタにフォーカスしているときのみShift+Lで右のタブに移動
     "key": "shift+l",
     "command": "workbench.action.nextEditor",
-    "when": "editorTextFocus && vim.mode != 'Insert'"
+    "when": "editorTextFocus && vim.mode != 'Insert' && vim.mode != 'CommandlineInProgress'"
+  },
+  {
+    // ドキュメントのフォーマットにShift+Alt+Fを使用
+    "key": "shift+alt+f",
+    "command": "editor.action.formatDocument",
+    "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
   }
 ]
