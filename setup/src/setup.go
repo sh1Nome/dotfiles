@@ -21,6 +21,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	// keybindings.json生成
+	if err := manager.GenerateKeybindingsJson(); err != nil {
+		os.Exit(1)
+	}
+
 	// 管理しているdotfilesのシンボリックリンク作成
 	manager.CreateDotfileLinks()
 

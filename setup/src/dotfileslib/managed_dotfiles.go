@@ -9,6 +9,7 @@ import (
     "path/filepath"
     "strings"
     "runtime"
+    "encoding/json"
 )
 
 // dotfiles管理ファイルの情報
@@ -153,6 +154,75 @@ func (m *DotfilesManager) RemoveGitConfigLocal() error {
     }
     fmt.Println(".gitconfig.localを削除しました")
     return nil
+}
+
+// keybindings_default.jsonとkeybindings_duo.jsonをマージしてkeybindings.jsonを出力する
+func (m *DotfilesManager) GenerateKeybindingsJson() error {
+    reader := bufio.NewReader(os.Stdin)
+    fmt.Print("GitLab Duoを使っていますか？ [y/N]: ")
+    ans, _ := reader.ReadString('\n')
+    ans = strings.TrimSpace(ans)
+
+    vscodeDir := filepath.Join(m.dotfilesDir, "vscode")
+    defaultPath := filepath.Join(vscodeDir, "keybindings_default.json")
+    duoPath := filepath.Join(vscodeDir, "keybindings_duo.json")
+    outPath := filepath.Join(vscodeDir, "keybindings.json")
+
+    // default読み込み
+    defaultBytes, err := os.ReadFile(defaultPath)
+    if err != nil {
+        return fmt.Errorf("keybindings_default.jsonの読み込みに失敗: %v", err)
+    }
+
+    var defaultArr []map[string]interface{}
+    if err := parseJsonArray(defaultBytes, &defaultArr); err != nil {
+        return fmt.Errorf("keybindings_default.jsonのパースに失敗: %v", err)
+    }
+
+    var merged []map[string]interface{}
+    merged = defaultArr
+
+    if ans == "y" || ans == "Y" {
+        // duo読み込み
+        duoBytes, err := os.ReadFile(duoPath)
+        if err != nil {
+            return fmt.Errorf("keybindings_duo.jsonの読み込みに失敗: %v", err)
+        }
+        var duoArr []map[string]interface{}
+        if err := parseJsonArray(duoBytes, &duoArr); err != nil {
+            return fmt.Errorf("keybindings_duo.jsonのパースに失敗: %v", err)
+        }
+        merged = append(merged, duoArr...)
+    }
+
+    // 出力
+    outBytes, err := toJsonArrayBytes(merged)
+    if err != nil {
+        return fmt.Errorf("keybindings.jsonの生成に失敗: %v", err)
+    }
+    if err := os.WriteFile(outPath, outBytes, 0644); err != nil {
+        return fmt.Errorf("keybindings.jsonの書き込みに失敗: %v", err)
+    }
+    fmt.Printf("%s を出力しました\n", outPath)
+    return nil
+}
+
+// JSON配列をパースするユーティリティ
+func parseJsonArray(data []byte, out *[]map[string]interface{}) error {
+    dec := json.NewDecoder(strings.NewReader(string(data)))
+    return dec.Decode(out)
+}
+
+// JSON配列を[]byteで返すユーティリティ
+func toJsonArrayBytes(arr []map[string]interface{}) ([]byte, error) {
+    var b strings.Builder
+    enc := json.NewEncoder(&b)
+    enc.SetEscapeHTML(false)
+    enc.SetIndent("", "  ")
+    if err := enc.Encode(arr); err != nil {
+        return nil, err
+    }
+    return []byte(b.String()), nil
 }
 
 // dotfilesのシンボリックリンクを作成するメソッド
