@@ -1,0 +1,12 @@
+[
+  {
+    "key": "ctrl+alt+i",
+    "command": "gl.webview.agentic-tabs.focus",
+    "when": "!view.gl.webview.agentic-tabs.visible"
+  },
+  {
+    "key": "ctrl+alt+i",
+    "command": "workbench.view.extension.gitlab-duo",
+    "when": "!view.gl.webview.duo-chat-v2.visible"
+  }
+]
