@@ -20,6 +20,7 @@
   // ミニマップを無効化
   "editor.minimap.enabled": false,
   "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.wordWrap": "off" // マークダウンの折り返しを無効化
   },
 
@@ -45,8 +46,12 @@
     "panel": "never"
   },
 
-  // Markdown拡張機能の設定
-  "markdown.extension.toc.updateOnSave": false,
+  // markdownlintのルール設定
+  "markdownlint.config": {
+    "ul-style": {
+      "style": "asterisk"
+    }
+  },
 
   // GitHub Copilot設定
   "github.copilot.nextEditSuggestions.enabled": true, // 次回編集提案機能を有効化（コードの次の変更を予測して提案）
