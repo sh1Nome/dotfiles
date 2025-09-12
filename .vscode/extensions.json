@@ -8,7 +8,6 @@
         "github.copilot",
         // 日本語・Markdown関連
         "ms-ceintl.vscode-language-pack-ja",
-        "DavidAnson.vscode-markdownlint",
         "takumii.markdowntable",
         // コード整形・補助
         "esbenp.prettier-vscode",
