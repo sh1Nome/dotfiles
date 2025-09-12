@@ -20,7 +20,6 @@
   // ミニマップを無効化
   "editor.minimap.enabled": false,
   "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.wordWrap": "off" // マークダウンの折り返しを無効化
   },
 
@@ -44,13 +43,6 @@
   // Copilot Chatの暗黙的コンテキストを無効化
   "chat.implicitContext.enabled": {
     "panel": "never"
-  },
-
-  // markdownlintのルール設定
-  "markdownlint.config": {
-    "ul-style": {
-      "style": "asterisk"
-    }
   },
 
   // GitHub Copilot設定
