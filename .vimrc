@@ -10,7 +10,7 @@ set noswapfile
 " バックスペース有効化
 set backspace=indent,eol,start
 " システムクリップボードを利用
-set clipboard=unnamed
+set clipboard=unnamed,unnamedplus
 
 " -------------------------------
 " 表示系
