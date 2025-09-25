@@ -23,6 +23,40 @@ LSPやAI関連の作業はVSCodeで行います。
 
 ## セットアップ
 
+### nix
+
+ホスト
+
+```bash
+# 1. 一時コンテナを起動（まだ何もマウントしない）
+docker run --name temp-nix -it nixos/nix bash
+
+# 2. ホストのファイルをコンテナにコピー
+docker cp . temp-nix:/workspace
+
+# 3. コンテナ内で作業（root権限でOK）
+
+# 4. コンテナを削除
+docker rm -f temp-nix
+```
+
+コンテナ内
+
+```bash
+# 権限を変更して移動
+chown -R root:root /workspace && cd /workspace
+
+# 競合を削除
+nix-env -e man-db
+nix-env -e git-minimal
+nix-env -e bash-interactive
+
+# 環境を実行
+nix --extra-experimental-features 'nix-command flakes' run .#homeConfigurations.sh1nome.activationPackage
+```
+
+### go
+
 セットアップは`setup/bin`配下のバイナリを実行するだけです。  
 注意：dotfilesリポジトリの設定ファイルを相対パスで参照しているので、バイナリは移動しないでください。
 
@@ -31,13 +65,13 @@ LSPやAI関連の作業はVSCodeで行います。
   * Vimのデータディレクトリも削除（Linuxの場合は`~/.vim`、Windowsの場合は`~/vimfiles`）
   * neovimのデータディレクトリも削除（Linuxの場合は`~/.local/share.nvim`、Windowsの場合は`~/AppData/Local/nvim-data`）
 
-### Windows環境の注意
+#### Windows環境の注意
 
 このリポジトリのセットアップは、`$PROFILE`および`$APPDATA`のパスを変更していないことが前提です。  
 これらのパスを変更している場合は、dotfilesのリンク先や動作に問題が生じる可能性があります。  
 なお、Windows環境でsetupスクリプトを実行すると、PowerShellの実行ポリシーが自動でRemoteSignedに変更されます。
 
-### 補足
+#### 補足
 
 `setup`スクリプトを実行すると、「現在のdotfilesシンボリックリンク一覧」が表示されます。  
 dotfilesで管理していないシンボリックリンクは「その他」として区別されます。  
