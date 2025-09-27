@@ -28,30 +28,29 @@ LSPやAI関連の作業はVSCodeで行います。
 ホスト
 
 ```bash
-# 1. 一時コンテナを起動（まだ何もマウントしない）
-docker run --name temp-nix -it nixos/nix bash
-
-# 2. ホストのファイルをコンテナにコピー
-docker cp . temp-nix:/workspace
-
-# 3. コンテナ内で作業（root権限でOK）
-
-# 4. コンテナを削除
-docker rm -f temp-nix
+docker run --rm -it \
+  -v "$(pwd)":/home/testuser/dotfiles \
+  debian bash -c "\
+    apt update && \
+    apt -y install sudo curl xz-utils && \
+    groupadd -g $(id -g) testgroup && \
+    useradd -u $(id -u) -g $(id -g) -m testuser && \
+    usermod -aG sudo testuser && \
+    sed -i 's|^%sudo\s\+ALL=(ALL:ALL) ALL|%sudo   ALL=(ALL:ALL) NOPASSWD: ALL|' /etc/sudoers && \
+    chsh -s /bin/bash testuser && \
+    chown -R $(id -u):$(id -g) /home/testuser && \
+    cd /home/testuser && \
+    su - testuser -c '\
+      sh <(curl --proto \"=https\" --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon && \
+      source ~/.nix-profile/etc/profile.d/nix.sh && \
+      exec bash \
+    '
+  "
 ```
 
 コンテナ内
 
 ```bash
-# 権限を変更して移動
-chown -R root:root /workspace && cd /workspace
-
-# 競合を削除
-nix-env -e man-db
-nix-env -e git-minimal
-nix-env -e bash-interactive
-
-# 環境を実行
 nix --extra-experimental-features 'nix-command flakes' run .#homeConfigurations.sh1nome.activationPackage
 ```
 
