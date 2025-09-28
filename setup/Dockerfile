@@ -24,8 +24,6 @@ RUN set -e; \
         name=$(basename "$f" .go); \
         echo "Building $f for linux/amd64..."; \
         GOOS=linux GOARCH=amd64 go build -v -o "bin/${name}-linux-amd64" "$f"; \
-        echo "Building $f for linux/arm64..."; \
-        GOOS=linux GOARCH=arm64 go build -v -o "bin/${name}-linux-arm64" "$f"; \
         echo "Building $f for windows/amd64..."; \
         GOOS=windows GOARCH=amd64 go build -v -o "bin/${name}-windows-amd64.exe" "$f"; \
     done
