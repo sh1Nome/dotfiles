@@ -7,9 +7,9 @@
 
   # 設定のシンボリックリンク
   home.file = {
-    ".bashrc".source = ./.bashrc;
-    ".vimrc".source = ./.vimrc;
-    ".gitconfig".source = ./.gitconfig;
+    ".bashrc".source = ./../.bashrc;
+    ".vimrc".source = ./../.vimrc;
+    ".gitconfig".source = ./../.gitconfig;
   };
 
   # 必要なアプリのインストール

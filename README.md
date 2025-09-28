@@ -25,33 +25,16 @@ LSPやAI関連の作業はVSCodeで行います。
 
 ### nix
 
-ホスト
+DebianコンテナにNixを入れた環境をお試し
 
 ```bash
-docker run --rm -it \
-  -v "$(pwd)":/home/testuser/dotfiles \
-  debian bash -c "\
-    apt update && \
-    apt -y install sudo curl xz-utils && \
-    groupadd -g $(id -g) testgroup && \
-    useradd -u $(id -u) -g $(id -g) -m testuser && \
-    usermod -aG sudo testuser && \
-    sed -i 's|^%sudo\s\+ALL=(ALL:ALL) ALL|%sudo   ALL=(ALL:ALL) NOPASSWD: ALL|' /etc/sudoers && \
-    chsh -s /bin/bash testuser && \
-    chown -R $(id -u):$(id -g) /home/testuser && \
-    cd /home/testuser && \
-    su - testuser -c '\
-      sh <(curl --proto \"=https\" --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon && \
-      source ~/.nix-profile/etc/profile.d/nix.sh && \
-      exec bash \
-    '
-  "
-```
+# ホストOS
+sh run.sh
 
-コンテナ内
-
-```bash
-nix --extra-experimental-features 'nix-command flakes' run .#homeConfigurations.sh1nome.activationPackage
+# Nix環境
+cd dotfiles/nix && \
+mv ~/.bashrc ~/.bashrc.bk && \
+USER=$(whoami) nix --extra-experimental-features 'nix-command flakes' run .#homeConfigurations.sh1nome.activationPackage
 ```
 
 ### go
