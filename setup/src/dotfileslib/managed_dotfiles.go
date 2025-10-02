@@ -24,6 +24,8 @@ var linuxManagedDotfileEntries = []dotfileEntry{
     {Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
     // vim
     {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+    // neovim
+    {Name: "init.lua", SrcRel: "neovim/init.lua", DstRel: ".config/nvim/init.lua"},
     // git
     {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
     {Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
@@ -39,6 +41,8 @@ var windowsManagedDotfileEntries = []dotfileEntry{
     {Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
     // vim
     {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+    // neovim
+    {Name: "init.lua", SrcRel: "neovim/init.lua", DstRel: "AppData/Local/nvim/init.lua"},
     // git
     {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
     {Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
