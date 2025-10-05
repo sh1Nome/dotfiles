@@ -19,6 +19,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	// vimデータディレクトリの削除
+	if err := manager.RemoveVimDataDir(); err != nil {
+		os.Exit(1)
+	}
+
 	// シンボリックリンクの一覧表示
 	fmt.Println("シンボリックリンクを削除しました。")
 	manager.ShowDotfilesLinks()

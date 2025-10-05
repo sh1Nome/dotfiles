@@ -115,6 +115,26 @@ func (m *DotfilesManager) SetPowerShellExecutionPolicy() error {
     return nil
 }
 
+// vimデータディレクトリを削除するメソッド
+func (m *DotfilesManager) RemoveVimDataDir() error {
+    var vimDir string
+    if m.osType == "windows" {
+        vimDir = filepath.Join(m.home, "vimfiles")
+    } else {
+        vimDir = filepath.Join(m.home, ".vim")
+    }
+    if _, err := os.Stat(vimDir); os.IsNotExist(err) {
+        fmt.Printf("%s は存在しません。\n", vimDir)
+        return nil
+    }
+    if err := os.RemoveAll(vimDir); err != nil {
+        fmt.Fprintf(os.Stderr, "%s の削除に失敗しました: %v\n", vimDir, err)
+        return err
+    }
+    fmt.Printf("%s を削除しました。\n", vimDir)
+    return nil
+}
+
 // 対話内容に応じ.gitconfig.localを作成する
 func (m *DotfilesManager) SetupGitConfigInteractive() error {
     reader := bufio.NewReader(os.Stdin)
