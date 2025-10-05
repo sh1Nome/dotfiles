@@ -38,6 +38,18 @@
 dotfilesで管理していないシンボリックリンクは「その他」として区別されます。  
 不要なシンボリックリンクを簡単に探せます。
 
+## Vimプラグイン管理について
+
+Vimのプラグイン管理には[vim-plug](https://github.com/junegunn/vim-plug)を利用しています。  
+Vimを開いた後、以下のコマンドでプラグインの導入や整理ができます。
+
+* `:PlugStatus`でプラグインの状態を確認
+* `:PlugUpdate`でプラグインのインストール・更新
+* `:PlugUpgrade`でvim-plug本体のアップデート
+* `:PlugClean`で不要なプラグインの削除
+
+詳しくは[vim-plug公式リポジトリ](https://github.com/junegunn/vim-plug)を参照してください。
+
 ## VSCodeの拡張機能
 
 `.vscode`ディレクトリで、VSCodeの推奨拡張機能を管理しています。
