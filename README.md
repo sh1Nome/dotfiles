@@ -25,6 +25,7 @@
 
 * setup：シンボリックリンクの作成（ツールのインストールは未対応）
 * remove：シンボリックリンクの削除
+  * Vimのデータディレクトリも削除（Linuxの場合は`~/.vim`、Windowsの場合は`~/vimfiles`）
 
 ### Windows環境の注意
 
