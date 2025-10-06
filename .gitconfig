@@ -5,6 +5,8 @@
         editor = vi
 [pull]
         rebase = false
+[fetch]
+        prune = true
 [color]
         ui = auto
 [include]
