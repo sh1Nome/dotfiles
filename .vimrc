@@ -15,7 +15,8 @@ endif
 call plug#begin()
 Plug 'lambdalisue/vim-fern'
 Plug 'itchyny/lightline.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " -------------------------------
@@ -96,8 +97,6 @@ let g:lightline = {
   \ }
 " vim-fernで隠しファイルも常に表示
 let g:fern#default_hidden = 1
-" ctrlp.vimで隠しファイルも検索できるようにする
-let g:ctrlp_show_hidden = 1
 
 " -------------------------------
 " キーマッピング
@@ -109,7 +108,7 @@ nnoremap L :bnext<CR>
 let mapleader = " "
 " <leader>eでfernを起動
 nnoremap <leader>e :Fern . -reveal=%<CR>
-" <leader><space>でctrlpを起動
-nnoremap <leader><space> :CtrlP<CR>
+" <leader><space>でfzf.vimを起動
+nnoremap <leader><space> :Files<CR>
 " <leader>gでlazygitを起動
 nnoremap <leader>g :silent !lazygit<CR>:redraw!<CR>
