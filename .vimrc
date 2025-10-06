@@ -17,6 +17,8 @@ Plug 'lambdalisue/vim-fern'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-commentary'
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " -------------------------------
@@ -108,7 +110,7 @@ nnoremap L :bnext<CR>
 let mapleader = " "
 " <leader>eでfernを起動
 nnoremap <leader>e :Fern . -reveal=%<CR>
-" <leader><space>でfzf.vimを起動
-nnoremap <leader><space> :Files<CR>
+" <leader>fでfzf.vimを起動
+nnoremap <leader>f :Files<CR>
 " <leader>gでlazygitを起動
 nnoremap <leader>g :silent !lazygit<CR>:redraw!<CR>
