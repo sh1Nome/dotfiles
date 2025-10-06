@@ -15,7 +15,7 @@ endif
 call plug#begin()
 Plug 'lambdalisue/vim-fern'
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
