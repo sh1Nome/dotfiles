@@ -14,7 +14,7 @@
 
 * Bash（Linux）
 * Powershell（Windows）
-* Vim（lazygitとfzfが必要）
+* Vim（lazygitが必要）
 * Git
 * VSCode
 
