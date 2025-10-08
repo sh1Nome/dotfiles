@@ -113,4 +113,4 @@ nnoremap <leader>e :Fern . -reveal=%<CR>
 " <leader>fでfzf.vimを起動
 nnoremap <leader>f :Files<CR>
 " <leader>gでlazygitを起動
-nnoremap <leader>g :silent !lazygit<CR>:redraw!<CR>
+nnoremap <leader>g :tab terminal ++close lazygit<CR>
