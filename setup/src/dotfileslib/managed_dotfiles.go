@@ -13,7 +13,7 @@ import (
 
 // dotfiles管理ファイルの情報
 type dotfileEntry struct {
-    Name   string // ファイル名
+    Name   string // ファイル名またはディレクトリ名
     SrcRel string // dotfilesディレクトリからの相対パス
     DstRel string // ホームディレクトリからの相対パス
 }
@@ -24,6 +24,8 @@ var linuxManagedDotfileEntries = []dotfileEntry{
     {Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
     // vim
     {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+    // nvim
+    {Name: "nvim", SrcRel: "nvim", DstRel: ".config/nvim"},
     // git
     {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
     {Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
@@ -39,6 +41,8 @@ var windowsManagedDotfileEntries = []dotfileEntry{
     {Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
     // vim
     {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+    // nvim
+    {Name: "nvim", SrcRel: "nvim", DstRel: "AppData/Local/nvim"},
     // git
     {Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
     {Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
@@ -117,21 +121,34 @@ func (m *DotfilesManager) SetPowerShellExecutionPolicy() error {
 
 // vimデータディレクトリを削除するメソッド
 func (m *DotfilesManager) RemoveVimDataDir() error {
-    var vimDir string
+    var vimDir, nvimDataDir string
     if m.osType == "windows" {
         vimDir = filepath.Join(m.home, "vimfiles")
+        nvimDataDir = filepath.Join(m.home, "AppData", "Local", "nvim-data")
     } else {
         vimDir = filepath.Join(m.home, ".vim")
+        nvimDataDir = filepath.Join(m.home, ".local", "share", "nvim")
     }
+
+    // vimディレクトリ削除
     if _, err := os.Stat(vimDir); os.IsNotExist(err) {
         fmt.Printf("%s は存在しません。\n", vimDir)
-        return nil
-    }
-    if err := os.RemoveAll(vimDir); err != nil {
+    } else if err := os.RemoveAll(vimDir); err != nil {
         fmt.Fprintf(os.Stderr, "%s の削除に失敗しました: %v\n", vimDir, err)
         return err
+    } else {
+        fmt.Printf("%s を削除しました。\n", vimDir)
     }
-    fmt.Printf("%s を削除しました。\n", vimDir)
+
+    // nvimデータディレクトリ削除
+    if _, err := os.Stat(nvimDataDir); os.IsNotExist(err) {
+        fmt.Printf("%s は存在しません。\n", nvimDataDir)
+    } else if err := os.RemoveAll(nvimDataDir); err != nil {
+        fmt.Fprintf(os.Stderr, "%s の削除に失敗しました: %v\n", nvimDataDir, err)
+        return err
+    } else {
+        fmt.Printf("%s を削除しました。\n", nvimDataDir)
+    }
     return nil
 }
 
@@ -228,7 +245,6 @@ func (m *DotfilesManager) ShowDotfilesLinks() {
     skipDirs := map[string]struct{}{}
     if m.osType == "windows" {
         skipList := []string{
-            "AppData/Local",
             "AppData/LocalLow",
             "AppData/LineCall",
             "Pictures",
