@@ -5,17 +5,19 @@
 
 ## 方針
 
-本リポジトリは、シンプルかつミニマルな構成・運用を心がけています。  
-また、WindowsとDebianで同じ開発体験を得られることを重視します。  
-各ツールや環境のデフォルト設定を意識して管理します。  
-操作はキーボード主体で、マウス操作は補助的な扱いとします。
+本リポジトリは、シンプルでミニマルな構成を心がけています。  
+WindowsとDebianのどちらでも同じように開発できること、またVSCodeとneovimで統一感のある操作体験を得られることを重視しています。  
+LSPやAI関連の作業はVSCodeで行います。  
+各ツールや環境のデフォルト設定を意識して管理しています。  
+操作は主にキーボードで行い、マウスは補助的に使う方針です。
 
 ## 管理しているツール
 
 * Bash（Linux）
 * Powershell（Windows）
-* Vim（lazygitが必要）
 * Git
+* Vim
+* neovim
 * VSCode
 
 ## セットアップ
@@ -26,6 +28,7 @@
 * setup：シンボリックリンクの作成（ツールのインストールは未対応）
 * remove：シンボリックリンクの削除
   * Vimのデータディレクトリも削除（Linuxの場合は`~/.vim`、Windowsの場合は`~/vimfiles`）
+  * neovimのデータディレクトリも削除（Linuxの場合は`~/.local/share.nvim`、Windowsの場合は`~/AppData/Local/nvim-data`）
 
 ### Windows環境の注意
 
@@ -38,18 +41,6 @@
 `setup`スクリプトを実行すると、「現在のdotfilesシンボリックリンク一覧」が表示されます。  
 dotfilesで管理していないシンボリックリンクは「その他」として区別されます。  
 不要なシンボリックリンクを簡単に探せます。
-
-## Vimプラグイン管理について
-
-Vimのプラグイン管理には[vim-plug](https://github.com/junegunn/vim-plug)を利用しています。  
-Vimを開いた後、以下のコマンドでプラグインの導入や整理ができます。
-
-* `:PlugStatus`でプラグインの状態を確認
-* `:PlugUpdate`でプラグインのインストール・更新
-* `:PlugUpgrade`でvim-plug本体のアップデート
-* `:PlugClean`で不要なプラグインの削除
-
-詳しくは[vim-plug公式リポジトリ](https://github.com/junegunn/vim-plug)を参照してください。
 
 ## VSCodeの拡張機能
 
