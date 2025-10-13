@@ -16,12 +16,12 @@ if not vim.loop.fs_stat(mini_path) then
 end
 -- mini.nvimのモジュールを有効化
 require('mini.deps').setup({ path = { package = path_package } })  -- mini.deps
-require('mini.jump').setup()     -- ジャンプ機能
-require('mini.jump2d').setup()     -- ジャンプ機能
+require('mini.jump').setup()     -- ジャンプ機能（f）
+require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
-  require('mini.comment').setup()  -- コメント機能
+  require('mini.comment').setup()  -- コメント機能（gcc or gc）
   require('mini.pairs').setup()    -- 括弧補完
   require('mini.diff').setup()     -- 差分表示
   require('mini.files').setup()    -- ファイラー
