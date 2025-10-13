@@ -1,27 +1,4 @@
 " -------------------------------
-" プラグイン
-" -------------------------------
-" vim-plugの自動インストール (Linux/Windows対応)
-if has('win32') || has('win64')
-  let data_dir = expand('~/vimfiles')
-else
-  let data_dir = expand('~/.vim')
-endif
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-" vim-plugで管理するプラグイン
-call plug#begin()
-Plug 'lambdalisue/vim-fern'
-Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-commentary'
-Plug 'easymotion/vim-easymotion'
-call plug#end()
-
-" -------------------------------
 " システム系
 " -------------------------------
 " 文字エンコード
@@ -80,37 +57,3 @@ set ignorecase
 set incsearch
 " 検索結果をハイライト
 set hlsearch
-
-" -------------------------------
-" プラグイン系
-" -------------------------------
-" lightline.vimでバッファ一覧をタブラインに表示
-function! LightlineBuffers()
-  let buflist = filter(range(1, bufnr('$')), 'buflisted(v:val)')
-  return map(buflist, {_, b ->
-    \ (b == bufnr('%')
-    \   ? '%#TabLineSel# ' . (bufname(b) ==# '' ? '[No Name]' : fnamemodify(bufname(b), ':t')) . ' %#TabLine#'
-    \   : ' ' . (bufname(b) ==# '' ? '[No Name]' : fnamemodify(bufname(b), ':t')) . ' ')
-    \ })
-endfunction
-let g:lightline = {
-  \ 'tabline': { 'left': [ [ 'buffers' ] ] },
-  \ 'component_expand': { 'buffers': 'LightlineBuffers' },
-  \ }
-" vim-fernで隠しファイルも常に表示
-let g:fern#default_hidden = 1
-
-" -------------------------------
-" キーマッピング
-" -------------------------------
-" バッファ移動
-nnoremap H :bprevious<CR>
-nnoremap L :bnext<CR>
-" リーダーキーをスペースに設定
-let mapleader = " "
-" <leader>eでfernを起動
-nnoremap <leader>e :Fern . -reveal=%<CR>
-" <leader>fでfzf.vimを起動
-nnoremap <leader>f :Files<CR>
-" <leader>gでlazygitを起動
-nnoremap <leader>g :tab terminal ++close lazygit<CR>
