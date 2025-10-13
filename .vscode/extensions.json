@@ -13,7 +13,7 @@
         "esbenp.prettier-vscode",
         "mechatroner.rainbow-csv",
         // エディタ操作・ライブプレビュー
-        "vscodevim.vim",
+        "asvetliakov.vscode-neovim",
         "ritwickdey.liveserver"
     ]
 }

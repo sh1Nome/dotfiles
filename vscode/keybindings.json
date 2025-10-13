@@ -1,33 +1,39 @@
 // 既定値を上書きするには、このファイル内にキー バインドを挿入します
 [
   {
-    // VSCodeの「ファイルをすばやく開く」（Ctrl+P）と競合するため無効化
-    "key": "ctrl+p",
-    "command": "-extension.vim_ctrl+p",
-    "when": "editorTextFocus && vim.active && vim.use<C-p> && !inDebugRepl || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
-  },
-  {
     // ターミナルがアクティブなときにCtrl+@でターミナルの表示/非表示を切り替え
     "key": "ctrl+[BracketLeft]",
     "command": "workbench.action.terminal.toggleTerminal",
     "when": "terminal.active"
   },
   {
-    // エディタにフォーカスしているときのみShift+Hで左のタブに移動
-    "key": "shift+h",
+    // エディタにフォーカスしているときのみ<space>hで左のタブに移動
+    "key": "space h",
     "command": "workbench.action.previousEditor",
-    "when": "editorTextFocus && vim.mode != 'Insert' && vim.mode != 'CommandlineInProgress'"
+    "when": "neovim.mode == normal && editorTextFocus"
   },
   {
-    // エディタにフォーカスしているときのみShift+Lで右のタブに移動
-    "key": "shift+l",
+    // エディタにフォーカスしているときのみ<space>lで右のタブに移動
+    "key": "space l",
     "command": "workbench.action.nextEditor",
-    "when": "editorTextFocus && vim.mode != 'Insert' && vim.mode != 'CommandlineInProgress'"
+    "when": "neovim.mode == normal && editorTextFocus"
   },
   {
-    // ドキュメントのフォーマットにShift+Alt+Fを使用
-    "key": "shift+alt+f",
-    "command": "editor.action.formatDocument",
-    "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
+    // Neovimのノーマルモードで<space>eを押すとエクスプローラーを開く
+    "key": "space e",
+    "command": "workbench.view.explorer",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
+  // エクスプローラーが表示されているときに<space>eを押すとエクスプローラーを閉じる
+  {
+    "key": "space e",
+    "command": "workbench.action.closeSidebar",
+    "when": "explorerViewletVisible"
+  },
+  // Neovimのノーマルモードで<space>fを押すとクイックオープンを開く
+  {
+    "key": "space f",
+    "command": "workbench.action.quickOpen",
+    "when": "neovim.mode == normal && editorTextFocus"
   }
 ]
