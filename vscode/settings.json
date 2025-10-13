@@ -27,12 +27,6 @@
   "diffEditor.ignoreTrimWhitespace": false, // 差分エディタで先頭または末尾の空白文字の変更を無視しない
   "diffEditor.renderSideBySide": false, // 差分エディタをサイドバイサイドで表示しない
 
-  // Vim拡張機能の設定
-  "vim.useSystemClipboard": true, // Vimでシステムクリップボードの統合を有効化
-  "vim.vimrc.enable": true, // Vimrcの読み込みを有効化
-  "vim.leader": "<space>", // リーダーキーをスペースに設定
-  "vim.easymotion": true, // vim-easymotionを有効化
-
   // ワークベンチ設定
   "workbench.list.smoothScrolling": true, // リストでスムーズスクロールを有効化
 
