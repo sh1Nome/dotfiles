@@ -28,7 +28,7 @@
   {
     "key": "space e",
     "command": "workbench.action.closeSidebar",
-    "when": "explorerViewletVisible"
+    "when": "explorerViewletVisible && editorTextFocus"
   },
   // Neovimのノーマルモードで<space>fを押すとクイックオープンを開く
   {
