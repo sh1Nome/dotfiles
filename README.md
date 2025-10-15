@@ -13,7 +13,7 @@ LSPやAI関連の作業はVSCodeで行います。
 
 ## 管理しているツール
 
-* Bash（Linux）
+* Bash
 * Powershell（Windows）
 * Git
 * Vim
