@@ -43,6 +43,12 @@ vim.opt.swapfile = false        -- スワップファイルを作成禁止
 vim.opt.backspace = { "indent", "eol", "start" }  -- バックスペース有効化
 vim.opt.clipboard = { "unnamed", "unnamedplus" }  -- システムクリップボードを利用
 
+-- windowsのときはgit bashを開く
+if vim.fn.has('win32') == 1 then
+    vim.opt.shell = 'C:\\Progra~1\\Git\\bin\\bash.exe'
+    vim.opt.shellcmdflag = '-c'
+end
+
 -- -------------------------------
 -- 表示系
 -- -------------------------------

@@ -37,6 +37,8 @@ var linuxManagedDotfileEntries = []dotfileEntry{
 
 // Windows用のdotfilesエントリ一覧
 var windowsManagedDotfileEntries = []dotfileEntry{
+    // bash
+    {Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
     // powershell
     {Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
     // vim
