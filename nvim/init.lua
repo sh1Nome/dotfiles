@@ -79,11 +79,12 @@ vim.opt.hlsearch = true    -- 検索結果をハイライト
 -- -------------------------------
 -- キーマッピング
 -- -------------------------------
--- バッファ移動
-vim.keymap.set('n', '<space>h', ':bprevious<CR>')  -- 前のバッファへ
-vim.keymap.set('n', '<space>l', ':bnext<CR>')      -- 次のバッファへ
 -- リーダーキーをスペースに設定
 vim.g.mapleader = ' '
+
+-- バッファ移動
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>')  -- 前のバッファへ
+vim.keymap.set('n', '<leader>l', ':bnext<CR>')      -- 次のバッファへ
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
