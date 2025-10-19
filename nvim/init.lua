@@ -90,7 +90,7 @@ vim.keymap.set('n', '<leader>l', ':bnext<CR>')      -- 次のバッファへ
 if not vim.g.vscode then
   -- <leader>fでmini.pickのファイル検索を起動
   vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
-  -- <leader>fでmini.pickのファイル検索を起動
+  -- <leader>bでmini.pickのバッファ検索を起動
   vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
   -- <leader>eでmini.filesを起動（カレントディレクトリ or CWD）
   local MiniFiles = require('mini.files')
