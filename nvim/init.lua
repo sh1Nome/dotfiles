@@ -14,8 +14,9 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('packadd mini.nvim | helptags ALL')
   vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
--- mini.nvimのモジュールを有効化
+-- mini.nvimのモジュールとプラグインを有効化
 require('mini.deps').setup({ path = { package = path_package } })  -- mini.deps
+local add = MiniDeps.add
 require('mini.jump').setup()     -- ジャンプ機能（f）
 require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
 
@@ -32,6 +33,12 @@ if not vim.g.vscode then
   require('mini.tabline').setup()     -- タブライン
   require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
   require('mini.indentscope').setup() -- インデントガイド
+  add({
+    source = 'sindrets/diffview.nvim',  -- 差分表示
+  })
+  add({
+    source = 'kdheepak/lazygit.nvim',  -- lazygit用
+  })
 end
 
 -- -------------------------------
@@ -79,18 +86,21 @@ vim.opt.hlsearch = true    -- 検索結果をハイライト
 -- -------------------------------
 -- キーマッピング
 -- -------------------------------
--- バッファ移動
-vim.keymap.set('n', '<space>h', ':bprevious<CR>')  -- 前のバッファへ
-vim.keymap.set('n', '<space>l', ':bnext<CR>')      -- 次のバッファへ
 -- リーダーキーをスペースに設定
 vim.g.mapleader = ' '
+
+-- バッファ移動
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>')  -- 前のバッファへ
+vim.keymap.set('n', '<leader>l', ':bnext<CR>')      -- 次のバッファへ
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
   -- <leader>fでmini.pickのファイル検索を起動
   vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
-  -- <leader>fでmini.pickのファイル検索を起動
+
+  -- <leader>bでmini.pickのバッファ検索を起動
   vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
+
   -- <leader>eでmini.filesを起動（カレントディレクトリ or CWD）
   local MiniFiles = require('mini.files')
   -- mini.filesのトグル関数
@@ -109,4 +119,17 @@ if not vim.g.vscode then
     end
     minifiles_toggle(dir)
   end, { desc = 'Toggle mini.files (current dir or CWD)' })
+
+  -- lazygitを開く
+  vim.keymap.set('n', '<leader>g', ':LazyGit<CR>')
+
+  -- <leader>dで差分を表示する
+  vim.keymap.set('n', '<leader>d', function()
+    if next(require('diffview.lib').views) == nil then
+      vim.cmd('DiffviewOpen')
+    else
+      vim.cmd('DiffviewClose')
+    end
+  end)
 end
+
