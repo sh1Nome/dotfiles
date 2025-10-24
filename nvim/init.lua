@@ -47,6 +47,7 @@ if not vim.g.vscode then
   require('mini.tabline').setup()     -- タブライン
   require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
   require('mini.indentscope').setup() -- インデントガイド
+  require('mini.notify').setup() -- 通知
   add({
     source = 'sindrets/diffview.nvim',  -- 差分表示
   })
