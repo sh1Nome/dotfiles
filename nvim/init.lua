@@ -29,7 +29,20 @@ if not vim.g.vscode then
   require('mini.files').setup()    -- ファイラー
   require('mini.pick').setup()     -- ファイル/バッファピック
   require('mini.animate').setup()  -- アニメーション
-  require('mini.starter').setup() -- スタート画面
+  require('mini.starter').setup({  -- スタート画面
+    items = {
+      -- 最近使ったファイル
+      require('mini.starter').sections.recent_files(5, true),
+      -- ビルトインアクション
+      require('mini.starter').sections.builtin_actions(),
+      -- カスタム項目
+      {
+        name = 'Open terminal',
+        action = 'terminal',
+        section = 'Custom actions',
+      },
+    },
+  })
   require('mini.statusline').setup()  -- ステータスライン
   require('mini.tabline').setup()     -- タブライン
   require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
