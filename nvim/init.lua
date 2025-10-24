@@ -19,6 +19,7 @@ require('mini.deps').setup({ path = { package = path_package } })  -- mini.deps
 local add = MiniDeps.add
 require('mini.jump').setup()     -- ジャンプ機能（f）
 require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
+require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
