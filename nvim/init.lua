@@ -20,6 +20,10 @@ local add = MiniDeps.add
 require('mini.jump').setup()     -- ジャンプ機能（f）
 require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
 require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
+add({
+  source = 'dhruvasagar/vim-table-mode',  -- テーブル
+})
+vim.g.table_mode_corner = '|'
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
@@ -107,6 +111,8 @@ vim.g.mapleader = ' '
 -- バッファ移動
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>')  -- 前のバッファへ
 vim.keymap.set('n', '<leader>l', ':bnext<CR>')      -- 次のバッファへ
+
+vim.keymap.set('n', '<leader>t', ':TableModeRealign<CR>')      -- テーブルを整形
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
