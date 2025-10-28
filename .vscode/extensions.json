@@ -1,19 +1,16 @@
 {
-    "recommendations": [
-        // コンテナ・リモート開発
-        "ms-azuretools.vscode-containers",
-        "docker.docker",
-        "ms-vscode-remote.vscode-remote-extensionpack",
-        // GitHub・AI支援
-        "github.copilot",
-        // 日本語・Markdown関連
-        "ms-ceintl.vscode-language-pack-ja",
-        "takumii.markdowntable",
-        // コード整形・補助
-        "esbenp.prettier-vscode",
-        "mechatroner.rainbow-csv",
-        // エディタ操作・ライブプレビュー
-        "asvetliakov.vscode-neovim",
-        "ritwickdey.liveserver"
-    ]
+  "recommendations": [
+    "ms-vscode-remote.vscode-remote-extensionpack",
+    "github.copilot",
+    "ms-ceintl.vscode-language-pack-ja",
+    "asvetliakov.vscode-neovim",
+    "ritwickdey.liveserver"
+
+    // 使わなくなったもの
+    // "ms-azuretools.vscode-containers",
+    // "docker.docker",
+    // "takumii.markdowntable",
+    // "esbenp.prettier-vscode",
+    // "mechatroner.rainbow-csv",
+  ]
 }
