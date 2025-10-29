@@ -17,41 +17,20 @@ end
 -- mini.nvimのモジュールとプラグインを有効化
 require('mini.deps').setup({ path = { package = path_package } })  -- mini.deps
 local add = MiniDeps.add
-require('mini.jump').setup()     -- ジャンプ機能（f）
-require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
-require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
-add({
-  source = 'dhruvasagar/vim-table-mode',  -- テーブル
-})
-vim.g.table_mode_corner = '|'
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
+  require('mini.notify').setup() -- 通知
   require('mini.comment').setup()  -- コメント機能（gcc or gc）
   require('mini.pairs').setup()    -- 括弧補完
   require('mini.diff').setup()     -- 差分表示
   require('mini.files').setup()    -- ファイラー
   require('mini.pick').setup()     -- ファイル/バッファピック
   require('mini.animate').setup()  -- アニメーション
-  require('mini.starter').setup({  -- スタート画面
-    items = {
-      -- 最近使ったファイル
-      require('mini.starter').sections.recent_files(5, true),
-      -- ビルトインアクション
-      require('mini.starter').sections.builtin_actions(),
-      -- カスタム項目
-      {
-        name = 'Open terminal',
-        action = 'terminal',
-        section = 'Custom actions',
-      },
-    },
-  })
   require('mini.statusline').setup()  -- ステータスライン
   require('mini.tabline').setup()     -- タブライン
   require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
   require('mini.indentscope').setup() -- インデントガイド
-  require('mini.notify').setup() -- 通知
   add({
     source = 'sindrets/diffview.nvim',  -- 差分表示
   })
@@ -59,6 +38,16 @@ if not vim.g.vscode then
     source = 'kdheepak/lazygit.nvim',  -- lazygit用
   })
 end
+
+require('mini.jump').setup()     -- ジャンプ機能（f）
+require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
+require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
+
+-- テーブル
+add({
+  source = 'dhruvasagar/vim-table-mode',
+})
+vim.g.table_mode_corner = '|'
 
 -- -------------------------------
 -- システム系
