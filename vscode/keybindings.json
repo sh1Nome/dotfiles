@@ -41,5 +41,12 @@
     "key": "space b",
     "command": "workbench.action.showAllEditors",
     "when": "editorTextFocus && neovim.mode != insert"
+  },
+  {
+    // Neovimのインサートモード以外で<space>tを押すとテーブルを整形（neovimのプラグインを実行）
+    "key": "space t",
+    "command": "vscode-neovim.send",
+    "when": "editorTextFocus && neovim.mode != insert",
+    "args": " t"
   }
 ]
