@@ -24,20 +24,20 @@
     "command": "workbench.view.explorer",
     "when": "neovim.mode == normal && editorTextFocus"
   },
-  // エクスプローラーが表示されているときに<space>eを押すとエクスプローラーを閉じる
   {
+    // エクスプローラーが表示されているときに<space>eを押すとエクスプローラーを閉じる
     "key": "space e",
     "command": "workbench.action.closeSidebar",
     "when": "neovim.mode != insert && explorerViewletVisible && (editorTextFocus || explorerViewletFocus)"
   },
-  // Neovimのノーマルモードで<space>fを押すとクイックオープンを開く
   {
+    // Neovimのノーマルモードで<space>fを押すとクイックオープンを開く
     "key": "space f",
     "command": "workbench.action.quickOpen",
     "when": "neovim.mode == normal && editorTextFocus"
   },
-  // Neovimのノーマルモードで<space>bを押すと開いているエディタの一覧を表示
   {
+    // Neovimのノーマルモードで<space>bを押すと開いているエディタの一覧を表示
     "key": "space b",
     "command": "workbench.action.showAllEditors",
     "when": "neovim.mode == normal && editorTextFocus"
