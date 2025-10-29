@@ -37,11 +37,18 @@ if not vim.g.vscode then
     require('mini.animate').setup()  -- アニメーション
     require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
     require('mini.indentscope').setup() -- インデントガイド
+
+    -- 差分表示
     add({
-      source = 'sindrets/diffview.nvim',  -- 差分表示
+      source = 'sindrets/diffview.nvim',
     })
+    require('diffview').setup({
+      use_icons = false,
+    })
+
+    -- lazygit
     add({
-      source = 'kdheepak/lazygit.nvim',  -- lazygit用
+      source = 'kdheepak/lazygit.nvim',
     })
   end)
 end
