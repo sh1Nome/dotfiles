@@ -16,38 +16,54 @@ if not vim.loop.fs_stat(mini_path) then
 end
 -- mini.nvimのモジュールとプラグインを有効化
 require('mini.deps').setup({ path = { package = path_package } })  -- mini.deps
-local add = MiniDeps.add
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
-  require('mini.notify').setup() -- 通知
-  require('mini.comment').setup()  -- コメント機能（gcc or gc）
-  require('mini.pairs').setup()    -- 括弧補完
-  require('mini.diff').setup()     -- 差分表示
-  require('mini.files').setup()    -- ファイラー
-  require('mini.pick').setup()     -- ファイル/バッファピック
-  require('mini.animate').setup()  -- アニメーション
-  require('mini.statusline').setup()  -- ステータスライン
-  require('mini.tabline').setup()     -- タブライン
-  require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
-  require('mini.indentscope').setup() -- インデントガイド
-  add({
-    source = 'sindrets/diffview.nvim',  -- 差分表示
-  })
-  add({
-    source = 'kdheepak/lazygit.nvim',  -- lazygit用
-  })
+  -- 即時ロード: UI表示に必要なもの
+  now(function()
+    require('mini.notify').setup() -- 通知
+    require('mini.statusline').setup()  -- ステータスライン
+    require('mini.tabline').setup()     -- タブライン
+  end)
+  
+  -- 遅延ロード: 初回使用時で十分なもの
+  later(function()
+    require('mini.comment').setup()  -- コメント機能（gcc or gc）
+    require('mini.pairs').setup()    -- 括弧補完
+    require('mini.diff').setup()     -- 差分表示
+    require('mini.files').setup()    -- ファイラー
+    require('mini.pick').setup()     -- ファイル/バッファピック
+    require('mini.animate').setup()  -- アニメーション
+    require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
+    require('mini.indentscope').setup() -- インデントガイド
+
+    -- 差分表示
+    add({
+      source = 'sindrets/diffview.nvim',
+    })
+    require('diffview').setup({
+      use_icons = false,
+    })
+
+    -- lazygit
+    add({
+      source = 'kdheepak/lazygit.nvim',
+    })
+  end)
 end
 
-require('mini.jump').setup()     -- ジャンプ機能（f）
-require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
-require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
+later(function()
+  require('mini.jump').setup()     -- ジャンプ機能（f）
+  require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
+  require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
 
--- テーブル
-add({
-  source = 'dhruvasagar/vim-table-mode',
-})
-vim.g.table_mode_corner = '|'
+  -- テーブル
+  add({
+    source = 'dhruvasagar/vim-table-mode',
+  })
+  vim.g.table_mode_corner = '|'
+end)
 
 -- -------------------------------
 -- システム系
