@@ -19,10 +19,10 @@
     "when": "neovim.mode == normal && editorTextFocus"
   },
   {
-    // Neovimのノーマルモードで<space>eを押すとエクスプローラーを開く
+    // Neovimのインサートモード以外で<space>eを押すとエクスプローラーを開く
     "key": "space e",
     "command": "workbench.view.explorer",
-    "when": "neovim.mode == normal && editorTextFocus"
+    "when": "editorTextFocus && neovim.mode != insert"
   },
   {
     // エクスプローラーが表示されているときに<space>eを押すとエクスプローラーを閉じる
@@ -31,15 +31,15 @@
     "when": "neovim.mode != insert && explorerViewletVisible && (editorTextFocus || explorerViewletFocus)"
   },
   {
-    // Neovimのノーマルモードで<space>fを押すとクイックオープンを開く
+    // Neovimのインサートモード以外で<space>fを押すとクイックオープンを開く
     "key": "space f",
     "command": "workbench.action.quickOpen",
-    "when": "neovim.mode == normal && editorTextFocus"
+    "when": "editorTextFocus && neovim.mode != insert"
   },
   {
-    // Neovimのノーマルモードで<space>bを押すと開いているエディタの一覧を表示
+    // Neovimのインサートモード以外で<space>bを押すと開いているエディタの一覧を表示
     "key": "space b",
     "command": "workbench.action.showAllEditors",
-    "when": "neovim.mode == normal && editorTextFocus"
+    "when": "editorTextFocus && neovim.mode != insert"
   }
 ]
