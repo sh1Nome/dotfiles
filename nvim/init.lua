@@ -55,7 +55,6 @@ end
 
 later(function()
   require('mini.jump').setup()     -- ジャンプ機能（f）
-  require('mini.jump2d').setup()     -- ジャンプ機能（<CR>）
   require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
 
   -- テーブル
