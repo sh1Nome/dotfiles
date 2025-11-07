@@ -59,6 +59,7 @@ fi
 
 # nvim
 export PATH="$PATH:/opt/nvim/"
+export EDITOR=nvim
 
 # nvm
 export NVM_DIR="$HOME/.config/nvm"
