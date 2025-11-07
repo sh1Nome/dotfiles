@@ -31,8 +31,8 @@
     "when": "neovim.mode != insert && explorerViewletVisible && (editorTextFocus || explorerViewletFocus)"
   },
   {
-    // Neovimのインサートモード以外で<space>fを押すとクイックオープンを開く
-    "key": "space f",
+    // Neovimのインサートモード以外で<space>pを押すとクイックオープンを開く
+    "key": "space p",
     "command": "workbench.action.quickOpen",
     "when": "editorTextFocus && neovim.mode != insert"
   },
@@ -40,6 +40,12 @@
     // Neovimのインサートモード以外で<space>bを押すと開いているエディタの一覧を表示
     "key": "space b",
     "command": "workbench.action.showAllEditors",
+    "when": "editorTextFocus && neovim.mode != insert"
+  },
+  {
+    // Neovimのインサートモード以外で<space>fを押すとあいまい検索を開く
+    "key": "space f",
+    "command": "workbench.action.terminal.searchWorkspace",
     "when": "editorTextFocus && neovim.mode != insert"
   },
   {
