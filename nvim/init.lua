@@ -120,11 +120,16 @@ vim.keymap.set('n', '<leader>t', ':TableModeRealign<CR>')      -- テーブル�
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
-  -- <leader>fでmini.pickのファイル検索を起動
-  vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
+  -- <leader>pでmini.pickのファイル検索を起動
+  vim.keymap.set('n', '<leader>p', ':Pick files<CR>')
 
   -- <leader>bでmini.pickのバッファ検索を起動
   vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
+
+  -- <leader>fでmini.pickの横断したあいまい検索を起動
+  vim.keymap.set('n', '<leader>f', function()
+    require('mini.pick').builtin.grep_live()
+  end, { desc = 'Live grep (fuzzy find across files)' })
 
   -- <leader>eでmini.filesを起動（カレントディレクトリ or CWD）
   local MiniFiles = require('mini.files')
