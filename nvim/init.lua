@@ -20,15 +20,15 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
-  -- 即時ロード: UI表示に必要なもの
+  -- 即時ロード
   now(function()
     require('mini.notify').setup() -- 通知
-    require('mini.statusline').setup()  -- ステータスライン
-    require('mini.tabline').setup()     -- タブライン
   end)
   
   -- 遅延ロード: 初回使用時で十分なもの
   later(function()
+    require('mini.statusline').setup()  -- ステータスライン
+    require('mini.tabline').setup()     -- タブライン
     require('mini.comment').setup()  -- コメント機能（gcc or gc）
     require('mini.pairs').setup()    -- 括弧補完
     require('mini.diff').setup()     -- 差分表示
