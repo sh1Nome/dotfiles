@@ -3,6 +3,11 @@
 -- リーダーキーをスペースに設定
 vim.g.mapleader = ' '
 
+-- <leader>bdでバッファを削除
+vim.keymap.set("n", "<leader>bd", function()
+  vim.api.nvim_buf_delete(0, { force = true })
+end)
+
 -- バッファ移動
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>')  -- 前のバッファへ
 vim.keymap.set('n', '<leader>l', ':bnext<CR>')      -- 次のバッファへ
@@ -11,18 +16,18 @@ vim.keymap.set('n', '<leader>t', ':TableModeRealign<CR>')      -- テーブル�
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
-  -- <leader>pでmini.pickのファイル検索を起動
-  vim.keymap.set('n', '<leader>p', ':Pick files<CR>')
+  -- mini.pickのファイル検索を起動
+  vim.keymap.set('n', '<leader>pf', ':Pick files<CR>')
 
-  -- <leader>bでmini.pickのバッファ検索を起動
-  vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
+  -- mini.pickのバッファ検索を起動
+  vim.keymap.set('n', '<leader>pb', ':Pick buffers<CR>')
 
-  -- <leader>fでmini.pickの横断したあいまい検索を起動
-  vim.keymap.set('n', '<leader>f', function()
+  -- mini.pickの横断したあいまい検索を起動
+  vim.keymap.set('n', '<leader>pg', function()
     require('mini.pick').builtin.grep_live()
   end, { desc = 'Live grep (fuzzy find across files)' })
 
-  -- <leader>eでmini.filesを起動（カレントディレクトリ or CWD）
+  -- mini.filesを起動（カレントディレクトリ or CWD）
   local MiniFiles = require('mini.files')
   -- mini.filesのトグル関数
   local minifiles_toggle = function(...)
