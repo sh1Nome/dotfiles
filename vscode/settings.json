@@ -1,12 +1,21 @@
 {
   // Linux用のターミナル設定
   "terminal.integrated.profiles.linux": {
-    "bash": { "path": "bash" }
+      "NeovimTerminal": {
+          "path": "bash",
+          "args": ["-c", "exec nvim +term"] // nvimのターミナルを起動
+      }
   },
-  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.linux": "NeovimTerminal",
 
   // Windows用のターミナル設定
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.profiles.windows": {
+      "NeovimTerminal": {
+          "path": "powershell",
+          "args": ["-NoExit", "-Command", "nvim +term"] // nvimのターミナルを起動
+      }
+  },
+  "terminal.integrated.defaultProfile.windows": "NeovimTerminal",
 
   // エディタ設定
   "editor.renderWhitespace": "all", // すべての空白文字を表示
