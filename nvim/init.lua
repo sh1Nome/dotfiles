@@ -22,7 +22,14 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 if not vim.g.vscode then
   -- 即時ロード
   now(function()
-    require('mini.notify').setup() -- 通知
+    require('mini.notify').setup({
+      -- 右下に表示
+      window = { config = function()
+        local has_statusline = vim.o.laststatus > 0
+        local pad = vim.o.cmdheight + (has_statusline and 1 or 0)
+        return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad }
+      end }
+    })
   end)
   
   -- 遅延ロード: 初回使用時で十分なもの
