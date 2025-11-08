@@ -32,7 +32,6 @@ var linuxManagedDotfileEntries = []dotfileEntry{
     // vscode
     {Name: "settings.json", SrcRel: "vscode/settings.json", DstRel: ".config/Code/User/settings.json"},
     {Name: "keybindings.json", SrcRel: "vscode/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
-    {Name: "prompts", SrcRel: "vscode/prompts", DstRel: ".config/Code/User/prompts"},
 }
 
 // Windows用のdotfilesエントリ一覧
@@ -51,7 +50,6 @@ var windowsManagedDotfileEntries = []dotfileEntry{
     // vscode
     {Name: "settings.json", SrcRel: "vscode/settings.json", DstRel: "AppData/Roaming/Code/User/settings.json"},
     {Name: "keybindings.json", SrcRel: "vscode/keybindings.json", DstRel: "AppData/Roaming/Code/User/keybindings.json"},
-    {Name: "prompts", SrcRel: "vscode/prompts", DstRel: "AppData/Roaming/Code/User/prompts"},
 }
 
 // DotfilesManager クラス（Goのstruct）
