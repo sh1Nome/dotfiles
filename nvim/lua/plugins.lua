@@ -60,6 +60,21 @@ if not vim.g.vscode then
   end)
 end
 
+now(function()
+  -- vscodeの設定
+  if vim.g.vscode then
+    local vscode = require('vscode')
+    vim.notify = vscode.notify  -- 通知
+    -- バッファを削除したらvscodeのタブを閉じる
+    vim.api.nvim_create_autocmd("BufDelete", {
+      pattern = "*",
+      callback = function()
+        vscode.call('workbench.action.closeActiveEditor')
+      end
+    })
+  end
+end)
+
 later(function()
   require('mini.jump').setup()     -- ジャンプ機能（f）
   require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
