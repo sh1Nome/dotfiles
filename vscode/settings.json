@@ -64,8 +64,15 @@
     { "text": "冗長な表現は避けてください" }
   ],
 
+  // 拡張機能を別のプロセスで実行
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  // 推奨の拡張機能を通知しない
+  "extensions.ignoreRecommendations": true
+
   // --- 一時的な対処: VSCodeVimが動作しない問題の回避策 ---
   // 詳細: https://github.com/VSCodeVim/Vim/issues/9672
   // この設定は将来的に不要になる可能性があります
-  "editor.editContext": false
+  // "editor.editContext": false,
 }
