@@ -23,6 +23,7 @@ if not vim.g.vscode then
   -- 即時ロード
   now(function()
     require('mini.notify').setup({
+      -- `:lua MiniNotify.show_history()`で通知履歴を見れる
       -- 右下に表示
       window = { config = function()
         local has_statusline = vim.o.laststatus > 0
@@ -56,6 +57,11 @@ if not vim.g.vscode then
     -- lazygit
     add({
       source = 'kdheepak/lazygit.nvim',
+    })
+
+    -- lsp
+    add({
+      source = 'neovim/nvim-lspconfig'
     })
   end)
 end
