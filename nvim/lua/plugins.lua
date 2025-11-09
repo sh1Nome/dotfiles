@@ -15,6 +15,8 @@ if not vim.loop.fs_stat(mini_path) then
 end
 
 -- mini.nvimのモジュールとプラグインを有効化
+-- `:DepsUpdate`でプラグインをアップデート
+-- `:DepsClean`で不要なプラグインを削除
 require('mini.deps').setup({ path = { package = path_package } })
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
