@@ -61,7 +61,19 @@ if not vim.g.vscode then
 
     -- lsp
     add({
+      -- `:h lspconfig-all`ですべての設定を見る
       source = 'neovim/nvim-lspconfig'
+    })
+    add({
+      -- `:Mason`でグラフィカルなステータスウィンドウを開く
+      source = 'mason-org/mason.nvim',
+    })
+    add({
+      source = 'mason-org/mason-lspconfig.nvim',
+      depends = { 
+        'mason-org/mason.nvim',
+        'neovim/nvim-lspconfig'
+      },
     })
   end)
 end
