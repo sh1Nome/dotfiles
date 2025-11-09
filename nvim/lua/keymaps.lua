@@ -11,6 +11,10 @@ vim.keymap.set('n', '<leader>t', ':TableModeRealign<CR>')      -- テーブル�
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
+  -- LSPキーマップ
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto Definition' })
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover' })
+
   -- <leader>pでmini.pickのファイル検索を起動
   vim.keymap.set('n', '<leader>p', ':Pick files<CR>')
 
