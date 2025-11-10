@@ -15,6 +15,8 @@ if not vim.loop.fs_stat(mini_path) then
 end
 
 -- mini.nvimのモジュールとプラグインを有効化
+-- `:DepsUpdate`でプラグインをアップデート
+-- `:DepsClean`で不要なプラグインを削除
 require('mini.deps').setup({ path = { package = path_package } })
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
@@ -23,6 +25,7 @@ if not vim.g.vscode then
   -- 即時ロード
   now(function()
     require('mini.notify').setup({
+      -- `:lua MiniNotify.show_history()`で通知履歴を見れる
       -- 右下に表示
       window = { config = function()
         local has_statusline = vim.o.laststatus > 0
@@ -56,6 +59,23 @@ if not vim.g.vscode then
     -- lazygit
     add({
       source = 'kdheepak/lazygit.nvim',
+    })
+
+    -- lsp
+    add({
+      -- `:h lspconfig-all`ですべての設定を見る
+      source = 'neovim/nvim-lspconfig'
+    })
+    add({
+      -- `:Mason`でグラフィカルなステータスウィンドウを開く
+      source = 'mason-org/mason.nvim',
+    })
+    add({
+      source = 'mason-org/mason-lspconfig.nvim',
+      depends = { 
+        'mason-org/mason.nvim',
+        'neovim/nvim-lspconfig'
+      },
     })
   end)
 end
