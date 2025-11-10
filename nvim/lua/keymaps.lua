@@ -15,6 +15,9 @@ if not vim.g.vscode then
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto Definition' })
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover' })
 
+  -- floatmemoを開く
+  vim.keymap.set('n', '<leader>m', ':FloatmemoToggle<CR>')
+
   -- <leader>pでmini.pickのファイル検索を起動
   vim.keymap.set('n', '<leader>p', ':Pick files<CR>')
 

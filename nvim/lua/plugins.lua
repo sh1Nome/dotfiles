@@ -61,6 +61,12 @@ if not vim.g.vscode then
       source = 'kdheepak/lazygit.nvim',
     })
 
+    -- floatmemo
+    add({
+      source = 'sh1Nome/floatmemo.nvim',
+    })
+    require('floatmemo').setup()
+
     -- lsp
     add({
       -- `:h lspconfig-all`ですべての設定を見る
