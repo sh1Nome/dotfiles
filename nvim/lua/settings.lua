@@ -30,8 +30,10 @@ vim.opt.scrolloff = 3    -- 常に3行のスクロールオフセットを確保
 vim.opt.cursorline = true  -- カーソル行をハイライト
 vim.opt.expandtab = true   -- タブをスペースに変換
 vim.opt.showtabline = 2    -- タブラインを常に表示
+vim.g.terminal_color_4 = "#3a7fff"  -- 通常の青を少し明るく
 
 -- 検索系
 vim.opt.ignorecase = true  -- 大文字小文字を区別しない
 vim.opt.incsearch = true   -- 入力中に検索開始
 vim.opt.hlsearch = true    -- 検索結果をハイライト
+
