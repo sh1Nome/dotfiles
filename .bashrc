@@ -47,9 +47,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color=auto'
 fi
 
-# ANSI カラー 4番 ( 青 ) を #3a7fff に変更
-printf "\e]4;4;#3a7fff\a"
-
 # プログラマブル補完機能を有効化
 # /etc/bash.bashrc ですでに有効なら不要
 if ! shopt -oq posix; then
