@@ -10,11 +10,13 @@
     ".bashrc".source = ./../.bashrc;
     ".vimrc".source = ./../.vimrc;
     ".gitconfig".source = ./../.gitconfig;
+    ".config/nvim".source = ./../nvim;
   };
 
   # 必要なアプリのインストール
   home.packages = with pkgs; [
     vim
+    neovim
     git
     bashInteractive
   ];
