@@ -43,8 +43,10 @@ FROM base AS dev
 # nvimをインストール
 RUN curl -LO --progress-bar https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage && \
     chmod 755 nvim-linux-x86_64.appimage && \
+    ./nvim-linux-x86_64.appimage --appimage-extract && \
     mkdir -p /opt/nvim && \
-    mv nvim-linux-x86_64.appimage /opt/nvim/nvim
+    mv squashfs-root /opt/nvim/ && \
+    ln -s /opt/nvim/squashfs-root/AppRun /opt/nvim/nvim
 
 # コンテナを起動し続けるためのコマンド
 CMD ["tail", "-f", "/dev/null"]
