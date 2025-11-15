@@ -30,3 +30,6 @@ function prompt {
     $esc = [char]27
     return "${esc}[01;32m$env:USERNAME@$env:COMPUTERNAME${esc}[0m:${esc}[01;34m$((Get-Location).Path)${esc}[0m${esc}[33m$(Get-GitBranchName)${esc}[0m> "
 }
+
+# miseを有効化
+mise activate pwsh | Out-String | Invoke-Expression
