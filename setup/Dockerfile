@@ -9,10 +9,12 @@
 # 4. コンテナを起動し続ける
 ############################################################
 
-FROM golang:1.24.5
+FROM golang:1.24.5 AS base
 
 # 作業ディレクトリを指定
 WORKDIR /workspace
+
+FROM base AS build
 
 # Goのソースコードをコンテナにコピー
 COPY ./src/ ./
