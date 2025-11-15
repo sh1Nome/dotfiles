@@ -17,8 +17,8 @@ set -e
 cd "$(dirname "$0")"
 
 # イメージ名とコンテナ名
-IMAGE_NAME=dotfiles-golang-setup
-CONTAINER_NAME=dotfiles-golang-setup-container
+IMAGE_NAME=dotfiles-golang-setup-build
+CONTAINER_NAME=dotfiles-golang-setup-container-build
 
 # setup/binディレクトリのクリーン
 rm -rf ./bin

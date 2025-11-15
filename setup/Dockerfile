@@ -9,11 +9,14 @@
 # 4. コンテナを起動し続ける
 ############################################################
 
+# ベースステージ
 FROM golang:1.24.5 AS base
 
 # 作業ディレクトリを指定
 WORKDIR /workspace
 
+
+# ビルドステージ
 FROM base AS build
 
 # Goのソースコードをコンテナにコピー
@@ -29,6 +32,19 @@ RUN set -e; \
         echo "Building $f for windows/amd64..."; \
         GOOS=windows GOARCH=amd64 go build -v -o "bin/${name}-windows-amd64.exe" "$f"; \
     done
+
+# コンテナを起動し続けるためのコマンド
+CMD ["tail", "-f", "/dev/null"]
+
+
+# 開発ステージ
+FROM base AS dev
+
+# nvimをインストール
+RUN curl -LO --progress-bar https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage && \
+    chmod 755 nvim-linux-x86_64.appimage && \
+    mkdir -p /opt/nvim && \
+    mv nvim-linux-x86_64.appimage /opt/nvim/nvim
 
 # コンテナを起動し続けるためのコマンド
 CMD ["tail", "-f", "/dev/null"]
