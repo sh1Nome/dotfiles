@@ -14,7 +14,7 @@ CONTAINER_NAME=dotfiles-golang-setup-container-dev
 docker build --target dev --no-cache -t "$IMAGE_NAME" .
 
 # コンテナを起動
-docker run --init -it --rm --name "$CONTAINER_NAME" "$IMAGE_NAME" bash
+docker run --init -it --rm -v $HOME/.config/nvim:/root/.config/nvim --name "$CONTAINER_NAME" "$IMAGE_NAME" bash
 
 # イメージを削除
 docker rmi "$IMAGE_NAME"
