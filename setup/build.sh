@@ -17,15 +17,15 @@ set -e
 cd "$(dirname "$0")"
 
 # イメージ名とコンテナ名
-IMAGE_NAME=dotfiles-golang-setup
-CONTAINER_NAME=dotfiles-golang-setup-container
+IMAGE_NAME=dotfiles-golang-setup-build
+CONTAINER_NAME=dotfiles-golang-setup-container-build
 
 # setup/binディレクトリのクリーン
 rm -rf ./bin
 mkdir -p ./bin
 
 # Dockerイメージをビルド
-docker build --no-cache -t "$IMAGE_NAME" .
+docker build --target build --no-cache -t "$IMAGE_NAME" .
 
 # コンテナを起動（バックグラウンドで）
 docker run -d --init --name "$CONTAINER_NAME" "$IMAGE_NAME"
