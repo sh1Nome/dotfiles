@@ -60,5 +60,5 @@ fi
 # エディター
 export EDITOR=nvim
 
-# miseを有効化
-eval "$(mise activate bash)"
+# miseのエイリアス
+alias x="mise x --"
