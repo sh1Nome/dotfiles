@@ -1,6 +1,5 @@
 [tools]
 gh = "latest"
-glab = "latest"
 go = "latest"
 java = "latest"
 lazygit = "latest"
