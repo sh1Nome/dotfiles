@@ -6,6 +6,7 @@ lazygit = "latest"
 neovim = "latest"
 node = "latest"
 "npm:@github/copilot" = "latest"
+powershell = "latest"
 python = "latest"
 usage = "latest"
 
