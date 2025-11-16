@@ -11,4 +11,9 @@ usage = "latest"
 
 [tasks.list-tool-backends]
 description = "Show the backend for each tool managed by mise"
-run = "mise ls | awk 'NR>1 {print $1}' | xargs -n1 mise tool | grep '^Backend:'"
+run = '''
+mise ls | awk 'NR>1 {print $1}' | xargs -n1 mise tool | grep '^Backend:'
+'''
+run_windows = '''
+mise ls | Select-Object -Skip 1 | ForEach-Object { ($_.Split()[0]) } | ForEach-Object { mise tool $_ } | Select-String "^Backend:"
+'''
