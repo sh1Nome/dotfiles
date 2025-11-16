@@ -43,7 +43,7 @@ var windowsManagedDotfileEntries = []dotfileEntry{
 		// mise
     {Name: "mise", SrcRel: "dot_mise", DstRel: ".config/mise"},
     // powershell
-    {Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/PowerShell/Microsoft.PowerShell_profile.ps1"},
+    {Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
     // vim
     {Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
     // nvim
