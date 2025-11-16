@@ -57,11 +57,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# nvim
-export PATH="$PATH:/opt/nvim/"
+# エディター
 export EDITOR=nvim
 
-# nvm
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# miseを有効化
+eval "$(mise activate bash)"

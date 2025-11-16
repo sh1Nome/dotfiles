@@ -1,0 +1,15 @@
+[tools]
+gh = "latest"
+glab = "latest"
+go = "latest"
+java = "latest"
+lazygit = "latest"
+neovim = "latest"
+node = "latest"
+"npm:@github/copilot" = "latest"
+python = "latest"
+usage = "latest"
+
+[tasks.list-tool-backends]
+description = "Show the backend for each tool managed by mise"
+run = "mise ls | awk 'NR>1 {print $1}' | xargs -n1 mise tool | grep '^Backend:'"
