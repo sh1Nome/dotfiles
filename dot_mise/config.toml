@@ -1,12 +1,12 @@
 [tools]
-gh = { version = "latest", os = ["linux"] }
-go = { version = "latest", os = ["linux"] }
-java = { version = "latest", os = ["linux"] }
+gh = "latest"
+go = "latest"
+java = "latest"
 lazygit = "latest"
 neovim = "latest"
-node = { version = "latest", os = ["linux"] }
-"npm:@github/copilot" = { version = "latest", os = ["linux"] }
-python = { version = "latest", os = ["linux"] }
+node = "latest"
+"npm:@github/copilot" = "latest"
+python = "latest"
 usage = "latest"
 
 [tasks.list-tool-backends]
