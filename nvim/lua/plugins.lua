@@ -91,11 +91,14 @@ now(function()
   if vim.g.vscode then
     local vscode = require('vscode')
     vim.notify = vscode.notify  -- 通知
-    -- バッファを削除したらvscodeのタブを閉じる
-    vim.api.nvim_create_autocmd("BufDelete", {
-      pattern = "*",
+    -- `:bd`でバッファを削除したらvscodeのタブを閉じる
+    vim.api.nvim_create_autocmd("CmdlineLeave", {
+      pattern = ":",
       callback = function()
-        vscode.call('workbench.action.closeActiveEditor')
+        local cmd = vim.fn.getcmdline()
+        if cmd:match("^bd") then
+          vscode.call('workbench.action.closeActiveEditor')
+        end
       end
     })
   end
