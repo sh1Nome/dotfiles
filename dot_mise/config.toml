@@ -13,4 +13,12 @@ vhs = "latest"
 
 [tasks.list-tool-backends]
 description = "Show the backend for each tool managed by mise"
-run = "mise ls | awk 'NR>1 {print $1}' | xargs -n1 mise tool | grep '^Backend:'"
+run = '''
+mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
+'''
+run_windows = '''
+mise ls | ForEach-Object { $_.split()[0] } | ForEach-Object { mise tool $_ } | Where-Object { $_ -match '^Backend' }
+'''
+
+[settings]
+windows_default_inline_shell_args = "powershell -NoProfile -Command"
