@@ -47,6 +47,7 @@ if not vim.g.vscode then
     require('mini.animate').setup()  -- アニメーション
     require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
     require('mini.indentscope').setup() -- インデントガイド
+    require('mini.completion').setup({}) -- 補完
 
     -- 差分表示
     add({
