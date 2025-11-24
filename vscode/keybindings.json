@@ -54,5 +54,11 @@
     "command": "vscode-neovim.send",
     "when": "editorTextFocus && neovim.mode != insert",
     "args": " t"
+  },
+  {
+    // NeovimのインサートモードでCtrl+yを押すと補完候補を確定
+    "key": "ctrl+y",
+    "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus && neovim.mode == insert"
   }
 ]
