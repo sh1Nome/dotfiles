@@ -62,3 +62,9 @@
     "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus && neovim.mode == insert"
   }
 ]
+
+// VSCode Neovimでデフォルトで使えるもの
+// gd: editor.action.revealDefinition
+// K: editor.action.showHover
+// C-n, C-p: Navigate lists, parameter hints, suggestions, quick-open, cmdline history, peek reference list
+// 参考: https://github.com/vscode-neovim/vscode-neovim
