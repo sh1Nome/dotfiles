@@ -23,6 +23,22 @@ WindowsとDebianのどちらでも同じように開発できること、またV
 
 ## セットアップ
 
+### nix
+
+DebianコンテナにNixを入れた環境をお試し
+
+```bash
+# ホストOS
+sh run.sh
+
+# Nix環境
+cd dotfiles/nix && \
+mv ~/.bashrc ~/.bashrc.bk && \
+USER=$(whoami) nix --extra-experimental-features 'nix-command flakes' run .#homeConfigurations.sh1nome.activationPackage
+```
+
+### go
+
 セットアップは`setup/bin`配下のバイナリを実行するだけです。  
 注意：dotfilesリポジトリの設定ファイルを相対パスで参照しているので、バイナリは移動しないでください。
 
@@ -31,13 +47,13 @@ WindowsとDebianのどちらでも同じように開発できること、またV
   * Vimのデータディレクトリも削除（Linuxの場合は`~/.vim`、Windowsの場合は`~/vimfiles`）
   * neovimのデータディレクトリも削除（Linuxの場合は`~/.local/share.nvim`、Windowsの場合は`~/AppData/Local/nvim-data`）
 
-### Windows環境の注意
+#### Windows環境の注意
 
 このリポジトリのセットアップは、`$PROFILE`および`$APPDATA`のパスを変更していないことが前提です。  
 これらのパスを変更している場合は、dotfilesのリンク先や動作に問題が生じる可能性があります。  
 なお、Windows環境でsetupスクリプトを実行すると、PowerShellの実行ポリシーが自動でRemoteSignedに変更されます。
 
-### 補足
+#### 補足
 
 `setup`スクリプトを実行すると、「現在のdotfilesシンボリックリンク一覧」が表示されます。  
 dotfilesで管理していないシンボリックリンクは「その他」として区別されます。  
