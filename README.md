@@ -26,10 +26,13 @@ WindowsとDebianのどちらでも同じように開発できること、またV
 セットアップは`setup/bin`配下のバイナリを実行するだけです。  
 注意：dotfilesリポジトリの設定ファイルを相対パスで参照しているので、バイナリは移動しないでください。
 
-* setup：シンボリックリンクの作成（ツールのインストールは未対応）
-* remove：シンボリックリンクの削除
+### コマンド説明
+
+* `setup link`：シンボリックリンクの作成（ツールのインストールは未対応）
+* `setup unlink`：シンボリックリンクの削除
   * Vimのデータディレクトリも削除（Linuxの場合は`~/.vim`、Windowsの場合は`~/vimfiles`）
-  * neovimのデータディレクトリも削除（Linuxの場合は`~/.local/share.nvim`、Windowsの場合は`~/AppData/Local/nvim-data`）
+  * neovimのデータディレクトリも削除（Linuxの場合は`~/.local/share/nvim`、Windowsの場合は`~/AppData/Local/nvim-data`）
+* `setup list`：現在作成されているシンボリックリンク一覧を表示
 
 ### Windows環境の注意
 

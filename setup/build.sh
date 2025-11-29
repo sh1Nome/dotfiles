@@ -16,29 +16,15 @@ set -e
 # スクリプトのあるディレクトリ（setup/）に移動
 cd "$(dirname "$0")"
 
-# イメージ名とコンテナ名
-IMAGE_NAME=dotfiles-golang-setup
-CONTAINER_NAME=dotfiles-golang-setup-container
-
 # setup/binディレクトリのクリーン
 rm -rf ./bin
 mkdir -p ./bin
 
-# Dockerイメージをビルド
-docker build --no-cache -t "$IMAGE_NAME" .
-
-# コンテナを起動（バックグラウンドで）
-docker run -d --init --name "$CONTAINER_NAME" "$IMAGE_NAME"
-
-# コンテナからbinディレクトリをコピー
-docker cp "$CONTAINER_NAME":/workspace/bin .
-
-# コンテナを停止して削除
-docker stop "$CONTAINER_NAME"
-docker rm "$CONTAINER_NAME"
-
-# イメージを削除
-docker rmi "$IMAGE_NAME"
+# ビルド
+echo "Building for linux/amd64..."
+GOOS=linux GOARCH=amd64 go build -v -o "bin/setup-linux-amd64" "main.go"
+echo "Building for windows/amd64..."
+GOOS=windows GOARCH=amd64 go build -v -o "bin/setup-windows-amd64.exe" "main.go"
 
 # bin以下のファイルに実行権限を付与
 chmod +x ./bin/*
