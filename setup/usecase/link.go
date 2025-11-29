@@ -29,7 +29,6 @@ func ExecuteLink() error {
 	// 管理しているdotfilesのシンボリックリンク作成
 	manager.CreateDotfileLinks()
 
-	// シンボリックリンクの一覧表示
 	fmt.Println("シンボリックリンクを作成しました。")
 
 	return nil

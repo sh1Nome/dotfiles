@@ -28,7 +28,6 @@ func ExecuteUnlink() error {
 		return err
 	}
 
-	// シンボリックリンクの一覧表示
 	fmt.Println("シンボリックリンクを削除しました。")
 
 	return nil
