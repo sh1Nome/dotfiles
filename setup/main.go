@@ -39,8 +39,7 @@ func handleLink() {
 		common.ShowLinkHelp()
 		return
 	}
-	uc := usecase.NewLinkUsecase()
-	if err := uc.Execute(); err != nil {
+	if err := usecase.ExecuteLink(); err != nil {
 		os.Exit(1)
 	}
 	common.PromptForEnter()
@@ -53,8 +52,7 @@ func handleUnlink() {
 		common.ShowUnlinkHelp()
 		return
 	}
-	uc := usecase.NewUnlinkUsecase()
-	if err := uc.Execute(); err != nil {
+	if err := usecase.ExecuteUnlink(); err != nil {
 		os.Exit(1)
 	}
 	common.PromptForEnter()
@@ -67,8 +65,7 @@ func handleList() {
 		common.ShowListHelp()
 		return
 	}
-	uc := usecase.NewListUsecase()
-	if err := uc.Execute(); err != nil {
+	if err := usecase.ExecuteList(); err != nil {
 		os.Exit(1)
 	}
 	common.PromptForEnter()

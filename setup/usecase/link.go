@@ -8,20 +8,9 @@ import (
 	"github.com/sh1Nome/dotfiles/setup/infrastructure"
 )
 
-// LinkUsecase はシンボリックリンク作成のユースケースを実行する
-type LinkUsecase struct {
-	manager *domain.Manager
-}
-
-// NewLinkUsecase はLinkUsecaseを初期化して返す
-func NewLinkUsecase() *LinkUsecase {
-	return &LinkUsecase{
-		manager: domain.NewManager(),
-	}
-}
-
-// Execute はlinkユースケースを実行する
-func (u *LinkUsecase) Execute() error {
+// ExecuteLink はlinkユースケースを実行する
+func ExecuteLink() error {
+	manager := domain.NewManager()
 	osType := infrastructure.GetOSType()
 
 	// Windowsの場合はPowerShellの実行ポリシーを設定
@@ -38,7 +27,7 @@ func (u *LinkUsecase) Execute() error {
 	}
 
 	// 管理しているdotfilesのシンボリックリンク作成
-	u.manager.CreateDotfileLinks()
+	manager.CreateDotfileLinks()
 
 	// シンボリックリンクの一覧表示
 	fmt.Println("シンボリックリンクを作成しました。")

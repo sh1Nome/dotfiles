@@ -8,22 +8,12 @@ import (
 	"github.com/sh1Nome/dotfiles/setup/infrastructure"
 )
 
-// UnlinkUsecase はシンボリックリンク削除のユースケースを実行する
-type UnlinkUsecase struct {
-	manager *domain.Manager
-}
+// ExecuteUnlink はunlinkユースケースを実行する
+func ExecuteUnlink() error {
+	manager := domain.NewManager()
 
-// NewUnlinkUsecase はUnlinkUsecaseを初期化して返す
-func NewUnlinkUsecase() *UnlinkUsecase {
-	return &UnlinkUsecase{
-		manager: domain.NewManager(),
-	}
-}
-
-// Execute はunlinkユースケースを実行する
-func (u *UnlinkUsecase) Execute() error {
 	// 管理しているdotfilesのリンク削除
-	u.manager.RemoveDotfileLinks()
+	manager.RemoveDotfileLinks()
 
 	// .gitconfig.localの削除
 	dotfilesDir := infrastructure.GetDotfilesDir()
