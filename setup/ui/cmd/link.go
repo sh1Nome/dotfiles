@@ -1,14 +1,14 @@
-package main
+package cmd
 
 import (
 	"fmt"
 	"os"
 
-	dotfileslib "github.com/sh1Nome/dotfiles/setup/dotfileslib"
+	"github.com/sh1Nome/dotfiles/setup/dotfileslib"
 )
 
-func main() {
-	// DotfilesManagerの初期化
+// Link はlinkサブコマンドを実行する
+func Link() {
 	manager := dotfileslib.NewDotfilesManager()
 
 	// Windowsの場合はPowerShellの実行ポリシーを設定

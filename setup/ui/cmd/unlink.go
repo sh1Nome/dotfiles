@@ -1,14 +1,14 @@
-package main
+package cmd
 
 import (
 	"fmt"
 	"os"
 
-	dotfileslib "github.com/sh1Nome/dotfiles/setup/dotfileslib"
+	"github.com/sh1Nome/dotfiles/setup/dotfileslib"
 )
 
-func main() {
-	// DotfilesManagerの初期化
+// Unlink はunlinkサブコマンドを実行する
+func Unlink() {
 	manager := dotfileslib.NewDotfilesManager()
 
 	// 管理しているdotfilesのリンク削除

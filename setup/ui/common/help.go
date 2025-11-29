@@ -1,4 +1,4 @@
-package dotfileslib
+package common
 
 import "fmt"
 
