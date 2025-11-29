@@ -62,21 +62,5 @@ Windows環境とWSL環境どちらでも使いたい場合、Windows環境にdot
 
 ### ビルド方法
 
-`setup/build.sh`でビルドできます。`docker`コマンドを`sudo`なしで実行できる必要があります。
+`setup/build.sh`でビルドできます。
 
-### テスト
-
-ビルド済みバイナリをテストするには以下のコマンドを使えます。
-
-```bash
-docker run --rm -it \
-  -v "$(pwd)":/home/testuser/dotfiles \
-  debian bash -c "\
-    groupadd -g $(id -g) testgroup && \
-    useradd -u $(id -u) -g $(id -g) -m testuser && \
-    chsh -s /bin/bash testuser && \
-    chown -R $(id -u):$(id -g) /home/testuser && \
-    cd /home/testuser && \
-    su - testuser \
-  "
-```
