@@ -1,0 +1,139 @@
+package infrastructure
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+)
+
+// CreateLinks はシンボリックリンクを作成する
+func CreateLinks(dotfilesDir, homeDir string, entries interface{}) {
+	// entries はスライスなので型アサーション
+	entryList, ok := entries.([]interface{})
+	if !ok {
+		// エントリがない場合のフォールバック
+		return
+	}
+
+	for _, e := range entryList {
+		entry, ok := e.(map[string]string)
+		if !ok {
+			continue
+		}
+		srcRel := entry["SrcRel"]
+		dstRel := entry["DstRel"]
+
+		src := filepath.Join(dotfilesDir, srcRel)
+		dst := filepath.Join(homeDir, dstRel)
+		_ = os.Remove(dst)
+		dstDir := filepath.Dir(dst)
+		if _, err := os.Stat(dstDir); os.IsNotExist(err) {
+			if err := os.MkdirAll(dstDir, 0755); err != nil {
+				fmt.Fprintf(os.Stderr, "ディレクトリ作成失敗: %s: %v\n", dstDir, err)
+				continue
+			}
+		}
+		if err := os.Symlink(src, dst); err != nil {
+			fmt.Fprintf(os.Stderr, "リンク作成失敗: %s -> %s: %v\n", src, dst, err)
+		}
+	}
+}
+
+// RemoveLinks はシンボリックリンクを削除する
+func RemoveLinks(homeDir string, entries interface{}) {
+	// entries はスライスなので型アサーション
+	entryList, ok := entries.([]interface{})
+	if !ok {
+		// エントリがない場合のフォールバック
+		return
+	}
+
+	for _, e := range entryList {
+		entry, ok := e.(map[string]string)
+		if !ok {
+			continue
+		}
+		dstRel := entry["DstRel"]
+		link := filepath.Join(homeDir, dstRel)
+
+		info, err := os.Lstat(link)
+		if err != nil {
+			fmt.Printf("%s は存在しません。\n", link)
+			continue
+		}
+		if info.Mode()&os.ModeSymlink != 0 || info.IsDir() {
+			if err := os.RemoveAll(link); err != nil {
+				fmt.Printf("%s の削除に失敗しました: %v\n", link, err)
+			} else {
+				fmt.Printf("%s を削除しました。\n", link)
+			}
+		} else {
+			fmt.Printf("%s はシンボリックリンクでもディレクトリでもありません。\n", link)
+		}
+	}
+}
+
+// ShowLinks はdotfilesのリンク情報を表示する
+func ShowLinks(homeDir, osType string, entryNames []string) {
+	fmt.Println("現在のdotfilesシンボリックリンク一覧:")
+
+	// Windows環境のみ、一部ディレクトリを除外（性能向上のため）
+	skipDirs := map[string]struct{}{}
+	if osType == "windows" {
+		skipList := []string{
+			"AppData/LocalLow",
+			"AppData/LineCall",
+			"Pictures",
+			"Videos",
+			"Downloads",
+			"Music",
+			"3D Objects",
+			"Saved Games",
+			"Contacts",
+			"Links",
+			"Searches",
+			"Favorites",
+		}
+		for _, d := range skipList {
+			skipDirs[filepath.Join(homeDir, d)] = struct{}{}
+		}
+	}
+
+	found := map[string]string{}
+	// ホームディレクトリ以下を全部調べて、dotfilesへのシンボリックリンクを見つける
+	filepath.Walk(homeDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil || info == nil {
+			return nil
+		}
+		// Windowsの場合のみ、不要なディレクトリをスキップ
+		if osType == "windows" && info.IsDir() {
+			if _, ok := skipDirs[path]; ok {
+				return filepath.SkipDir
+			}
+		}
+		// シンボリックリンクかつリンク先に"dotfiles"が含まれていれば記録
+		if info.Mode()&os.ModeSymlink != 0 {
+			link, err := os.Readlink(path)
+			if err == nil && strings.Contains(link, "dotfiles") {
+				base := filepath.Base(path)
+				found[base] = fmt.Sprintf("%s -> %s", path, filepath.Base(link))
+			}
+		}
+		return nil
+	})
+	// entryNamesの順番で見つかったリンクを表示
+	for _, k := range entryNames {
+		if v, ok := found[k]; ok {
+			fmt.Println(v)
+			delete(found, k)
+		}
+	}
+	// entryNames以外のリンクがあれば「その他」として表示
+	if len(found) > 0 {
+		fmt.Println("その他:")
+		for _, v := range found {
+			fmt.Println(v)
+		}
+	}
+}

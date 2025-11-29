@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sh1Nome/dotfiles/setup/ui/cmd"
 	"github.com/sh1Nome/dotfiles/setup/ui/common"
+	"github.com/sh1Nome/dotfiles/setup/usecase"
 )
 
 func main() {
@@ -39,7 +39,11 @@ func handleLink() {
 		common.ShowLinkHelp()
 		return
 	}
-	cmd.Link()
+	uc := usecase.NewLinkUsecase()
+	if err := uc.Execute(); err != nil {
+		os.Exit(1)
+	}
+	common.PromptForEnter()
 }
 
 // handleUnlink はunlinkサブコマンドを処理する
@@ -49,7 +53,11 @@ func handleUnlink() {
 		common.ShowUnlinkHelp()
 		return
 	}
-	cmd.Unlink()
+	uc := usecase.NewUnlinkUsecase()
+	if err := uc.Execute(); err != nil {
+		os.Exit(1)
+	}
+	common.PromptForEnter()
 }
 
 // handleList はlistサブコマンドを処理する
@@ -59,6 +67,10 @@ func handleList() {
 		common.ShowListHelp()
 		return
 	}
-	cmd.List()
+	uc := usecase.NewListUsecase()
+	if err := uc.Execute(); err != nil {
+		os.Exit(1)
+	}
+	common.PromptForEnter()
 }
 
