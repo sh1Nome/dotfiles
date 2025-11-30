@@ -1,0 +1,3 @@
+git:
+  pagers:
+    - externalDiffCommand: "C:/tool/dotfiles/lazygit/lazygit-pager.bat"

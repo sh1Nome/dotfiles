@@ -49,14 +49,6 @@ if not vim.g.vscode then
     require('mini.indentscope').setup() -- インデントガイド
     require('mini.completion').setup({}) -- 補完
 
-    -- 差分表示
-    add({
-      source = 'sindrets/diffview.nvim',
-    })
-    require('diffview').setup({
-      use_icons = false,
-    })
-
     -- lazygit
     add({
       source = 'kdheepak/lazygit.nvim',

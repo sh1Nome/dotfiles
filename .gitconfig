@@ -1,13 +1,19 @@
 [core]
-        autocrlf = false
-        ignorecase = false
-        quotepath = false
-        editor = vi
+        autocrlf = false       # 改行コードを自動変換しない
+        ignorecase = false     # 大文字小文字を区別する
+        quotepath = false      # パスをクォートせずUTF-8表示
+        editor = vi            # デフォルトエディタをviにする
+        pager = delta          # ページャーにdeltaを使用
 [pull]
-        rebase = false
+        rebase = false         # pull時にrebaseしない
 [fetch]
-        prune = true
+        prune = true           # 取得時に不要ブランチを自動削除
 [color]
-        ui = auto
+        ui = auto              # 色表示を自動判定
 [include]
-        path = .gitconfig.local
+        path = .gitconfig.local # ローカル設定を読み込む
+[interactive]
+        diffFilter = delta --color-only # 対話的diffでdeltaを使用
+[delta]
+        navigate = true        # n/Nで差分移動を有効化
+        dark = true            # ダークテーマを使用

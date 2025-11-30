@@ -1,4 +1,5 @@
 [tools]
+delta = "latest"
 lazygit = "latest"
 neovim = "latest"
 usage = "latest"

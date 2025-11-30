@@ -52,13 +52,4 @@ if not vim.g.vscode then
 
   -- lazygitを開く
   vim.keymap.set('n', '<leader>g', ':LazyGit<CR>')
-
-  -- <leader>dで差分を表示する
-  vim.keymap.set('n', '<leader>d', function()
-    if next(require('diffview.lib').views) == nil then
-      vim.cmd('DiffviewOpen')
-    else
-      vim.cmd('DiffviewClose')
-    end
-  end)
 end
