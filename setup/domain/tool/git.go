@@ -33,17 +33,3 @@ func SetupGitConfigInteractive(dotfilesDir string) error {
 	return nil
 }
 
-// RemoveGitConfigLocal は.gitconfig.localを削除する
-func RemoveGitConfigLocal(dotfilesDir string) error {
-	gitconfigLocalPath := filepath.Join(dotfilesDir, ".gitconfig.local")
-	if err := os.Remove(gitconfigLocalPath); err != nil {
-		if os.IsNotExist(err) {
-			fmt.Fprintf(os.Stderr, ".gitconfig.localは存在しません\n")
-			return nil
-		}
-		fmt.Fprintf(os.Stderr, ".gitconfig.localの削除に失敗: %v\n", err)
-		return err
-	}
-	fmt.Println(".gitconfig.localを削除しました")
-	return nil
-}

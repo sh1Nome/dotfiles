@@ -1,0 +1,12 @@
+[tools]
+gh = "latest"
+go = "latest"
+java = "latest"
+lazygit = "latest"
+neovim = "latest"
+node = "latest"
+"npm:@github/copilot" = "latest"
+python = "latest"
+ttyd = "latest"
+usage = "latest"
+vhs = "latest"

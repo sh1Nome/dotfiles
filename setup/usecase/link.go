@@ -26,6 +26,22 @@ func ExecuteLink() error {
 		return err
 	}
 
+	// mise環境設定を取得
+	miseEnv, err := tool.GetMiseEnvInteractive()
+	if err != nil {
+		return err
+	}
+
+	// Bashの設定ファイルを作成
+	if err := tool.SetupBashrcLocal(dotfilesDir, miseEnv); err != nil {
+		return err
+	}
+
+	// PowerShellの設定ファイルを作成
+	if err := tool.SetupProfileLocal(dotfilesDir, miseEnv); err != nil {
+		return err
+	}
+
 	// 管理しているdotfilesのシンボリックリンク作成
 	manager.CreateDotfileLinks()
 
