@@ -17,6 +17,12 @@ end
 vim.opt.showcmd = true  -- コマンドを表示
 vim.opt.number = true  -- 行番号を表示
 vim.opt.relativenumber = true  -- 相対行番号を表示（現在行は絶対表示）
+vim.api.nvim_create_autocmd("TermOpen", {  -- ターミナルでも常時相対行番号を表示
+  callback = function()
+    vim.opt_local.number = true
+    vim.opt_local.relativenumber = true
+  end,
+})
 vim.opt.showmatch = true  -- 対応する括弧をハイライト
 vim.opt.softtabstop = 2  -- タブキー押下時の文字幅
 vim.opt.tabstop = 2      -- タブ文字の表示幅
