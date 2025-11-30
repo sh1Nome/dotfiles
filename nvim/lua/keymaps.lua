@@ -45,6 +45,11 @@ if not vim.g.vscode then
     minifiles_toggle(dir)
   end, { desc = 'Toggle mini.files (current dir or CWD)' })
 
+  -- <leader>nでmini.notifyの履歴を表示
+  vim.keymap.set('n', '<leader>n', function()
+    MiniNotify.show_history()
+  end, { desc = 'View notification history' })
+
   -- lazygitを開く
   vim.keymap.set('n', '<leader>g', ':LazyGit<CR>')
 

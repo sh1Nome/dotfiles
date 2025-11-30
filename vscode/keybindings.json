@@ -54,6 +54,12 @@
     "key": "ctrl+y",
     "command": "acceptSelectedSuggestion",
     "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus && neovim.mode == insert"
+  },
+    // Neovimのインサートモード以外で<space>nを押すと通知一覧を表示
+  {
+    "key": "space n",
+    "command": "notifications.showList",
+    "when": "editorTextFocus && neovim.mode != insert"
   }
 ]
 
