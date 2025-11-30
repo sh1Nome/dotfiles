@@ -1,16 +1,3 @@
-[tools]
-gh = "latest"
-go = "latest"
-java = "latest"
-lazygit = "latest"
-neovim = "latest"
-node = "latest"
-"npm:@github/copilot" = "latest"
-python = "latest"
-ttyd = "latest"
-usage = "latest"
-vhs = "latest"
-
 [tasks.list-tool-backends]
 description = "Show the backend for each tool managed by mise"
 run = '''

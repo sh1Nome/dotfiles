@@ -62,3 +62,8 @@ export EDITOR=nvim
 
 # miseのエイリアス
 alias x="mise x --"
+
+# ローカル設定ファイルの読み込み
+if [ -f ~/.bashrc.local ]; then
+    source ~/.bashrc.local
+fi

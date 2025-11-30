@@ -15,12 +15,6 @@ func ExecuteUnlink() error {
 	// 管理しているdotfilesのリンク削除
 	manager.RemoveDotfileLinks()
 
-	// .gitconfig.localの削除
-	dotfilesDir := infrastructure.GetDotfilesDir()
-	if err := tool.RemoveGitConfigLocal(dotfilesDir); err != nil {
-		return err
-	}
-
 	// vimデータディレクトリの削除
 	homeDir := infrastructure.GetHomeDir()
 	osType := infrastructure.GetOSType()

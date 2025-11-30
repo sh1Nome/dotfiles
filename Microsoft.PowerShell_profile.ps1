@@ -33,3 +33,10 @@ function prompt {
 
 # miseのエイリアス
 function x { mise x -- @args }
+
+# ローカル設定ファイルの読み込み
+$profileDir = Split-Path -Parent $PROFILE
+$profileLocal = Join-Path $profileDir ".profile.local.ps1"
+if (Test-Path $profileLocal) {
+    . $profileLocal
+}

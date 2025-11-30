@@ -1,0 +1,4 @@
+[tools]
+lazygit = "latest"
+neovim = "latest"
+usage = "latest"
