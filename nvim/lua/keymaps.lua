@@ -4,10 +4,10 @@
 vim.g.mapleader = ' '
 
 -- バッファ移動
-vim.keymap.set('n', '<leader>h', ':bprevious<CR>')  -- 前のバッファへ
-vim.keymap.set('n', '<leader>l', ':bnext<CR>')      -- 次のバッファへ
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = 'Previous buffer' })  -- 前のバッファへ
+vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = 'Next buffer' })      -- 次のバッファへ
 
-vim.keymap.set('n', '<leader>t', ':TableModeRealign<CR>')      -- テーブルを整形
+vim.keymap.set('n', '<leader>t', ':TableModeRealign<CR>', { desc = 'Align table' })      -- テーブルを整形
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
@@ -16,15 +16,15 @@ if not vim.g.vscode then
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover' })
 
   -- floatmemoを開く
-  vim.keymap.set('n', '<leader>m', ':FloatmemoToggle<CR>')
+  vim.keymap.set('n', '<leader>m', ':FloatmemoToggle<CR>', { desc = 'Toggle floatmemo' })
 
   -- <leader>pでmini.pickのファイル検索を起動
-  vim.keymap.set('n', '<leader>p', ':Pick files<CR>')
+  vim.keymap.set('n', '<leader>p', ':Pick files<CR>', { desc = 'Pick files' })
 
   -- <leader>fでmini.pickの横断したあいまい検索を起動
   vim.keymap.set('n', '<leader>f', function()
     require('mini.pick').builtin.grep_live()
-  end, { desc = 'Live grep (fuzzy find across files)' })
+  end, { desc = 'Live grep' })
 
   -- <leader>eでmini.filesを起動（カレントディレクトリ or CWD）
   local MiniFiles = require('mini.files')
@@ -43,13 +43,13 @@ if not vim.g.vscode then
       dir = vim.fn.fnamemodify(file, ':h')
     end
     minifiles_toggle(dir)
-  end, { desc = 'Toggle mini.files (current dir or CWD)' })
+  end, { desc = 'Toggle file explorer' })
 
   -- <leader>nでmini.notifyの履歴を表示
   vim.keymap.set('n', '<leader>n', function()
     MiniNotify.show_history()
-  end, { desc = 'View notification history' })
+  end, { desc = 'Show notifications' })
 
   -- lazygitを開く
-  vim.keymap.set('n', '<leader>g', ':LazyGit<CR>')
+  vim.keymap.set('n', '<leader>g', ':LazyGit<CR>', { desc = 'LazyGit' })
 end
