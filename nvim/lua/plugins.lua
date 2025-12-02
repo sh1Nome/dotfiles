@@ -49,6 +49,18 @@ if not vim.g.vscode then
     require('mini.indentscope').setup() -- インデントガイド
     require('mini.completion').setup({}) -- 補完
 
+    local miniclue = require('mini.clue')  -- キーマップを表示
+    miniclue.setup({
+      -- リーダーキーのみトリガー
+      triggers = {
+        { mode = 'n', keys = '<Leader>' },
+        { mode = 'x', keys = '<Leader>' },
+      },
+      window = {
+        delay = 0,  -- 遅延なしで表示
+      },
+    })
+
     -- lazygit
     add({
       source = 'kdheepak/lazygit.nvim',
@@ -100,18 +112,6 @@ end)
 later(function()
   require('mini.jump').setup()     -- ジャンプ機能（f）
   require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
-
-  local miniclue = require('mini.clue')  -- キーマップを表示
-  miniclue.setup({
-    -- リーダーキーのみトリガー
-    triggers = {
-      { mode = 'n', keys = '<Leader>' },
-      { mode = 'x', keys = '<Leader>' },
-    },
-    window = {
-      delay = 0,  -- 遅延なしで表示
-    },
-  })
 
   -- テーブル
   add({
