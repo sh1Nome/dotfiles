@@ -112,10 +112,7 @@ end)
 later(function()
   require('mini.jump').setup()     -- ジャンプ機能（f）
   require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
-
-  -- テーブル
-  add({
-    source = 'dhruvasagar/vim-table-mode',
-  })
-  vim.g.table_mode_corner = '|'
+  require('mini.align').setup({
+    mappings = require('keymaps').get_mini_align_mappings(),
+  })  -- 整列
 end)

@@ -7,8 +7,6 @@ vim.g.mapleader = ' '
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = 'Previous buffer' })  -- 前のバッファへ
 vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = 'Next buffer' })      -- 次のバッファへ
 
-vim.keymap.set('n', '<leader>t', ':TableModeRealign<CR>', { desc = 'Align table' })      -- テーブルを整形
-
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
   -- LSPキーマップ
@@ -53,3 +51,13 @@ if not vim.g.vscode then
   -- lazygitを開く
   vim.keymap.set('n', '<leader>g', ':LazyGit<CR>', { desc = 'LazyGit' })
 end
+
+-- mini.align用のキーマップ設定を返す関数
+local function get_mini_align_mappings()
+  return {
+    start = '<leader>a',
+    start_with_preview = '',
+  }
+end
+
+return { get_mini_align_mappings = get_mini_align_mappings }
