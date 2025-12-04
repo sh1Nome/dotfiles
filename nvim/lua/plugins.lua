@@ -37,19 +37,19 @@ if not vim.g.vscode then
 
   -- 遅延ロード: 初回使用時で十分なもの
   later(function()
-    require('mini.statusline').setup()  -- ステータスライン
-    require('mini.tabline').setup()     -- タブライン
-    require('mini.comment').setup()  -- コメント機能（gcc or gc）
-    require('mini.pairs').setup()    -- 括弧補完
-    require('mini.diff').setup()     -- 差分表示
-    require('mini.files').setup()    -- ファイラー
-    require('mini.pick').setup()     -- ファイル/バッファピック
-    require('mini.animate').setup()  -- アニメーション
-    require('mini.cursorword').setup()  -- カーソル下の単語ハイライト
+    require('mini.statusline').setup() -- ステータスライン
+    require('mini.tabline').setup() -- タブライン
+    require('mini.comment').setup() -- コメント機能（gcc or gc）
+    require('mini.pairs').setup() -- 括弧補完
+    require('mini.diff').setup() -- 差分表示
+    require('mini.files').setup() -- ファイラー
+    require('mini.pick').setup() -- ファイル/バッファピック
+    require('mini.animate').setup() -- アニメーション
+    require('mini.cursorword').setup() -- カーソル下の単語ハイライト
     require('mini.indentscope').setup() -- インデントガイド
     require('mini.completion').setup({}) -- 補完
 
-    local miniclue = require('mini.clue')  -- キーマップを表示
+    local miniclue = require('mini.clue') -- キーマップを表示
     miniclue.setup({
       -- リーダーキーのみトリガー
       triggers = {
@@ -57,7 +57,7 @@ if not vim.g.vscode then
         { mode = 'x', keys = '<Leader>' },
       },
       window = {
-        delay = 0,  -- 遅延なしで表示
+        delay = 0, -- 遅延なしで表示
       },
     })
 
@@ -95,7 +95,7 @@ now(function()
   -- vscodeの設定
   if vim.g.vscode then
     local vscode = require('vscode')
-    vim.notify = vscode.notify  -- 通知
+    vim.notify = vscode.notify -- 通知
     -- `:bd`でバッファを削除したらvscodeのタブを閉じる
     vim.api.nvim_create_autocmd("CmdlineLeave", {
       pattern = ":",
@@ -110,9 +110,9 @@ now(function()
 end)
 
 later(function()
-  require('mini.jump').setup()     -- ジャンプ機能（f）
-  require('mini.surround').setup()   -- サラウンド機能（sa, sr, sd）
+  require('mini.jump').setup() -- ジャンプ機能（f）
+  require('mini.surround').setup() -- サラウンド機能（sa, sr, sd）
   require('mini.align').setup({
     mappings = require('keymaps').get_mini_align_mappings(),
-  })  -- 整列
+  }) -- 整列
 end)
