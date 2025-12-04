@@ -2,4 +2,6 @@
 delta = "latest"
 lazygit = "latest"
 neovim = "latest"
+node = "latest"
+"npm:@github/copilot" = "latest"
 usage = "latest"
