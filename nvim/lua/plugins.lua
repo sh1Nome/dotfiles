@@ -115,4 +115,8 @@ later(function()
   require('mini.align').setup({
     mappings = require('keymaps').get_mini_align_mappings(),
   }) -- 整列
+
+  add({
+    source = 'sh1Nome/md-table-align.nvim', -- mdのテーブルを整形
+  })
 end)
