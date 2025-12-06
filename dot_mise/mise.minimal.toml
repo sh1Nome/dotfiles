@@ -1,5 +1,6 @@
 [tools]
 delta = "latest"
+glow = "latest"
 lazygit = "latest"
 neovim = "latest"
 node = "latest"

@@ -1,6 +1,7 @@
 [tools]
 delta = "latest"
 gh = "latest"
+glow = "latest"
 go = "latest"
 java = "latest"
 lazygit = "latest"
