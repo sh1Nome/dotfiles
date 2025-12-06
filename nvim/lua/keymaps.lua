@@ -6,6 +6,7 @@ vim.g.mapleader = ' '
 -- バッファ移動
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = 'Previous buffer' }) -- 前のバッファへ
 vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = 'Next buffer' }) -- 次のバッファへ
+vim.keymap.set('n', '<leader>t', ':MdTableAlign<CR>', { desc = 'Align a markdown table' }) -- マークダウンのテーブルを整形
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
