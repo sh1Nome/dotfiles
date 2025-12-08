@@ -40,7 +40,6 @@ if not vim.g.vscode then
     require('mini.statusline').setup() -- ステータスライン
     require('mini.tabline').setup() -- タブライン
     require('mini.comment').setup() -- コメント機能（gcc or gc）
-    require('mini.pairs').setup() -- 括弧補完
     require('mini.diff').setup() -- 差分表示
     require('mini.files').setup() -- ファイラー
     require('mini.pick').setup() -- ファイル/バッファピック
@@ -115,7 +114,28 @@ end)
 
 later(function()
   require('mini.jump').setup() -- ジャンプ機能（f）
-  require('mini.surround').setup() -- サラウンド機能（sa, sr, sd）
+  -- サラウンド機能（sa, sr, sd）
+  require('mini.surround').setup({
+    custom_surroundings = {
+      -- 左括弧は全角、右括弧は半角
+      ['('] = {
+        input = { '（().-()）' },
+        output = { left = '（', right = '）' },
+      },
+      ['['] = {
+        input = { '「().-()」' },
+        output = { left = '「', right = '」' },
+      },
+      ['{'] = {
+        input = { '｛().-()｝' },
+        output = { left = '｛', right = '｝' },
+      },
+      ['<'] = {
+        input = { '＜().-()＞' },
+        output = { left = '＜', right = '＞' },
+      },
+    },
+  })
   require('mini.align').setup({
     mappings = require('keymaps').get_mini_align_mappings(),
   }) -- 整列
