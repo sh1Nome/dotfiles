@@ -10,7 +10,7 @@ if not vim.g.vscode then
         'gopls', -- Go
         'jdtls', -- Java
         'ts_ls', -- JavaScript, TypeScript
-        'pyright' -- Python
+        'pyright', -- Python
       },
     })
   end)
@@ -35,6 +35,7 @@ local lsp_actions = {
   ['code-action'] = with_vscode_fallback('editor.action.codeAction', vim.lsp.buf.code_action),
   ['rename'] = with_vscode_fallback('editor.action.rename', vim.lsp.buf.rename),
   ['diag'] = with_vscode_fallback('editor.action.showHover', vim.diagnostic.open_float),
+  ['format'] = with_vscode_fallback('editor.action.formatDocument', vim.lsp.buf.format),
 }
 
 -- Lspコマンド定義
