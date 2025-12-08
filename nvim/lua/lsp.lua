@@ -1,8 +1,21 @@
 -- LSP設定
 MiniDeps.later(function()
-  local conform = require("conform")
+  local lsp_actions
 
-  if not vim.g.vscode then
+  if vim.g.vscode then
+    -- VSCode環境: VSCodeコマンドのみ使用
+    local vscode = require('vscode')
+    lsp_actions = {
+      ['type-def'] = function() vscode.call('editor.action.goToTypeDefinition') end,
+      ['refs'] = function() vscode.call('editor.action.referenceSearch.trigger') end,
+      ['impl'] = function() vscode.call('editor.action.goToImplementation') end,
+      ['code-action'] = function() vscode.call('editor.action.codeAction') end,
+      ['rename'] = function() vscode.call('editor.action.rename') end,
+      ['diag'] = function() vscode.call('editor.action.showHover') end,
+      ['format'] = function() vscode.call('editor.action.formatDocument') end,
+    }
+  else
+    -- Neovim環境: LSP + conform を使用
     require("mason").setup()
     require("mason-lspconfig").setup({
       -- ここに書かれたlsをMasonで入れると自動的に`vim.lsp.enable`される
@@ -14,7 +27,9 @@ MiniDeps.later(function()
         'pyright', -- Python
       },
     })
+
     -- 個別のフォーマッター設定
+    local conform = require("conform")
     conform.setup({
       formatters_by_ft = {
         sql = { "sql_formatter" },
@@ -24,29 +39,18 @@ MiniDeps.later(function()
         lsp_format = "fallback",
       }
     })
-  end
 
-  -- VSCode と Neovim 両環境対応のラッパー関数
-  local function with_vscode_fallback(vscode_command, nvim_function)
-    return function()
-      if vim.g.vscode then
-        require('vscode').call(vscode_command)
-      else
-        nvim_function()
-      end
-    end
+    -- LSP操作のテーブル定義
+    lsp_actions = {
+      ['type-def'] = vim.lsp.buf.type_definition,
+      ['refs'] = vim.lsp.buf.references,
+      ['impl'] = vim.lsp.buf.implementation,
+      ['code-action'] = vim.lsp.buf.code_action,
+      ['rename'] = vim.lsp.buf.rename,
+      ['diag'] = vim.diagnostic.open_float,
+      ['format'] = conform.format,
+    }
   end
-
-  -- LSP操作のテーブル定義
-  local lsp_actions = {
-    ['type-def'] = with_vscode_fallback('editor.action.goToTypeDefinition', vim.lsp.buf.type_definition),
-    ['refs'] = with_vscode_fallback('editor.action.referenceSearch.trigger', vim.lsp.buf.references),
-    ['impl'] = with_vscode_fallback('editor.action.goToImplementation', vim.lsp.buf.implementation),
-    ['code-action'] = with_vscode_fallback('editor.action.codeAction', vim.lsp.buf.code_action),
-    ['rename'] = with_vscode_fallback('editor.action.rename', vim.lsp.buf.rename),
-    ['diag'] = with_vscode_fallback('editor.action.showHover', vim.diagnostic.open_float),
-    ['format'] = with_vscode_fallback('editor.action.formatDocument', conform.format),
-  }
 
   -- Lspコマンド定義
   vim.api.nvim_create_user_command('Lsp', function(opts)
