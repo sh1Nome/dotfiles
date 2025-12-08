@@ -88,6 +88,10 @@ if not vim.g.vscode then
         'neovim/nvim-lspconfig'
       },
     })
+    add({
+      -- フォーマット
+      source = 'stevearc/conform.nvim',
+    })
   end)
 end
 
