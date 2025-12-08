@@ -52,11 +52,11 @@ MiniDeps.later(function()
     }
   end
 
-  -- Lspコマンド定義
-  vim.api.nvim_create_user_command('Lsp', function(opts)
+  -- Lコマンド定義
+  vim.api.nvim_create_user_command('L', function(opts)
     local action = opts.args
     if action == '' then
-      vim.notify('Usage: :Lsp <action>\nAvailable actions: ' .. table.concat(vim.tbl_keys(lsp_actions), ', '), vim.log.levels.INFO)
+      vim.notify('Usage: :L <action>\nAvailable actions: ' .. table.concat(vim.tbl_keys(lsp_actions), ', '), vim.log.levels.INFO)
       return
     end
     if lsp_actions[action] then
@@ -66,8 +66,17 @@ MiniDeps.later(function()
     end
   end, {
     nargs = '?',
-    complete = function()
-      return vim.tbl_keys(lsp_actions)
+    complete = function(_, cmd, _)
+      -- コマンド行から「:L 」の後の入力文字列を抽出
+      local input = cmd:match('^%s*L%s+(%S*)$') or ''
+      local actions = vim.tbl_keys(lsp_actions)
+      if input == '' then
+        return actions
+      end
+      return vim.tbl_filter(function(action)
+        -- 入力で始まるアクション名をフィルタリング
+        return action:find('^' .. input)
+      end, actions)
     end
   })
 end)
