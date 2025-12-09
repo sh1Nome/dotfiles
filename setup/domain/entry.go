@@ -14,19 +14,19 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
 		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
 		// mise
-		{Name: "mise", SrcRel: "dot_mise", DstRel: ".config/mise"},
+		{Name: "mise", SrcRel: "dot_config/mise", DstRel: ".config/mise"},
 		// vim
 		{Name: "vimrc", SrcRel: "dot_config/vim/vimrc", DstRel: ".config/vim/vimrc"},
 		// nvim
-		{Name: "nvim", SrcRel: "nvim", DstRel: ".config/nvim"},
+		{Name: "nvim", SrcRel: "dot_config/nvim", DstRel: ".config/nvim"},
 		// git
 		{Name: "config", SrcRel: "dot_config/git/config", DstRel: ".config/git/config"},
 		{Name: "config.local", SrcRel: "dot_config/git/config.local", DstRel: ".config/git/config.local"},
 		// lazygit
-		{Name: "config.yml", SrcRel: "lazygit/config-linux.yml", DstRel: ".config/lazygit/config.yml"},
+		{Name: "config.yml", SrcRel: "dot_config/lazygit/config-linux.yml", DstRel: ".config/lazygit/config.yml"},
 		// vscode
-		{Name: "settings.json", SrcRel: "vscode/settings.json", DstRel: ".config/Code/User/settings.json"},
-		{Name: "keybindings.json", SrcRel: "vscode/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
+		{Name: "settings.json", SrcRel: "dot_config/Code/User/settings.json", DstRel: ".config/Code/User/settings.json"},
+		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
 	}
 }
 
@@ -40,18 +40,18 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		{Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "dot_config/powershell/Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
 		{Name: ".profile.local.ps1", SrcRel: "dot_config/powershell/profile.local.ps1", DstRel: "Documents/WindowsPowerShell/.profile.local.ps1"},
 		// mise
-		{Name: "mise", SrcRel: "dot_mise", DstRel: ".config/mise"},
+		{Name: "mise", SrcRel: "dot_config/mise", DstRel: ".config/mise"},
 		// vim
 		{Name: ".vimrc", SrcRel: "dot_config/vim/vimrc", DstRel: ".vimrc"},
 		// nvim
-		{Name: "nvim", SrcRel: "nvim", DstRel: "AppData/Local/nvim"},
+		{Name: "nvim", SrcRel: "dot_config/nvim", DstRel: "AppData/Local/nvim"},
 		// git
 		{Name: "config", SrcRel: "dot_config/git/config", DstRel: ".config/git/config"},
 		{Name: "config.local", SrcRel: "dot_config/git/config.local", DstRel: ".config/git/config.local"},
 		// lazygit
-		{Name: "config.yml", SrcRel: "lazygit/config-windows.yml", DstRel: "AppData/Local/lazygit/config.yml"},
+		{Name: "config.yml", SrcRel: "dot_config/lazygit/config-windows.yml", DstRel: "AppData/Local/lazygit/config.yml"},
 		// vscode
-		{Name: "settings.json", SrcRel: "vscode/settings.json", DstRel: "AppData/Roaming/Code/User/settings.json"},
-		{Name: "keybindings.json", SrcRel: "vscode/keybindings.json", DstRel: "AppData/Roaming/Code/User/keybindings.json"},
+		{Name: "settings.json", SrcRel: "dot_config/Code/User/settings.json", DstRel: "AppData/Roaming/Code/User/settings.json"},
+		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: "AppData/Roaming/Code/User/keybindings.json"},
 	}
 }
