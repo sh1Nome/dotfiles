@@ -11,7 +11,7 @@
 [color]
         ui = auto              # 色表示を自動判定
 [include]
-        path = .gitconfig.local # ローカル設定を読み込む
+        path = config.local    # ローカル設定を読み込む
 [interactive]
         diffFilter = delta --color-only # 対話的diffでdeltaを使用
 [delta]
