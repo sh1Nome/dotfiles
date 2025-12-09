@@ -21,7 +21,7 @@ func SetupGitConfigInteractive(dotfilesDir string) error {
 	credProvider, _ := reader.ReadString('\n')
 	credProvider = strings.TrimSpace(credProvider)
 
-	gitconfigLocalPath := filepath.Join(dotfilesDir, ".gitconfig.local")
+	gitconfigLocalPath := filepath.Join(dotfilesDir, "dot_config/git/config.local")
 	gitconfigLocalContent := fmt.Sprintf("[user]\n    name = %s\n    email = %s\n", gitUser, gitEmail)
 	if credProvider == "y" || credProvider == "Y" {
 		gitconfigLocalContent += "[credential]\n    provider = generic\n"

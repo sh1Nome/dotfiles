@@ -20,8 +20,8 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		// nvim
 		{Name: "nvim", SrcRel: "nvim", DstRel: ".config/nvim"},
 		// git
-		{Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
-		{Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
+		{Name: "config", SrcRel: "dot_config/git/config", DstRel: ".config/git/config"},
+		{Name: "config.local", SrcRel: "dot_config/git/config.local", DstRel: ".config/git/config.local"},
 		// lazygit
 		{Name: "config.yml", SrcRel: "lazygit/config-linux.yml", DstRel: ".config/lazygit/config.yml"},
 		// vscode
@@ -46,8 +46,8 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		// nvim
 		{Name: "nvim", SrcRel: "nvim", DstRel: "AppData/Local/nvim"},
 		// git
-		{Name: ".gitconfig", SrcRel: ".gitconfig", DstRel: ".gitconfig"},
-		{Name: ".gitconfig.local", SrcRel: ".gitconfig.local", DstRel: ".gitconfig.local"},
+		{Name: "config", SrcRel: "dot_config/git/config", DstRel: ".config/git/config"},
+		{Name: "config.local", SrcRel: "dot_config/git/config.local", DstRel: ".config/git/config.local"},
 		// lazygit
 		{Name: "config.yml", SrcRel: "lazygit/config-windows.yml", DstRel: "AppData/Local/lazygit/config.yml"},
 		// vscode
