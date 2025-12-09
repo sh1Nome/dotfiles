@@ -11,8 +11,8 @@ type DotfileEntry struct {
 func LinuxManagedDotfiles() []DotfileEntry {
 	return []DotfileEntry{
 		// bash
-		{Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
-		{Name: ".bashrc.local", SrcRel: ".bashrc.local", DstRel: ".bashrc.local"},
+		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
+		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
 		// mise
 		{Name: "mise", SrcRel: "dot_mise", DstRel: ".config/mise"},
 		// vim
@@ -34,8 +34,8 @@ func LinuxManagedDotfiles() []DotfileEntry {
 func WindowsManagedDotfiles() []DotfileEntry {
 	return []DotfileEntry{
 		// bash
-		{Name: ".bashrc", SrcRel: ".bashrc", DstRel: ".bashrc"},
-		{Name: ".bashrc.local", SrcRel: ".bashrc.local", DstRel: ".bashrc.local"},
+		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
+		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
 		// powershell
 		{Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
 		{Name: ".profile.local.ps1", SrcRel: ".profile.local.ps1", DstRel: "Documents/WindowsPowerShell/.profile.local.ps1"},
