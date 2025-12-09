@@ -16,7 +16,7 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		// mise
 		{Name: "mise", SrcRel: "dot_mise", DstRel: ".config/mise"},
 		// vim
-		{Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+		{Name: "vimrc", SrcRel: "dot_config/vim/vimrc", DstRel: ".config/vim/vimrc"},
 		// nvim
 		{Name: "nvim", SrcRel: "nvim", DstRel: ".config/nvim"},
 		// git
@@ -42,7 +42,7 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		// mise
 		{Name: "mise", SrcRel: "dot_mise", DstRel: ".config/mise"},
 		// vim
-		{Name: ".vimrc", SrcRel: ".vimrc", DstRel: ".vimrc"},
+		{Name: ".vimrc", SrcRel: "dot_config/vim/vimrc", DstRel: ".vimrc"},
 		// nvim
 		{Name: "nvim", SrcRel: "nvim", DstRel: "AppData/Local/nvim"},
 		// git
