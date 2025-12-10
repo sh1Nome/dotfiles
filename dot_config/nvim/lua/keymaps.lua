@@ -20,6 +20,9 @@ if not vim.g.vscode then
   -- <leader>pでmini.pickのファイル検索を起動
   vim.keymap.set('n', '<leader>p', ':Pick files<CR>', { desc = 'Pick files' })
 
+  -- <leader>bでmini.pickのバッファ検索を起動
+  vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
+
   -- <leader>fでmini.pickの横断したあいまい検索を起動
   vim.keymap.set('n', '<leader>f', function()
     require('mini.pick').builtin.grep_live()
