@@ -7,5 +7,9 @@ run_windows = '''
 mise ls | ForEach-Object { $_.split()[0] } | ForEach-Object { mise tool $_ } | Where-Object { $_ -match '^Backend' }
 '''
 
+[tasks.pr-complete]
+description = "Create PR, view details, review diff with delta, and merge"
+run = "gh pr create && gh pr view && gh pr diff | delta && gh pr merge"
+
 [settings]
 windows_default_inline_shell_args = "powershell -NoProfile -Command"
