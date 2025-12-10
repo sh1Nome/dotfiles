@@ -62,14 +62,22 @@ if not vim.g.vscode then
 
     -- lazygit
     add({
-      source = 'kdheepak/lazygit.nvim',
+      source = 'numToStr/FTerm.nvim',
+    })
+    require('FTerm').setup({
+      dimensions = {
+          height = 0.9,
+          width = 0.9,
+      },
     })
 
     -- floatmemo
     add({
       source = 'sh1Nome/floatmemo.nvim',
     })
-    require('floatmemo').setup()
+    require('floatmemo').setup({
+      border = 'single'
+    })
 
     -- lsp
     add({
