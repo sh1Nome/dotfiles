@@ -60,7 +60,7 @@ if not vim.g.vscode then
       },
     })
 
-    -- lazygit
+    -- FTerm
     add({
       source = 'numToStr/FTerm.nvim',
     })
