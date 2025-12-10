@@ -21,7 +21,7 @@ if not vim.g.vscode then
   vim.keymap.set('n', '<leader>p', ':Pick files<CR>', { desc = 'Pick files' })
 
   -- <leader>bでmini.pickのバッファ検索を起動
-  vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
+  vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>', { desc = 'Pick buffers' })
 
   -- <leader>fでmini.pickの横断したあいまい検索を起動
   vim.keymap.set('n', '<leader>f', function()
@@ -53,7 +53,20 @@ if not vim.g.vscode then
   end, { desc = 'Show notifications' })
 
   -- lazygitを開く
-  vim.keymap.set('n', '<leader>g', ':LazyGit<CR>', { desc = 'LazyGit' })
+  vim.keymap.set('n', '<leader>g', function()
+    require('FTerm').run('lazygit && exit')
+  end, { desc = 'LazyGit' })
+
+  -- マークダウンをプレビューする（markdown ファイルのみ）
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function()
+      vim.keymap.set('n', '<leader>r', function()
+        local buf = vim.api.nvim_buf_get_name(0)
+        require('FTerm').run('glow -t ' .. buf .. ' && exit')
+      end, { desc = 'Preview markdown', buffer = true })
+    end,
+  })
 end
 
 -- mini.align用のキーマップ設定を返す関数
