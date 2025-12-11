@@ -13,6 +13,7 @@ MiniDeps.later(function()
       ['rename'] = function() vscode.call('editor.action.rename') end,
       ['diag'] = function() vscode.call('editor.action.showHover') end,
       ['format'] = function() vscode.call('editor.action.formatDocument') end,
+      ['symbol'] = function() vscode.call('workbench.action.gotoSymbol') end,
     }
   else
     -- Neovim環境: LSP + conform を使用
@@ -42,13 +43,14 @@ MiniDeps.later(function()
 
     -- LSP操作のテーブル定義
     lsp_actions = {
-      ['type-def'] = vim.lsp.buf.type_definition,
-      ['refs'] = vim.lsp.buf.references,
-      ['impl'] = vim.lsp.buf.implementation,
+      ['type-def'] = function() MiniExtra.pickers.lsp({ scope = 'type_definition' }) end,
+      ['refs'] = function() MiniExtra.pickers.lsp({ scope = 'references' }) end,
+      ['impl'] = function() MiniExtra.pickers.lsp({ scope = 'implementation' }) end,
       ['code-action'] = vim.lsp.buf.code_action,
       ['rename'] = vim.lsp.buf.rename,
-      ['diag'] = vim.diagnostic.open_float,
+      ['diag'] = function() MiniExtra.pickers.diagnostic() end,
       ['format'] = conform.format,
+      ['symbol'] = function() MiniExtra.pickers.lsp({ scope = 'document_symbol' }) end,
     }
   end
 

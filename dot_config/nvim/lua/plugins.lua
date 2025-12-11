@@ -47,6 +47,7 @@ if not vim.g.vscode then
     require('mini.cursorword').setup() -- カーソル下の単語ハイライト
     require('mini.indentscope').setup() -- インデントガイド
     require('mini.completion').setup({}) -- 補完
+    require('mini.extra').setup() -- 追加
 
     local miniclue = require('mini.clue') -- キーマップを表示
     miniclue.setup({
