@@ -48,7 +48,7 @@ MiniDeps.later(function()
       ['impl'] = function() MiniExtra.pickers.lsp({ scope = 'implementation' }) end,
       ['code-action'] = vim.lsp.buf.code_action,
       ['rename'] = vim.lsp.buf.rename,
-      ['diag'] = function() MiniExtra.pickers.diagnostic() end,
+      ['diag'] = function() MiniExtra.pickers.diagnostic({ scope = 'current' }) end,
       ['format'] = conform.format,
       ['symbol'] = function() MiniExtra.pickers.lsp({ scope = 'document_symbol' }) end,
     }
