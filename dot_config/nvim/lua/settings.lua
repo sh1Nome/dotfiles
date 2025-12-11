@@ -36,13 +36,7 @@ vim.opt.scrolloff = 3 -- 常に3行のスクロールオフセットを確保
 vim.opt.cursorline = true -- カーソル行をハイライト
 vim.opt.expandtab = true -- タブをスペースに変換
 vim.opt.showtabline = 2 -- タブラインを常に表示
--- Markdown 専用設定
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.wrap = false -- 行末で折り返さない
-  end,
-})
+vim.opt.wrap = false -- 行末で折り返さない
 vim.g.terminal_color_4 = "#3a7fff" -- 通常の青を少し明るく
 
 -- 検索系
