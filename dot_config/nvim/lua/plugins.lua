@@ -65,6 +65,7 @@ if not vim.g.vscode then
       source = 'numToStr/FTerm.nvim',
     })
     require('FTerm').setup({
+      cmd = 'bash', -- Windowsでは指定しないと動かない
       dimensions = {
           height = 0.9,
           width = 0.9,

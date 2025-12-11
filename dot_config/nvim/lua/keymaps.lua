@@ -62,7 +62,8 @@ if not vim.g.vscode then
     pattern = 'markdown',
     callback = function()
       vim.keymap.set('n', '<leader>r', function()
-        local buf = vim.api.nvim_buf_get_name(0)
+        -- 開いているバッファのパスの区切り文字を置換（Windows用）
+        local buf = vim.api.nvim_buf_get_name(0):gsub("\\", "/")
         require('FTerm').run('glow -t ' .. buf .. ' && exit')
       end, { desc = 'Preview markdown', buffer = true })
     end,
