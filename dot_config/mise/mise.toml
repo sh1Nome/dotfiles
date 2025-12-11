@@ -9,7 +9,9 @@ mise ls | ForEach-Object { $_.split()[0] } | ForEach-Object { mise tool $_ } | W
 
 [tasks.pr-complete]
 description = "Create PR, view details, review diff with delta, and merge"
-run = "gh pr create && gh pr view && gh pr diff | delta && gh pr merge"
+run = '''
+gh pr create && gh pr view && read -p "Press Enter to view diff..." _ && gh pr diff | delta && gh pr merge
+'''
 
 [tasks.copilot-write]
 description = "Launch GitHub Copilot CLI with write tool enabled"
