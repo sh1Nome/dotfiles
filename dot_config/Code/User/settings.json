@@ -25,8 +25,9 @@
   "editor.autoSurround": "never", // 選択範囲を自動で囲まない
   "editor.autoClosingQuotes": "never", // クォートを自動で閉じない
   "editor.autoClosingBrackets": "never", // 括弧を自動で閉じない
+  "editor.wordWrap": "off", // 折返しを無効化
   "[markdown]": {
-    "editor.wordWrap": "off" // マークダウンの折り返しを無効化
+    "editor.wordWrap": "off" // これを書かないと設定がオーバーライドされてしまう
   },
 
   // 差分エディタ設定
