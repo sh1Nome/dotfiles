@@ -17,5 +17,34 @@ gh pr create && gh pr view && read -p "Press Enter to view diff..." _ && gh pr d
 description = "Launch GitHub Copilot CLI with write tool enabled"
 run = "copilot --allow-tool 'write' --model claude-haiku-4.5"
 
+[tasks.tree]
+description = "Show directory tree (ignore .git)"
+
+usage = '''
+arg "<depth>" help="Max depth (omit to show all levels)" default=""
+'''
+
+run = '''
+# depth が指定されていれば -maxdepth を付ける
+# 未指定なら全階層を表示する
+if [ -n "${usage_depth}" ]; then
+  maxdepth_arg="-maxdepth ${usage_depth}"
+else
+  maxdepth_arg=""
+fi
+
+# .git ディレクトリは探索対象から除外して一覧を出す
+find . ${maxdepth_arg} \
+  -name .git -prune -o \
+  -print |
+sed '
+  # 「/」で区切られたパス要素を縦線インデントに置き換える
+  s;[^/]*/;│   ;g
+
+  # 行末のファイル名（最後の要素）を枝（├──）付きで表示する
+  s;│   \([^│]*\)$;├── \1;
+'
+'''
+
 [settings]
 windows_default_inline_shell_args = "powershell -NoProfile -Command"
