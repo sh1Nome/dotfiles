@@ -3,9 +3,6 @@ description = "Show the backend for each tool managed by mise"
 run = '''
 mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 '''
-run_windows = '''
-mise ls | ForEach-Object { $_.split()[0] } | ForEach-Object { mise tool $_ } | Where-Object { $_ -match '^Backend' }
-'''
 
 [tasks.pr-complete]
 description = "Create PR, view details, review diff with delta, and merge"
@@ -47,4 +44,4 @@ sed '
 '''
 
 [settings]
-windows_default_inline_shell_args = "powershell -NoProfile -Command"
+windows_default_inline_shell_args = "C:/Progra~1/Git/bin/bash.exe --noprofile -c"
