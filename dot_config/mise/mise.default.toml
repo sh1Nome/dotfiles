@@ -1,6 +1,7 @@
 [tools]
 delta = "latest"
 gh = "latest"
+"gitlab:gitlab-org/cli" = "latest"
 glow = "latest"
 go = "latest"
 java = "latest"
