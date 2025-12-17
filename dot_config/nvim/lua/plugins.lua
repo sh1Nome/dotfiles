@@ -80,7 +80,8 @@ if not vim.g.vscode then
       source = 'sh1Nome/floatmemo.nvim',
     })
     require('floatmemo').setup({
-      border = 'single'
+      border = 'single',
+      extension = 'md'
     })
 
     -- lsp
