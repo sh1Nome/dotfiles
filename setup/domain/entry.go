@@ -10,6 +10,8 @@ type DotfileEntry struct {
 // LinuxManagedDotfiles はLinux用のdotfilesエントリ一覧を返す
 func LinuxManagedDotfiles() []DotfileEntry {
 	return []DotfileEntry{
+		// fcitx5
+		{Name: "fcitx5", SrcRel: "dot_config/fcitx5", DstRel: ".config/fcitx5"},
 		// bash
 		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
 		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
