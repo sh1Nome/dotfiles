@@ -12,6 +12,8 @@ func LinuxManagedDotfiles() []DotfileEntry {
 	return []DotfileEntry{
 		// fcitx5
 		{Name: "fcitx5", SrcRel: "dot_config/fcitx5", DstRel: ".config/fcitx5"},
+		// wezterm
+		{Name: "wezterm.lua", SrcRel: "dot_config/wezterm/wezterm.lua", DstRel: ".config/wezterm/wezterm.lua"},
 		// bash
 		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
 		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
@@ -35,6 +37,8 @@ func LinuxManagedDotfiles() []DotfileEntry {
 // WindowsManagedDotfiles はWindows用のdotfilesエントリ一覧を返す
 func WindowsManagedDotfiles() []DotfileEntry {
 	return []DotfileEntry{
+		// wezterm
+		{Name: ".wezterm.lua", SrcRel: "dot_config/wezterm/wezterm.lua", DstRel: ".wezterm.lua"},
 		// bash
 		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
 		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
