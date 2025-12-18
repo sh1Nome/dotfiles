@@ -57,6 +57,11 @@ if not vim.g.vscode then
     require('FTerm').run('lazygit && exit')
   end, { desc = 'LazyGit' })
 
+  -- ghコマンドでPRをマージし、lazygitを開く
+  vim.keymap.set('n', '<leader>c', function()
+    require('FTerm').run('mise run pr-complete && lazygit && exit')
+  end, { desc = 'PR complete & LazyGit' })
+
   -- マークダウンをプレビューする（markdown ファイルのみ）
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'markdown',
