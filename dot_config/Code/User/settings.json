@@ -15,7 +15,7 @@
   "editor.renderWhitespace": "all", // すべての空白文字を表示
   "editor.formatOnSave": false, // 保存時の自動フォーマットを無効化
   "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッタをPrettierに設定
-  "editor.fontFamily": "'Noto Sans Mono CJK JP', Consolas, 'Courier New', monospace", // フォントファミリーにNoto Sans Mono CJK JPを追加
+  "editor.fontFamily": "monospace", // フォントファミリーでmonospaceを指定
   "editor.smoothScrolling": true, // エディタでスムーズスクロールを有効化
   "editor.cursorSmoothCaretAnimation": "on", // カーソルのスムーズアニメーションを有効化
   "editor.lineNumbers": "relative", // 相対行番号表示を有効化
