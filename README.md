@@ -13,12 +13,15 @@ WindowsとDebianのどちらでも同じように開発できること、またV
 
 ## 管理しているツール
 
+* Fcitx5（Linux）
+* Wezterm
 * Bash
 * Powershell（Windows）
 * mise
-* Git
 * Vim
 * neovim
+* Git
+* Lazygit
 * VSCode
 
 ## セットアップ
