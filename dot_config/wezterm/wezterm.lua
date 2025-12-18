@@ -7,6 +7,8 @@ config.use_ime = true
 config.initial_cols = 120
 config.initial_rows = 28
 
+config.window_background_opacity = 0.85
+
 config.font_size = 11
 
 if wezterm.target_triple:find("windows") then
