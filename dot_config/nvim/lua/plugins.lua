@@ -68,8 +68,8 @@ if not vim.g.vscode then
     miniclue.setup({
       -- リーダーキーのみトリガー
       triggers = {
-        { mode = 'n', keys = '<Leader>' },
-        { mode = 'x', keys = '<Leader>' },
+        { mode = 'n', keys = '<Leader>' }, -- ノーマルモード
+        { mode = 'x', keys = '<Leader>' }, -- ビジュアルモード
       },
       window = {
         delay = 0, -- 遅延なしで表示
