@@ -167,6 +167,27 @@ later(function()
   }) -- 整列
 
   add({
+    source = 'monaqa/dial.nvim' -- <C-a>と<C-x>の拡張
+  })
+  local augend = require("dial.augend")
+  require("dial.config").augends:register_group{
+    default = {
+      -- nvimのデフォルト動作に近づける`nrformats (default "bin,hex")`
+      augend.integer.alias.decimal_int,
+      augend.integer.alias.hex,
+      augend.integer.alias.binary,
+      -- ここからカスタム
+      augend.constant.alias.bool, -- true, false
+      augend.constant.alias.Bool, -- True, False
+      augend.constant.new{ elements = {"あり", "なし"} },
+      augend.constant.new{
+        elements = {"[ ]", "[x]"}, -- マークダウンのチェックボックス
+        word = false, -- 単語の境界になくてもマッチする
+      },
+    },
+  }
+
+  add({
     source = 'sh1Nome/md-table-align.nvim', -- mdのテーブルを整形
   })
 end)
