@@ -44,7 +44,21 @@ if not vim.g.vscode then
     require('mini.diff').setup() -- 差分表示
     require('mini.files').setup() -- ファイラー
     require('mini.pick').setup() -- ファイル/バッファピック
-    require('mini.animate').setup() -- アニメーション
+    local animate = require('mini.animate') -- アニメーション
+    animate.setup({
+      cursor = {
+        -- 50ミリ秒の線形アニメーション
+        timing = animate.gen_timing.linear({ duration = 50, unit = 'total' }),
+        -- すべてのカーソル移動に対してアニメーション
+        path = animate.gen_path.line({
+          predicate = function() return true end,
+        }),
+      },
+      scroll = {
+        -- 50ミリ秒の線形アニメーション
+        timing = animate.gen_timing.linear({ duration = 50, unit = 'total' }),
+      },
+    })
     require('mini.cursorword').setup() -- カーソル下の単語ハイライト
     require('mini.indentscope').setup() -- インデントガイド
     require('mini.completion').setup({}) -- 補完
