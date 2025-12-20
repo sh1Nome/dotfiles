@@ -37,6 +37,7 @@ vim.opt.cursorline = true -- カーソル行をハイライト
 vim.opt.expandtab = true -- タブをスペースに変換
 vim.opt.showtabline = 2 -- タブラインを常に表示
 vim.opt.wrap = false -- 行末で折り返さない
+vim.opt.colorcolumn = "80" -- 80文字目に縦線を表示
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 
 -- 検索系

@@ -26,6 +26,7 @@
   "editor.autoClosingQuotes": "never", // クォートを自動で閉じない
   "editor.autoClosingBrackets": "never", // 括弧を自動で閉じない
   "editor.wordWrap": "off", // 折返しを無効化
+  "editor.rulers": [80], // 80文字目に縦線を表示
   "[markdown]": {
     "editor.wordWrap": "off" // これを書かないと設定がオーバーライドされてしまう
   },
