@@ -64,23 +64,29 @@ if not vim.g.vscode then
     MiniNotify.show_history()
   end, { desc = 'Show notifications' })
 
+  -- floatcliの設定
+  -- Windows対応: コマンド引数をダブルクオートで囲む
+  local function quote_for_windows(commands)
+    if vim.fn.has('win32') == 1 then
+      return vim.tbl_map(function(cmd) return '"' .. cmd .. '"' end, commands)
+    end
+    return commands
+  end
   -- lazygitを開く
   vim.keymap.set('n', '<leader>g', function()
     require('floatcli').open({
-      commands = { 'lazygit' }
+      commands = quote_for_windows({ 'lazygit' })
     })
   end, { desc = 'LazyGit' })
-
   -- ghコマンドでPRをマージし、lazygitを開く
   vim.keymap.set('n', '<leader>c', function()
     require('floatcli').open({
-      commands = { 
+      commands = quote_for_windows({
         'mise run pr-complete',
         'lazygit'
-      }
+      })
     })
   end, { desc = 'PR complete & LazyGit' })
-
   -- マークダウンをプレビューする（markdown ファイルのみ）
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'markdown',
@@ -89,7 +95,7 @@ if not vim.g.vscode then
         -- 開いているバッファのパスの区切り文字を置換（Windows用）
         local buf = vim.api.nvim_buf_get_name(0):gsub("\\", "/")
         require('floatcli').open({
-          commands = { 'glow -t ' .. buf }
+          commands = quote_for_windows({ 'glow -t ' .. buf })
         })
       end, { desc = 'Preview markdown', buffer = true })
     end,
