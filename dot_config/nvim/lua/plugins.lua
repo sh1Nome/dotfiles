@@ -76,18 +76,6 @@ if not vim.g.vscode then
       },
     })
 
-    -- FTerm
-    add({
-      source = 'numToStr/FTerm.nvim',
-    })
-    require('FTerm').setup({
-      cmd = 'bash', -- Windowsでは指定しないと動かない
-      dimensions = {
-          height = 0.9,
-          width = 0.9,
-      },
-    })
-
     -- floatmemo
     add({
       source = 'sh1Nome/floatmemo.nvim',
@@ -96,6 +84,11 @@ if not vim.g.vscode then
       border = 'single',
       extension = 'md'
     })
+    -- floatcli
+    add({
+      source = 'sh1Nome/floatcli.nvim',
+    })
+    require('floatcli').setup()
 
     -- lsp
     add({

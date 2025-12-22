@@ -66,12 +66,19 @@ if not vim.g.vscode then
 
   -- lazygitを開く
   vim.keymap.set('n', '<leader>g', function()
-    require('FTerm').run('lazygit && exit')
+    require('floatcli').open({
+      commands = { 'lazygit' }
+    })
   end, { desc = 'LazyGit' })
 
   -- ghコマンドでPRをマージし、lazygitを開く
   vim.keymap.set('n', '<leader>c', function()
-    require('FTerm').run('mise run pr-complete && lazygit && exit')
+    require('floatcli').open({
+      commands = { 
+        'mise run pr-complete',
+        'lazygit'
+      }
+    })
   end, { desc = 'PR complete & LazyGit' })
 
   -- マークダウンをプレビューする（markdown ファイルのみ）
@@ -81,7 +88,9 @@ if not vim.g.vscode then
       vim.keymap.set('n', '<leader>r', function()
         -- 開いているバッファのパスの区切り文字を置換（Windows用）
         local buf = vim.api.nvim_buf_get_name(0):gsub("\\", "/")
-        require('FTerm').run('glow -t ' .. buf .. ' && exit')
+        require('floatcli').open({
+          commands = { 'glow -t ' .. buf }
+        })
       end, { desc = 'Preview markdown', buffer = true })
     end,
   })
