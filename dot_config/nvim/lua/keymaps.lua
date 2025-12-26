@@ -7,24 +7,26 @@ vim.g.mapleader = ' '
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = 'Previous buffer' }) -- 前のバッファへ
 vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = 'Next buffer' }) -- 次のバッファへ
 vim.keymap.set('n', '<leader>t', ':MdTableAlign<CR>', { desc = 'Align a markdown table' }) -- マークダウンのテーブルを整形
-vim.keymap.set("n", "<C-a>", function()
-    require("dial.map").manipulate("increment", "normal")
+vim.keymap.set('n', '<C-a>', function()
+    require('dial.map').manipulate('increment', 'normal')
 end)
-vim.keymap.set("n", "<C-x>", function()
-    require("dial.map").manipulate("decrement", "normal")
+vim.keymap.set('n', '<C-x>', function()
+    require('dial.map').manipulate('decrement', 'normal')
 end)
-vim.keymap.set("x", "<C-a>", function()
-    require("dial.map").manipulate("increment", "visual")
+vim.keymap.set('x', '<C-a>', function()
+    require('dial.map').manipulate('increment', 'visual')
 end)
-vim.keymap.set("x", "<C-x>", function()
-    require("dial.map").manipulate("decrement", "visual")
+vim.keymap.set('x', '<C-x>', function()
+    require('dial.map').manipulate('decrement', 'visual')
 end)
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
   -- LSPキーマップ
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto Definition' })
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover' })
+  vim.keymap.set('n', 'K', function()
+    vim.lsp.buf.hover({ border = 'single' })
+  end, { desc = 'Hover' })
 
   -- floatmemoを開く
   vim.keymap.set('n', '<leader>m', ':FloatmemoToggle<CR>', { desc = 'Toggle floatmemo' })
