@@ -42,7 +42,9 @@ if not vim.g.vscode then
     require('mini.tabline').setup() -- タブライン
     require('mini.comment').setup() -- コメント機能（gcc or gc）
     require('mini.diff').setup() -- 差分表示
-    require('mini.files').setup() -- ファイラー
+    require('mini.files').setup({
+      mappings = require('keymaps').get_mini_files_mappings(),
+    }) -- ファイラー
     require('mini.pick').setup() -- ファイル/バッファピック
     local animate = require('mini.animate') -- アニメーション
     animate.setup({

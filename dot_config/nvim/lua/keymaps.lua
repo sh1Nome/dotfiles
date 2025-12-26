@@ -42,23 +42,15 @@ if not vim.g.vscode then
     require('mini.pick').builtin.grep_live()
   end, { desc = 'Live grep' })
 
-  -- <leader>eでmini.filesを起動（カレントディレクトリ or CWD）
-  local MiniFiles = require('mini.files')
-  -- mini.filesのトグル関数
-  local minifiles_toggle = function(...)
-    if not MiniFiles.close() then MiniFiles.open(...) end
-  end
+  -- <leader>eでmini.filesを起動
   vim.keymap.set('n', '<leader>e', function()
-    local file = vim.fn.expand('%:p')
-    local dir
-    if file == '' or vim.fn.filereadable(file) == 0 then
-      -- バッファが空、またはファイルが存在しない場合はCWDを使用
-      dir = vim.fn.getcwd()
-    else
-      -- それ以外はカレントディレクトリを使用
-      dir = vim.fn.fnamemodify(file, ':h')
+    local MiniFiles = require('mini.files')
+    -- mini.filesをトグルする（開いているバッファ）
+    if not MiniFiles.close() then
+      MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
     end
-    minifiles_toggle(dir)
+    -- mini.filesを開いたらcwdを表示する
+    MiniFiles.reveal_cwd()
   end, { desc = 'Toggle file explorer' })
 
   -- <leader>nでmini.notifyの履歴を表示
@@ -112,4 +104,17 @@ local function get_mini_align_mappings()
   }
 end
 
-return { get_mini_align_mappings = get_mini_align_mappings }
+local function get_mini_files_mappings()
+  return {
+      go_in = '',
+      go_in_plus  = '<CR>',
+      go_out = '',
+      go_out_plus = '-',
+      synchronize = ':w<CR>',
+  }
+end
+
+return {
+  get_mini_align_mappings = get_mini_align_mappings,
+  get_mini_files_mappings = get_mini_files_mappings,
+}
