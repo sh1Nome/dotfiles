@@ -62,7 +62,6 @@ if not vim.g.vscode then
       },
     })
     require('mini.cursorword').setup() -- カーソル下の単語ハイライト
-    require('mini.indentscope').setup() -- インデントガイド
     require('mini.completion').setup() -- 補完
     require('mini.cmdline').setup() -- コマンドライン
     require('mini.trailspace').setup() -- 末尾の空白をハイライト
@@ -94,6 +93,16 @@ if not vim.g.vscode then
     })
     require('floatcli').setup()
 
+    -- インデントガイド
+    add({
+      source = 'saghen/blink.indent',
+    })
+    require('blink.indent').setup({
+      static = {
+        char = '▏', -- デフォルトだと太いため設定
+      },
+    })
+
     -- lsp
     add({
       -- `:h lspconfig-all`ですべての設定を見る
@@ -105,7 +114,7 @@ if not vim.g.vscode then
     })
     add({
       source = 'mason-org/mason-lspconfig.nvim',
-      depends = { 
+      depends = {
         'mason-org/mason.nvim',
         'neovim/nvim-lspconfig'
       },
