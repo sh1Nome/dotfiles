@@ -1,119 +1,121 @@
 -- キーマッピング設定
 
 -- リーダーキーをスペースに設定
-vim.g.mapleader = ' '
+vim.g.mapleader = " "
 
 -- バッファ移動
-vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = 'Previous buffer' }) -- 前のバッファへ
-vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = 'Next buffer' }) -- 次のバッファへ
-vim.keymap.set('n', '<leader>t', ':MdTableAlign<CR>', { desc = 'Align a markdown table' }) -- マークダウンのテーブルを整形
-vim.keymap.set('n', '<C-a>', function()
-    require('dial.map').manipulate('increment', 'normal')
+vim.keymap.set("n", "<leader>h", ":bprevious<CR>", { desc = "Previous buffer" }) -- 前のバッファへ
+vim.keymap.set("n", "<leader>l", ":bnext<CR>", { desc = "Next buffer" }) -- 次のバッファへ
+vim.keymap.set("n", "<leader>t", ":MdTableAlign<CR>", { desc = "Align a markdown table" }) -- マークダウンのテーブルを整形
+vim.keymap.set("n", "<C-a>", function()
+	require("dial.map").manipulate("increment", "normal")
 end)
-vim.keymap.set('n', '<C-x>', function()
-    require('dial.map').manipulate('decrement', 'normal')
+vim.keymap.set("n", "<C-x>", function()
+	require("dial.map").manipulate("decrement", "normal")
 end)
-vim.keymap.set('x', '<C-a>', function()
-    require('dial.map').manipulate('increment', 'visual')
+vim.keymap.set("x", "<C-a>", function()
+	require("dial.map").manipulate("increment", "visual")
 end)
-vim.keymap.set('x', '<C-x>', function()
-    require('dial.map').manipulate('decrement', 'visual')
+vim.keymap.set("x", "<C-x>", function()
+	require("dial.map").manipulate("decrement", "visual")
 end)
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
-  -- LSPキーマップ
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto Definition' })
-  vim.keymap.set('n', 'K', function()
-    vim.lsp.buf.hover({ border = 'single' })
-  end, { desc = 'Hover' })
+	-- LSPキーマップ
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
+	vim.keymap.set("n", "K", function()
+		vim.lsp.buf.hover({ border = "single" })
+	end, { desc = "Hover" })
 
-  -- floatmemoを開く
-  vim.keymap.set('n', '<leader>m', ':FloatmemoToggle<CR>', { desc = 'Toggle floatmemo' })
+	-- floatmemoを開く
+	vim.keymap.set("n", "<leader>m", ":FloatmemoToggle<CR>", { desc = "Toggle floatmemo" })
 
-  -- <leader>pでmini.pickのファイル検索を起動
-  vim.keymap.set('n', '<leader>p', ':Pick files<CR>', { desc = 'Pick files' })
+	-- <leader>pでmini.pickのファイル検索を起動
+	vim.keymap.set("n", "<leader>p", ":Pick files<CR>", { desc = "Pick files" })
 
-  -- <leader>bでmini.pickのバッファ検索を起動
-  vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>', { desc = 'Pick buffers' })
+	-- <leader>bでmini.pickのバッファ検索を起動
+	vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>", { desc = "Pick buffers" })
 
-  -- <leader>fでmini.pickの横断したあいまい検索を起動
-  vim.keymap.set('n', '<leader>f', function()
-    require('mini.pick').builtin.grep_live()
-  end, { desc = 'Live grep' })
+	-- <leader>fでmini.pickの横断したあいまい検索を起動
+	vim.keymap.set("n", "<leader>f", function()
+		require("mini.pick").builtin.grep_live()
+	end, { desc = "Live grep" })
 
-  -- <leader>eでmini.filesを起動
-  vim.keymap.set('n', '<leader>e', function()
-    local MiniFiles = require('mini.files')
-    -- mini.filesをトグルする（開いているバッファ）
-    if not MiniFiles.close() then
-      MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
-    end
-    -- mini.filesを開いたらcwdを表示する
-    MiniFiles.reveal_cwd()
-  end, { desc = 'Toggle file explorer' })
+	-- <leader>eでmini.filesを起動
+	vim.keymap.set("n", "<leader>e", function()
+		local MiniFiles = require("mini.files")
+		-- mini.filesをトグルする（開いているバッファ）
+		if not MiniFiles.close() then
+			MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+		end
+		-- mini.filesを開いたらcwdを表示する
+		MiniFiles.reveal_cwd()
+	end, { desc = "Toggle file explorer" })
 
-  -- <leader>nでmini.notifyの履歴を表示
-  vim.keymap.set('n', '<leader>n', function()
-    MiniNotify.show_history()
-  end, { desc = 'Show notifications' })
+	-- <leader>nでmini.notifyの履歴を表示
+	vim.keymap.set("n", "<leader>n", function()
+		MiniNotify.show_history()
+	end, { desc = "Show notifications" })
 
-  -- floatcliの設定
-  -- Windows対応: コマンド引数をダブルクオートで囲む
-  local function quote_for_windows(commands)
-    if vim.fn.has('win32') == 1 then
-      return vim.tbl_map(function(cmd) return '"' .. cmd .. '"' end, commands)
-    end
-    return commands
-  end
-  -- lazygitを開く
-  vim.keymap.set('n', '<leader>g', function()
-    require('floatcli').open({
-      commands = quote_for_windows({ 'lazygit' })
-    })
-  end, { desc = 'LazyGit' })
-  -- ghコマンドでPRをマージし、lazygitを開く
-  vim.keymap.set('n', '<leader>c', function()
-    require('floatcli').open({
-      commands = quote_for_windows({
-        'mise run pr-complete'
-      })
-    })
-  end, { desc = 'PR complete & LazyGit' })
-  -- マークダウンをプレビューする（markdown ファイルのみ）
-  vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'markdown',
-    callback = function()
-      vim.keymap.set('n', '<leader>r', function()
-        -- 開いているバッファのパスの区切り文字を置換（Windows用）
-        local buf = vim.api.nvim_buf_get_name(0):gsub("\\", "/")
-        require('floatcli').open({
-          commands = quote_for_windows({ 'glow -t ' .. buf })
-        })
-      end, { desc = 'Preview markdown', buffer = true })
-    end,
-  })
+	-- floatcliの設定
+	-- Windows対応: コマンド引数をダブルクオートで囲む
+	local function quote_for_windows(commands)
+		if vim.fn.has("win32") == 1 then
+			return vim.tbl_map(function(cmd)
+				return '"' .. cmd .. '"'
+			end, commands)
+		end
+		return commands
+	end
+	-- lazygitを開く
+	vim.keymap.set("n", "<leader>g", function()
+		require("floatcli").open({
+			commands = quote_for_windows({ "lazygit" }),
+		})
+	end, { desc = "LazyGit" })
+	-- ghコマンドでPRをマージし、lazygitを開く
+	vim.keymap.set("n", "<leader>c", function()
+		require("floatcli").open({
+			commands = quote_for_windows({
+				"mise run pr-complete",
+			}),
+		})
+	end, { desc = "PR complete & LazyGit" })
+	-- マークダウンをプレビューする（markdown ファイルのみ）
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "markdown",
+		callback = function()
+			vim.keymap.set("n", "<leader>r", function()
+				-- 開いているバッファのパスの区切り文字を置換（Windows用）
+				local buf = vim.api.nvim_buf_get_name(0):gsub("\\", "/")
+				require("floatcli").open({
+					commands = quote_for_windows({ "glow -t " .. buf }),
+				})
+			end, { desc = "Preview markdown", buffer = true })
+		end,
+	})
 end
 
 -- mini.align用のキーマップ設定を返す関数
 local function get_mini_align_mappings()
-  return {
-    start = '<leader>a',
-    start_with_preview = '',
-  }
+	return {
+		start = "<leader>a",
+		start_with_preview = "",
+	}
 end
 
 local function get_mini_files_mappings()
-  return {
-      go_in = '',
-      go_in_plus  = '<CR>',
-      go_out = '',
-      go_out_plus = '-',
-      synchronize = ':w<CR>',
-  }
+	return {
+		go_in = "",
+		go_in_plus = "<CR>",
+		go_out = "",
+		go_out_plus = "-",
+		synchronize = ":w<CR>",
+	}
 end
 
 return {
-  get_mini_align_mappings = get_mini_align_mappings,
-  get_mini_files_mappings = get_mini_files_mappings,
+	get_mini_align_mappings = get_mini_align_mappings,
+	get_mini_files_mappings = get_mini_files_mappings,
 }
