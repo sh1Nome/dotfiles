@@ -7,7 +7,7 @@ mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 [tasks.pr-complete]
 description = "Create PR, view details, review diff with delta, and merge"
 run = '''
-gh pr create && gh pr view && read -p "Press Enter to view diff..." _ && gh pr diff | delta && gh pr merge
+gh pr create && gh pr view && read -p "Press Enter to view diff..." _ && gh pr diff | delta && gh pr merge && lazygit
 '''
 
 [tasks.copilot-write]

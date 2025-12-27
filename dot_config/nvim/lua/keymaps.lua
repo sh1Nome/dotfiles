@@ -76,8 +76,7 @@ if not vim.g.vscode then
   vim.keymap.set('n', '<leader>c', function()
     require('floatcli').open({
       commands = quote_for_windows({
-        'mise run pr-complete',
-        'lazygit'
+        'mise run pr-complete'
       })
     })
   end, { desc = 'PR complete & LazyGit' })
