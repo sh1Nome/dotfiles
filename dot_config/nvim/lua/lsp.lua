@@ -34,6 +34,7 @@ MiniDeps.later(function()
     conform.setup({
       formatters_by_ft = {
         sql = { "sql_formatter" },
+        lua = { "stylua" },
       },
       default_format_opts = {
         -- フォーマッターがない場合はLSPのフォーマットを実行
