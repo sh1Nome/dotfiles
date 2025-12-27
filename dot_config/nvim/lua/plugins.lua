@@ -45,6 +45,7 @@ if not vim.g.vscode then
 		require("mini.icons").setup() -- アイコン
 		require("mini.statusline").setup() -- ステータスライン
 		require("mini.tabline").setup() -- タブライン
+		vim.api.nvim_set_hl(0, "MiniTablineCurrent", { fg = "#ffffff", bg = "#a22041" }) -- アクティブなタブの色を変更
 		require("mini.comment").setup() -- コメント機能（gcc or gc）
 		require("mini.diff").setup() -- 差分表示
 		require("mini.files").setup({
