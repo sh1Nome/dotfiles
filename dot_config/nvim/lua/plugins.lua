@@ -65,6 +65,7 @@ if not vim.g.vscode then
     require('mini.indentscope').setup() -- インデントガイド
     require('mini.completion').setup() -- 補完
     require('mini.cmdline').setup() -- コマンドライン
+    require('mini.trailspace').setup() -- 末尾の空白をハイライト
     require('mini.extra').setup() -- 追加
 
     local miniclue = require('mini.clue') -- キーマップを表示
