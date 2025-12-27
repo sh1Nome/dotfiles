@@ -8,9 +8,9 @@ vim.opt.backspace = { "indent", "eol", "start" } -- バックスペース有効�
 vim.opt.clipboard = { "unnamed", "unnamedplus" } -- システムクリップボードを利用
 
 -- Windowsのときはgit bashを開く
-if vim.fn.has('win32') == 1 then
-    vim.opt.shell = 'C:\\Progra~1\\Git\\bin\\bash.exe'
-    vim.opt.shellcmdflag = '-c'
+if vim.fn.has("win32") == 1 then
+	vim.opt.shell = "C:\\Progra~1\\Git\\bin\\bash.exe"
+	vim.opt.shellcmdflag = "-c"
 end
 
 -- 表示系
@@ -18,10 +18,10 @@ vim.opt.showcmd = true -- コマンドを表示
 vim.opt.number = true -- 行番号を表示
 vim.opt.relativenumber = true -- 相対行番号を表示（現在行は絶対表示）
 vim.api.nvim_create_autocmd("TermOpen", { -- ターミナルでも常時相対行番号を表示
-  callback = function()
-    vim.opt_local.number = true
-    vim.opt_local.relativenumber = true
-  end,
+	callback = function()
+		vim.opt_local.number = true
+		vim.opt_local.relativenumber = true
+	end,
 })
 vim.opt.showmatch = true -- 対応する括弧をハイライト
 vim.opt.softtabstop = 2 -- タブキー押下時の文字幅
@@ -45,4 +45,3 @@ vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.opt.ignorecase = true -- 大文字小文字を区別しない
 vim.opt.incsearch = true -- 入力中に検索開始
 vim.opt.hlsearch = true -- 検索結果をハイライト
-
