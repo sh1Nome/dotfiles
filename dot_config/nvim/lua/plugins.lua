@@ -153,7 +153,23 @@ now(function()
 end)
 
 later(function()
-	require("mini.jump").setup() -- ジャンプ機能（f）
+	-- ジャンプ機能（<CR>）
+	local jump2d = require("mini.jump2d")
+	jump2d.setup({
+		-- 空白以外の2文字に1つジャンプスポットを生成
+		spotter = jump2d.gen_spotter.pattern("%S%S"),
+		-- ジャンプスポットのラベルを定義
+		labels = "abcdefghijklmnopqrstuvwxyz1234567890",
+		view = {
+			-- 3ステップ先まで表示
+			n_steps_ahead = 3,
+		},
+		-- 現在のウィンドウでのみ表示
+		allowed_windows = {
+			current = true,
+			not_current = false,
+		},
+	})
 	-- サラウンド機能（sa, sr, sd）
 	require("mini.surround").setup({
 		custom_surroundings = {
