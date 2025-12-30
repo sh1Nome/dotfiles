@@ -47,7 +47,12 @@ if not vim.g.vscode then
 		local MiniFiles = require("mini.files")
 		-- mini.filesをトグルする（開いているバッファ）
 		if not MiniFiles.close() then
-			MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+			local buf_name = vim.api.nvim_buf_get_name(0)
+			-- URL形式のバッファ名はローカルファイルシステムのパスではないため、空文字列を渡す
+			if buf_name:match("^[a-z]+://") then
+				buf_name = ""
+			end
+			MiniFiles.open(buf_name, false)
 		end
 		-- mini.filesを開いたらcwdを表示する
 		MiniFiles.reveal_cwd()

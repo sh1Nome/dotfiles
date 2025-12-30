@@ -27,6 +27,14 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 if not vim.g.vscode then
 	-- 即時ロード
 	now(function()
+		require("mini.starter").setup({
+			items = {
+				{ name = "Update", action = "DepsUpdate", section = "Plugins" },
+				{ name = "Clean", action = "DepsClean", section = "Plugins" },
+				{ name = "Mason", action = "Mason", section = "Plugins" },
+				{ name = "Quit", action = "qa!", section = "System" },
+			},
+		}) -- スタート画面
 		require("mini.notify").setup({
 			-- `:lua MiniNotify.show_history()`で通知履歴を見れる
 			-- 右下に表示
