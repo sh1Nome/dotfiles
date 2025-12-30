@@ -171,6 +171,14 @@ later(function()
 			not_current = false,
 		},
 	})
+	-- 括弧補完
+	require("mini.pairs").setup({
+		mappings = {
+			-- バッククオートを無効化
+			-- マークダウンでコードブロックを書くときに邪魔になるため
+			["`"] = false,
+		},
+	})
 	-- サラウンド機能（sa, sr, sd）
 	require("mini.surround").setup({
 		custom_surroundings = {
