@@ -79,14 +79,14 @@ if not vim.g.vscode then
 			commands = quote_for_windows({ "lazygit" }),
 		})
 	end, { desc = "LazyGit" })
-	-- ghコマンドでPRをマージし、lazygitを開く
-	vim.keymap.set("n", "<leader>c", function()
+	-- miseのタスクを実行する
+	vim.keymap.set("n", "<leader>d", function()
 		require("floatcli").open({
 			commands = quote_for_windows({
-				"mise run pr-complete",
+				"mise run",
 			}),
 		})
-	end, { desc = "PR complete & LazyGit" })
+	end, { desc = "Do task with mise" })
 	-- マークダウンをプレビューする（markdown ファイルのみ）
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "markdown",
