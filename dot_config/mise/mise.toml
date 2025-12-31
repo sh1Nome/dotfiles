@@ -26,9 +26,9 @@ while true; do
 
   # 操作に応じた選択肢を設定
   if [ "$target" = "issue" ]; then
-    operations="view\nedit\ncomment\nclose\nback"
+    operations="view\nedit\ncomment\nclose\nback\nquit"
   else
-    operations="view\ncheckout\ndiff\nedit\ncomment\nmerge\nready\nclose\nback"
+    operations="view\ncheckout\ndiff\nedit\ncomment\nmerge\nready\nclose\nback\nquit"
   fi
 
   while true; do
@@ -40,6 +40,10 @@ while true; do
 
     if [ "$operation" = "back" ]; then
       break
+    fi
+
+    if [ "$operation" = "quit" ]; then
+      exit 0
     fi
 
     if [ "$operation" = "diff" ] && [ "$target" = "pr" ]; then
