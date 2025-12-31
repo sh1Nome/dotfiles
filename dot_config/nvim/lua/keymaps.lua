@@ -116,7 +116,6 @@ local function get_mini_files_mappings()
 		go_in_plus = "<CR>",
 		go_out = "",
 		go_out_plus = "-",
-		synchronize = ":w<CR>",
 	}
 end
 

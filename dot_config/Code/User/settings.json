@@ -22,6 +22,10 @@
   "editor.guides.bracketPairs": "active", // アクティブな括弧ペアをハイライト
   // ミニマップを無効化
   "editor.minimap.enabled": false,
+  "editor.autoClosingBrackets": "always", // 括弧の自動閉じを常に有効
+  "editor.autoClosingQuotes": "always", // 引用符の自動閉じを常に有効
+  "editor.autoClosingDelete": "always", // 閉じ括弧や閉じ引用符の自動削除を常に有効
+  "editor.autoSurround": "never", // 選択範囲の自動囲みを無効
   "editor.wordWrap": "off", // 折返しを無効化
   "editor.rulers": [80], // 80文字目に縦線を表示
   "[markdown]": {

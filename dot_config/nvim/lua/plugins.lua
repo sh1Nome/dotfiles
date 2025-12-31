@@ -82,6 +82,14 @@ if not vim.g.vscode then
 		require("mini.cmdline").setup() -- コマンドライン
 		require("mini.trailspace").setup() -- 末尾の空白をハイライト
 		require("mini.git").setup() -- `:Git`コマンドを追加
+		-- 括弧補完
+		require("mini.pairs").setup({
+			mappings = {
+				-- バッククオートを無効化
+				-- マークダウンでコードブロックを書くときに邪魔になるため
+				["`"] = false,
+			},
+		})
 		require("mini.extra").setup() -- 追加
 
 		local miniclue = require("mini.clue") -- キーマップを表示
@@ -177,14 +185,6 @@ later(function()
 		allowed_windows = {
 			current = true,
 			not_current = false,
-		},
-	})
-	-- 括弧補完
-	require("mini.pairs").setup({
-		mappings = {
-			-- バッククオートを無効化
-			-- マークダウンでコードブロックを書くときに邪魔になるため
-			["`"] = false,
 		},
 	})
 	-- サラウンド機能（sa, sr, sd）
