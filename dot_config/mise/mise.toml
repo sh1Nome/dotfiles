@@ -48,7 +48,11 @@ while true; do
       break
     fi
 
-    gh "$target" "$operation" "$number"
+    if [ "$operation" = "diff" ] && [ "$target" = "pr" ]; then
+      gh "$target" "$operation" "$number" | delta
+    else
+      gh "$target" "$operation" "$number"
+    fi
     read -p "Press Enter to continue..." _
   done
 done
