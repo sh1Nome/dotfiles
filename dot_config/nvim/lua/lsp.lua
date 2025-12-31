@@ -51,6 +51,12 @@ MiniDeps.later(function()
 			formatters_by_ft = {
 				sql = { "sql_formatter" },
 				lua = { "stylua" },
+				typescript = { "prettier" },
+				javascript = { "prettier" },
+				vue = { "prettier" },
+				html = { "prettier" },
+				json = { "prettier" },
+				jsonc = { "prettier" },
 			},
 			default_format_opts = {
 				-- フォーマッターがない場合はLSPのフォーマットを実行
