@@ -10,6 +10,50 @@ run = '''
 gh pr create && gh pr view && read -p "Press Enter to view diff..." _ && gh pr diff | delta && gh pr merge && lazygit
 '''
 
+[tasks.gh-manage]
+description = "Interactive GitHub issue/PR manager with gum"
+run = '''
+# Issue か PR かを選択
+target=$(printf "issue\npr" | gum choose)
+
+if [ -z "$target" ]; then
+  exit 0
+fi
+
+while true; do
+  # Issue または PR の一覧を表示
+  item=$(gh "$target" ls | gum filter)
+
+  if [ -z "$item" ]; then
+    exit 0
+  fi
+
+  number=$(echo "$item" | awk '{print $1}')
+
+  # 操作に応じた選択肢を設定
+  if [ "$target" = "issue" ]; then
+    operations="view\nedit\ncomment\nclose\nback"
+  else
+    operations="view\ncheckout\ndiff\nedit\ncomment\nmerge\nready\nclose\nback"
+  fi
+
+  while true; do
+    operation=$(printf "$operations" | gum choose)
+
+    if [ -z "$operation" ]; then
+      exit 0
+    fi
+
+    if [ "$operation" = "back" ]; then
+      break
+    fi
+
+    gh "$target" "$operation" "$number"
+    read -p "Press Enter to continue..." _
+  done
+done
+'''
+
 [tasks.copilot-write]
 description = "Launch GitHub Copilot CLI with write tool enabled"
 run = "copilot --allow-tool 'write' --model claude-haiku-4.5"
