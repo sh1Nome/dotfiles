@@ -8,7 +8,7 @@ mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 description = "Interactive GitHub issue/PR manager with gum"
 run = '''
 while true; do
-  # Issue/PR/Quitを選択
+  # issue/pr/quitを選択（そのままコマンド実行に使うためすべて小文字）
   target=$(printf "issue\npr\nquit" | gum choose)
 
   # 未選択またはQuit選択でスクリプトを終了
@@ -41,7 +41,17 @@ done
 
 [tasks.copilot-write]
 description = "Launch GitHub Copilot CLI with write tool enabled"
-run = "copilot --allow-tool 'write' --model claude-haiku-4.5"
+run = '''
+mode=$(printf "new\nresume" | gum choose --header "Select mode:")
+if [ -z "$mode" ]; then
+  exit 0
+fi
+if [ "$mode" = "resume" ]; then
+  copilot --allow-tool 'write' --model claude-haiku-4.5 --resume
+else
+  copilot --allow-tool 'write' --model claude-haiku-4.5
+fi
+'''
 
 [settings]
 windows_default_inline_shell_args = "C:/Progra~1/Git/bin/bash.exe --noprofile -c"
