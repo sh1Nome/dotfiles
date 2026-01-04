@@ -73,6 +73,12 @@ if not vim.g.vscode then
 		end
 		return commands
 	end
+	-- bashを開く
+	vim.keymap.set("n", "<leader>s", function()
+		require("floatcli").open({
+			commands = quote_for_windows({ "bash" }),
+		})
+	end, { desc = "LazyGit" })
 	-- lazygitを開く
 	vim.keymap.set("n", "<leader>g", function()
 		require("floatcli").open({
