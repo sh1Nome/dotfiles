@@ -12,10 +12,8 @@ remote_url=$(git config get remote.origin.url)
 
 if echo "$remote_url" | grep -q "gitlab"; then
   vcs_cli="glab"
-  vcs_name="GitLab"
 elif echo "$remote_url" | grep -q "github"; then
   vcs_cli="gh"
-  vcs_name="GitHub"
 else
   echo "Error: Unable to determine VCS provider (GitHub or GitLab) from remote URL: $remote_url"
   exit 1
@@ -23,13 +21,13 @@ fi
 
 while true; do
   # issue/pr,mr/quitを選択（そのままコマンド実行に使うためすべて小文字）
-  if [ "$vcs_name" = "GitLab" ]; then
+  if [ "$vcs_cli" = "glab" ]; then
     resource_options="issue\nmr\nquit"
   else
     resource_options="issue\npr\nquit"
   fi
 
-  target=$(printf "$resource_options" | gum choose --header "Select $vcs_name resource type")
+  target=$(printf "$resource_options" | gum choose --header "Select $vcs_cli resource type")
 
   # 未選択またはQuit選択でスクリプトを終了
   if [ -z "$target" ] || [ "$target" = "quit" ]; then
