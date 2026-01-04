@@ -78,21 +78,7 @@ if not vim.g.vscode then
 		require("floatcli").open({
 			commands = quote_for_windows({ "bash" }),
 		})
-	end, { desc = "LazyGit" })
-	-- lazygitを開く
-	vim.keymap.set("n", "<leader>g", function()
-		require("floatcli").open({
-			commands = quote_for_windows({ "lazygit" }),
-		})
-	end, { desc = "LazyGit" })
-	-- miseのタスクを実行する
-	vim.keymap.set("n", "<leader>d", function()
-		require("floatcli").open({
-			commands = quote_for_windows({
-				"mise run",
-			}),
-		})
-	end, { desc = "Do task with mise" })
+	end, { desc = "Float shell" })
 	-- マークダウンをプレビューする（markdown ファイルのみ）
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "markdown",
