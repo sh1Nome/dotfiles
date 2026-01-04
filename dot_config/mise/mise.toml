@@ -22,12 +22,10 @@ fi
 while true; do
   # issue/pr,mr/quitを選択（そのままコマンド実行に使うためすべて小文字）
   if [ "$vcs_cli" = "glab" ]; then
-    resource_options="issue\nmr\nquit"
+    target=$(gum choose --header "Select $vcs_cli resource type" "issue" "mr" "quit")
   else
-    resource_options="issue\npr\nquit"
+    target=$(gum choose --header "Select $vcs_cli resource type" "issue" "pr" "quit")
   fi
-
-  target=$(printf "$resource_options" | gum choose --header "Select $vcs_cli resource type")
 
   # 未選択またはQuit選択でスクリプトを終了
   if [ -z "$target" ] || [ "$target" = "quit" ]; then
@@ -60,7 +58,7 @@ done
 [tasks.copilot-write]
 description = "Launch GitHub Copilot CLI with write tool enabled"
 run = '''
-mode=$(printf "new\ncontinue\nresume" | gum choose --header "Select mode:")
+mode=$(gum choose --header "Select mode:" "new" "continue" "resume")
 if [ -z "$mode" ]; then
   exit 0
 fi
