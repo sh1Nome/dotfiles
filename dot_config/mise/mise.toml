@@ -4,12 +4,32 @@ run = '''
 mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 '''
 
-[tasks.gh-manage]
-description = "Interactive GitHub issue/PR manager with gum"
+[tasks.vcs-manage]
+description = "Interactive VCS (GitHub/GitLab) manager with gum"
 run = '''
+# リモートURLからVCSプロバイダーを判定
+remote_url=$(git config get remote.origin.url)
+
+if echo "$remote_url" | grep -q "gitlab"; then
+  vcs_cli="glab"
+  vcs_name="GitLab"
+elif echo "$remote_url" | grep -q "github"; then
+  vcs_cli="gh"
+  vcs_name="GitHub"
+else
+  echo "Error: Unable to determine VCS provider (GitHub or GitLab) from remote URL: $remote_url"
+  exit 1
+fi
+
 while true; do
-  # issue/pr/quitを選択（そのままコマンド実行に使うためすべて小文字）
-  target=$(printf "issue\npr\nquit" | gum choose)
+  # issue/pr,mr/quitを選択（そのままコマンド実行に使うためすべて小文字）
+  if [ "$vcs_name" = "GitLab" ]; then
+    resource_options="issue\nmr\nquit"
+  else
+    resource_options="issue\npr\nquit"
+  fi
+
+  target=$(printf "$resource_options" | gum choose --header "Select $vcs_name resource type")
 
   # 未選択またはQuit選択でスクリプトを終了
   if [ -z "$target" ] || [ "$target" = "quit" ]; then
@@ -18,7 +38,7 @@ while true; do
 
   while true; do
     # コマンド入力を受け付ける
-    command=$(gum input --prompt "gh ${target}> " --header "Type 'exit' to return to selection")
+    command=$(gum input --prompt "$vcs_cli ${target}> " --header "Type 'exit' to return to selection")
 
     # 未入力の場合はエラーを表示して続行
     if [ -z "$command" ]; then
@@ -33,7 +53,7 @@ while true; do
     fi
 
     # コマンド実行（|| true でエラー時もスクリプトを続行）
-    eval "gh $target $command" || true
+    eval "$vcs_cli $target $command" || true
     echo "---"
   done
 done
