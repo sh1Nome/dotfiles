@@ -31,18 +31,18 @@ if not vim.g.vscode then
 	-- floatmemoを開く
 	vim.keymap.set("n", "<leader>m", ":FloatmemoToggle<CR>", { desc = "Toggle floatmemo" })
 
-	-- <leader>pでmini.pickのファイル検索を起動
+	-- mini.pickのファイル検索を起動
 	vim.keymap.set("n", "<leader>p", ":Pick files<CR>", { desc = "Pick files" })
 
-	-- <leader>bでmini.pickのバッファ検索を起動
+	-- mini.pickのバッファ検索を起動
 	vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>", { desc = "Pick buffers" })
 
-	-- <leader>fでmini.pickの横断したあいまい検索を起動
+	-- mini.pickの横断したあいまい検索を起動
 	vim.keymap.set("n", "<leader>f", function()
 		require("mini.pick").builtin.grep_live()
 	end, { desc = "Live grep" })
 
-	-- <leader>eでmini.filesを起動
+	-- mini.filesを起動
 	vim.keymap.set("n", "<leader>e", function()
 		local MiniFiles = require("mini.files")
 		-- mini.filesをトグルする（開いているバッファ）
@@ -58,7 +58,7 @@ if not vim.g.vscode then
 		MiniFiles.reveal_cwd()
 	end, { desc = "Toggle file explorer" })
 
-	-- <leader>nでmini.notifyの履歴を表示
+	-- mini.notifyの履歴を表示
 	vim.keymap.set("n", "<leader>n", function()
 		MiniNotify.show_history()
 	end, { desc = "Show notifications" })
@@ -73,6 +73,12 @@ if not vim.g.vscode then
 		end
 		return commands
 	end
+	-- bashを開く
+	vim.keymap.set("n", "<leader>s", function()
+		require("floatcli").open({
+			commands = quote_for_windows({ "bash" }),
+		})
+	end, { desc = "LazyGit" })
 	-- lazygitを開く
 	vim.keymap.set("n", "<leader>g", function()
 		require("floatcli").open({
