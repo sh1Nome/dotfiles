@@ -7,51 +7,34 @@ mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 [tasks.gh-manage]
 description = "Interactive GitHub issue/PR manager with gum"
 run = '''
-# Issue か PR かを選択
-target=$(printf "issue\npr" | gum choose)
-
-if [ -z "$target" ]; then
-  exit 0
-fi
-
 while true; do
-  # Issue または PR の一覧を表示
-  item=$(gh "$target" ls | gum filter)
+  # Issue/PR/Quitを選択
+  target=$(printf "issue\npr\nquit" | gum choose)
 
-  if [ -z "$item" ]; then
+  # 未選択またはQuit選択でスクリプトを終了
+  if [ -z "$target" ] || [ "$target" = "quit" ]; then
     exit 0
   fi
 
-  number=$(echo "$item" | awk '{print $1}')
-
-  # 操作に応じた選択肢を設定
-  if [ "$target" = "issue" ]; then
-    operations="view\nedit\ncomment\nclose\nback\nquit"
-  else
-    operations="view\ncheckout\ndiff\nedit\ncomment\nmerge\nready\nclose\nback\nquit"
-  fi
-
   while true; do
-    operation=$(printf "$operations" | gum choose)
+    # コマンド入力を受け付ける
+    command=$(gum input --prompt "gh ${target}> " --header "Type 'exit' to return to selection")
 
-    if [ -z "$operation" ]; then
-      exit 0
+    # 未入力の場合はエラーを表示して続行
+    if [ -z "$command" ]; then
+      echo "Please enter a command (or type 'exit' to return)"
+      echo "---"
+      continue
     fi
 
-    if [ "$operation" = "back" ]; then
+    # exitで選択画面に戻る
+    if [ "$command" = "exit" ]; then
       break
     fi
 
-    if [ "$operation" = "quit" ]; then
-      exit 0
-    fi
-
-    if [ "$operation" = "diff" ] && [ "$target" = "pr" ]; then
-      gh "$target" "$operation" "$number" | delta
-    else
-      gh "$target" "$operation" "$number"
-    fi
-    read -p "Press Enter to continue..." _
+    # コマンド実行（|| true でエラー時もスクリプトを続行）
+    eval "gh $target $command" || true
+    echo "---"
   done
 done
 '''
