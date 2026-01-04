@@ -42,11 +42,13 @@ done
 [tasks.copilot-write]
 description = "Launch GitHub Copilot CLI with write tool enabled"
 run = '''
-mode=$(printf "new\nresume" | gum choose --header "Select mode:")
+mode=$(printf "new\ncontinue\nresume" | gum choose --header "Select mode:")
 if [ -z "$mode" ]; then
   exit 0
 fi
-if [ "$mode" = "resume" ]; then
+if [ "$mode" = "continue" ]; then
+  copilot --allow-tool 'write' --model claude-haiku-4.5 --continue
+elif [ "$mode" = "resume" ]; then
   copilot --allow-tool 'write' --model claude-haiku-4.5 --resume
 else
   copilot --allow-tool 'write' --model claude-haiku-4.5
