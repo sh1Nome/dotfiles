@@ -54,7 +54,6 @@ if not vim.g.vscode then
 		require("mini.statusline").setup() -- ステータスライン
 		require("mini.tabline").setup() -- タブライン
 		vim.api.nvim_set_hl(0, "MiniTablineHidden", { fg = "#a3a3a2" }) -- 非アクティブなタブの色を変更
-		require("mini.comment").setup() -- コメント機能（gcc or gc）
 		require("mini.diff").setup() -- 差分表示
 		require("mini.files").setup({
 			mappings = require("keymaps").get_mini_files_mappings(),
