@@ -11,6 +11,7 @@ vim.opt.clipboard = { "unnamed", "unnamedplus" } -- システムクリップボ�
 if vim.fn.has("win32") == 1 then
 	vim.opt.shell = "C:\\Progra~1\\Git\\bin\\bash.exe"
 	vim.opt.shellcmdflag = "-c"
+	vim.opt.shellxquote = ""
 end
 
 -- 表示系
