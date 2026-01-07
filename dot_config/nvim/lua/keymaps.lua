@@ -78,7 +78,7 @@ if not vim.g.vscode then
 				-- 開いているバッファのパスの区切り文字を置換（Windows用）
 				local buf = vim.api.nvim_buf_get_name(0):gsub("\\", "/")
 				require("floatcli").open({
-					commands = { "glow -t " .. buf },
+					commands = { "glow -t '" .. buf .. "'" },
 				})
 			end, { desc = "Preview markdown", buffer = true })
 		end,
