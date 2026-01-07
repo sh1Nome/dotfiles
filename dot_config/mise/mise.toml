@@ -4,52 +4,30 @@ run = '''
 mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 '''
 
-[tasks.vcs-manage]
-description = "Interactive VCS (GitHub/GitLab) manager with gum"
+[tasks.prefix-cli]
+description = "Interactive command runner with custom prefix"
 run = '''
-# リモートURLからVCSプロバイダーを判定
-remote_url=$(git config get remote.origin.url)
-
-if echo "$remote_url" | grep -q "gitlab"; then
-  vcs_cli="glab"
-elif echo "$remote_url" | grep -q "github"; then
-  vcs_cli="gh"
-else
-  echo "Error: Unable to determine VCS provider (GitHub or GitLab) from remote URL: $remote_url"
-  exit 1
-fi
-
 while true; do
-  # issue/pr,mr/quitを選択（そのままコマンド実行に使うためすべて小文字）
-  if [ "$vcs_cli" = "glab" ]; then
-    target=$(gum choose --header "Select $vcs_cli resource type" "issue" "mr" "quit")
-  else
-    target=$(gum choose --header "Select $vcs_cli resource type" "issue" "pr" "quit")
+  prefix=$(gum input --prompt "Enter command prefix> " --header "e.g., git, gh, gh issue | Type 'exit' to exit")
+  if [ -z "$prefix" ]; then
+    continue
   fi
 
-  # 未選択またはQuit選択でスクリプトを終了
-  if [ -z "$target" ] || [ "$target" = "quit" ]; then
+  if [ "$prefix" = "exit" ]; then
     exit 0
   fi
 
   while true; do
-    # コマンド入力を受け付ける
-    command=$(gum input --prompt "$vcs_cli ${target}> " --header "Type 'exit' to return to selection")
-
-    # 未入力の場合はエラーを表示して続行
-    if [ -z "$command" ]; then
-      echo "Please enter a command (or type 'exit' to return)"
-      echo "---"
+    subcommand=$(gum input --prompt "$prefix> " --header "Type 'exit' to change prefix")
+    if [ -z "$subcommand" ]; then
       continue
     fi
 
-    # exitで選択画面に戻る
-    if [ "$command" = "exit" ]; then
+    if [ "$subcommand" = "exit" ]; then
       break
     fi
 
-    # コマンド実行（|| true でエラー時もスクリプトを続行）
-    eval "$vcs_cli $target $command" || true
+    eval "$prefix $subcommand" || true
     echo "---"
   done
 done
