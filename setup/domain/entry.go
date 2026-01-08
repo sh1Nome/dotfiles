@@ -26,8 +26,6 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		// git
 		{Name: "config", SrcRel: "dot_config/git/config", DstRel: ".config/git/config"},
 		{Name: "config.local", SrcRel: "dot_config/git/config.local", DstRel: ".config/git/config.local"},
-		// lazygit
-		{Name: "config.yml", SrcRel: "dot_config/lazygit/config-linux.yml", DstRel: ".config/lazygit/config.yml"},
 		// vscode
 		{Name: "settings.json", SrcRel: "dot_config/Code/User/settings.json", DstRel: ".config/Code/User/settings.json"},
 		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
@@ -54,8 +52,6 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		// git
 		{Name: "config", SrcRel: "dot_config/git/config", DstRel: ".config/git/config"},
 		{Name: "config.local", SrcRel: "dot_config/git/config.local", DstRel: ".config/git/config.local"},
-		// lazygit
-		{Name: "config.yml", SrcRel: "dot_config/lazygit/config-windows.yml", DstRel: "AppData/Local/lazygit/config.yml"},
 		// vscode
 		{Name: "settings.json", SrcRel: "dot_config/Code/User/settings.json", DstRel: "AppData/Roaming/Code/User/settings.json"},
 		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: "AppData/Roaming/Code/User/keybindings.json"},
