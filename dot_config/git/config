@@ -2,7 +2,6 @@
         autocrlf = false       # 改行コードを自動変換しない
         ignorecase = false     # 大文字小文字を区別する
         quotepath = false      # パスをクォートせずUTF-8表示
-        editor = vi            # デフォルトエディタをviにする
 [pull]
         rebase = false         # pull時にrebaseしない
 [fetch]
