@@ -37,6 +37,11 @@ func ExecuteLink() error {
 		return err
 	}
 
+	// Zshの設定ファイルを作成
+	if err := tool.SetupZshrcLocal(dotfilesDir, miseEnv); err != nil {
+		return err
+	}
+
 	// PowerShellの設定ファイルを作成
 	if err := tool.SetupProfileLocal(dotfilesDir, miseEnv); err != nil {
 		return err

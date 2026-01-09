@@ -17,6 +17,9 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		// bash
 		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
 		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
+		// zsh
+		{Name: ".zshrc", SrcRel: "dot_config/zsh/zshrc", DstRel: ".zshrc"},
+		{Name: ".zshrc.local", SrcRel: "dot_config/zsh/zshrc.local", DstRel: ".zshrc.local"},
 		// mise
 		{Name: "mise", SrcRel: "dot_config/mise", DstRel: ".config/mise"},
 		// vim

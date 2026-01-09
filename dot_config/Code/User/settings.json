@@ -1,9 +1,9 @@
 {
   // Linux用のターミナル設定
   "terminal.integrated.profiles.linux": {
-    "bash": { "path": "bash" }
+    "zsh": { "path": "zsh" }
   },
-  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.linux": "zsh",
 
   // Windows用のターミナル設定
   "terminal.integrated.profiles.windows": {

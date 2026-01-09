@@ -64,10 +64,10 @@ if not vim.g.vscode then
 	end, { desc = "Show notifications" })
 
 	-- floatcliの設定
-	-- bashを開く
+	-- zshを開く
 	vim.keymap.set("n", "<leader>s", function()
 		require("floatcli").open({
-			commands = { "bash" },
+			commands = { "zsh" },
 		})
 	end, { desc = "Float shell" })
 	-- マークダウンをプレビューする（markdown ファイルのみ）
