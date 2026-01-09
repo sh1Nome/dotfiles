@@ -15,6 +15,7 @@ Neovimのキーマップはleaderキーのあとに1文字だけ使える制約�
 * Fcitx5（Linux）
 * Wezterm
 * Bash
+* Zsh
 * Powershell（Windows）
 * mise
 * Vim

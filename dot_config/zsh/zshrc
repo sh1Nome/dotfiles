@@ -1,0 +1,50 @@
+# vcs_info を読み込む（VCS 情報取得用）
+autoload -Uz vcs_info
+
+# プロンプト表示前に vcs_info を実行する
+precmd() {
+  vcs_info
+}
+
+# %uと%cを有効化
+zstyle ':vcs_info:*' check-for-changes true
+# 未コミットの場合!を表示
+zstyle ':vcs_info:*' stagedstr !
+# 未ステージングの場合+を表示
+zstyle ':vcs_info:*' unstagedstr +
+# プロンプトに表示するフォーマット（ブランチ名と変更状態）
+zstyle ':vcs_info:*' formats '[%b]%u%c'
+
+# PROMPT 内で変数展開を有効化する
+setopt prompt_subst
+
+# プロンプト設定
+PROMPT='%F{green}%n@%m%f:%F{blue}%~%f%F{yellow}${vcs_info_msg_0_}%f
+$ '
+
+# 履歴設定
+# histignorealldups: 重複したコマンドを履歴に記録しない
+# sharehistory: 複数のシェルセッションで履歴を共有
+setopt histignorealldups sharehistory
+
+# 履歴ファイル保存先と行数設定
+# HISTSIZE: メモリに保持する履歴行数
+# SAVEHIST: ファイルに保存する履歴行数（~/.zsh_history）
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# モダンな補完システムを使用
+autoload -Uz compinit
+compinit
+
+# エディター
+export EDITOR=nvim
+
+# miseのエイリアス
+alias x="mise x --"
+
+# ローカル設定ファイルの読み込み
+if [ -f ~/.zshrc.local ]; then
+    source ~/.zshrc.local
+fi

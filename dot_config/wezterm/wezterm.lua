@@ -24,7 +24,7 @@ config.use_ime = true -- 日本語入力の有効化
 if wezterm.target_triple:find("windows") then
 	config.default_prog = { "C:\\Progra~1\\Git\\bin\\bash.exe" } -- Windows環境でGit Bashを使用
 else
-	config.default_prog = { "bash" } -- Unix環境でbashを使用
+	config.default_prog = { "zsh" } -- Unix環境でzshを使用
 end
 
 return config
