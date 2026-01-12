@@ -4,48 +4,26 @@ run = '''
 mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 '''
 
-[tasks.prefix-cli]
-description = "Interactive command runner with custom prefix"
-run = '''
-while true; do
-  prefix=$(gum input --prompt "Enter command prefix> " --header "e.g., git, gh, gh issue | Type 'exit' to exit")
-  if [ -z "$prefix" ]; then
-    continue
-  fi
-
-  if [ "$prefix" = "exit" ]; then
-    exit 0
-  fi
-
-  while true; do
-    subcommand=$(gum input --prompt "$prefix> " --header "Type 'exit' to change prefix")
-    if [ -z "$subcommand" ]; then
-      continue
-    fi
-
-    if [ "$subcommand" = "exit" ]; then
-      break
-    fi
-
-    eval "$prefix $subcommand" || true
-    echo "---"
-  done
-done
-'''
-
 [tasks.copilot-write]
 description = "Launch GitHub Copilot CLI with write tool enabled"
 run = '''
-mode=$(gum choose --header "Select mode:" "new" "continue" "resume")
-if [ -z "$mode" ]; then
-  exit 0
-fi
-if [ "$mode" = "continue" ]; then
+cat << 'EOF'
+Select mode:
+  n) new
+  c) continue
+  r) resume
+EOF
+read -p "Enter (n/c/r): " mode
+
+if [ "$mode" = "n" ]; then
+  copilot --allow-tool 'write' --model claude-haiku-4.5
+elif [ "$mode" = "c" ]; then
   copilot --allow-tool 'write' --model claude-haiku-4.5 --continue
-elif [ "$mode" = "resume" ]; then
+elif [ "$mode" = "r" ]; then
   copilot --allow-tool 'write' --model claude-haiku-4.5 --resume
 else
-  copilot --allow-tool 'write' --model claude-haiku-4.5
+  echo "Invalid input: $mode"
+  exit 1
 fi
 '''
 
