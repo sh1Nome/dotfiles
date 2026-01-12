@@ -37,11 +37,6 @@ func ExecuteLink() error {
 		return err
 	}
 
-	// PowerShellの設定ファイルを作成
-	if err := tool.SetupProfileLocal(dotfilesDir, miseEnv); err != nil {
-		return err
-	}
-
 	// 管理しているdotfilesのシンボリックリンク作成
 	manager.CreateDotfileLinks()
 

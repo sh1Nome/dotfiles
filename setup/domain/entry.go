@@ -40,9 +40,6 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		// bash
 		{Name: ".bashrc", SrcRel: "dot_config/bash/bashrc", DstRel: ".bashrc"},
 		{Name: ".bashrc.local", SrcRel: "dot_config/bash/bashrc.local", DstRel: ".bashrc.local"},
-		// powershell
-		{Name: "Microsoft.PowerShell_profile.ps1", SrcRel: "dot_config/powershell/Microsoft.PowerShell_profile.ps1", DstRel: "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"},
-		{Name: ".profile.local.ps1", SrcRel: "dot_config/powershell/profile.local.ps1", DstRel: "Documents/WindowsPowerShell/.profile.local.ps1"},
 		// mise
 		{Name: "mise", SrcRel: "dot_config/mise", DstRel: ".config/mise"},
 		// vim

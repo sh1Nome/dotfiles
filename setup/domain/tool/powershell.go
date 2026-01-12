@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 )
 
 // SetPowerShellExecutionPolicy はPowerShellの実行ポリシーをRemoteSignedに設定する
@@ -16,16 +15,5 @@ func SetPowerShellExecutionPolicy() error {
 		return err
 	}
 	fmt.Println("PowerShellの実行ポリシーをRemoteSignedに設定しました")
-	return nil
-}
-
-// SetupProfileLocal は .profile.local.ps1 を作成する
-func SetupProfileLocal(dotfilesDir string, miseEnv string) error {
-	psLocalPath := filepath.Join(dotfilesDir, "dot_config/powershell/profile.local.ps1")
-	psContent := fmt.Sprintf("$env:MISE_ENV = \"%s\"\n", miseEnv)
-	if err := os.WriteFile(psLocalPath, []byte(psContent), 0644); err != nil {
-		fmt.Fprintf(os.Stderr, ".profile.local.ps1の作成に失敗: %v\n", err)
-		return err
-	}
 	return nil
 }
