@@ -22,9 +22,9 @@ mkdir -p ./bin
 
 # ビルド
 echo "Building for linux/amd64..."
-GOOS=linux GOARCH=amd64 go build -v -o "bin/setup-linux-amd64" "main.go"
+GOOS=linux GOARCH=amd64 go build -v -o "bin/setup" "main.go"
 echo "Building for windows/amd64..."
-GOOS=windows GOARCH=amd64 go build -v -o "bin/setup-windows-amd64.exe" "main.go"
+GOOS=windows GOARCH=amd64 go build -v -o "bin/setup.exe" "main.go"
 
 # bin以下のファイルに実行権限を付与
 chmod +x ./bin/*
