@@ -17,7 +17,7 @@ Neovimのキーマップはleaderキーのあとに1文字だけ使える制約�
 * Bash
 * mise
 * Vim
-* neovim
+* Neovim
 * Git
 * VSCode
 
@@ -39,6 +39,11 @@ Neovimのキーマップはleaderキーのあとに1文字だけ使える制約�
 このリポジトリのセットアップは、`$PROFILE`および`$APPDATA`のパスを変更していないことが前提です。  
 これらのパスを変更している場合は、dotfilesのリンク先や動作に問題が生じる可能性があります。  
 なお、Windows環境でsetupスクリプトを実行すると、PowerShellの実行ポリシーが自動でRemoteSignedに変更されます。
+
+### アーキテクチャ
+
+AMD64のみ対応しています。  
+詳細は`setup/build.sh`を確認してください。
 
 ## VSCodeの拡張機能
 
