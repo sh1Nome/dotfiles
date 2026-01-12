@@ -17,17 +17,28 @@ HISTFILESIZE=2000
 # 各コマンド実行後にウィンドウサイズを確認し、必要なら LINES と COLUMNS を更新
 shopt -s checkwinsize
 
-# プロンプト設定
-PS1='\[\033]0;\W\a\]\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\]
-\$ '
-
-# Gitブランチ名を取得する関数
-parse_git_branch() {
+# Git プロンプト情報を取得する関数
+git_prompt_info() {
   branch=$(git branch --show-current 2>/dev/null)
   if [ -n "$branch" ]; then
-    echo "(git:$branch)"
+    echo "[$branch]"
   fi
 }
+
+# ウィンドウタイトル設定
+SET_TITLE='\[\033]0;\W\a\]'
+# 色
+COLOR_GREEN='\[\033[01;32m\]'
+COLOR_BLUE='\[\033[01;34m\]'
+COLOR_YELLOW='\[\033[33m\]'
+COLOR_RESET='\[\033[00m\]'
+# プロンプト設定
+PS1="${SET_TITLE}\
+${COLOR_GREEN}\u@\h${COLOR_RESET}:\
+${COLOR_BLUE}\w\
+${COLOR_YELLOW}\$(git_prompt_info)\
+${COLOR_RESET}
+\$ "
 
 # ls のカラーサポートを有効化し、エイリアスを追加
 if [ -x /usr/bin/dircolors ]; then
