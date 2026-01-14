@@ -24,7 +24,9 @@ is_git_repo() {
 
 # Gitのブランチ名を取得する
 git_branch_name() {
-  git branch --show-current 2>/dev/null
+  ! $(is_git_repo) && return
+  local branch=$(git branch --show-current)
+  echo " $branch"
 }
 
 # Gitのステータスを取得する
@@ -57,7 +59,7 @@ git_status() {
 
   # 出力
   if [ -n "$status" ]; then
-    echo "[$status]"
+    echo " [$status]"
   fi
 }
 
@@ -68,7 +70,7 @@ command_timer_start() {
 }
 command_timer_elapsed() {
   local now=$(date '+%s%3N')
-  echo $((now - COMMAND_START_TIME))
+  echo " $((now - COMMAND_START_TIME))"
 }
 trap 'command_timer_start' DEBUG
 
@@ -85,11 +87,11 @@ COLOR_RESET='\[\e[00m\]'
 # プロンプト設定
 PS1="${SET_TITLE}\
 ${COLOR_BOLD_LIGHT_BLUE}\W\
-${COLOR_RESET} \$(is_git_repo && echo on)\
-${COLOR_BOLD_PURPLE} \$(git_branch_name)\
-${COLOR_BOLD_RED} \$(git_status)\
+${COLOR_RESET}\$(is_git_repo && echo ' on')\
+${COLOR_BOLD_PURPLE}\$(git_branch_name)\
+${COLOR_BOLD_RED}\$(git_status)\
 ${COLOR_RESET} took\
-${COLOR_BOLD_YELLOW} \$(command_timer_elapsed)ms
+${COLOR_BOLD_YELLOW}\$(command_timer_elapsed)ms
 ${COLOR_RESET}\$ "
 
 # ls のカラーサポートを有効化し、エイリアスを追加
