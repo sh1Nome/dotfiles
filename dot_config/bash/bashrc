@@ -61,6 +61,17 @@ git_status() {
   fi
 }
 
+# コマンド実行時間を測定
+COMMAND_START_TIME=
+command_timer_start() {
+  COMMAND_START_TIME=$(date '+%s%3N')
+}
+command_timer_elapsed() {
+  local now=$(date '+%s%3N')
+  echo $((now - COMMAND_START_TIME))
+}
+trap 'command_timer_start' DEBUG
+
 # ウィンドウタイトル設定
 SET_TITLE='\[\e]0;\W\a\]'
 # デザイン
@@ -76,7 +87,9 @@ PS1="${SET_TITLE}\
 ${COLOR_BOLD_LIGHT_BLUE}\W\
 ${COLOR_RESET} \$(is_git_repo && echo on)\
 ${COLOR_BOLD_PURPLE} \$(git_branch_name)\
-${COLOR_BOLD_RED} \$(git_status)
+${COLOR_BOLD_RED} \$(git_status)\
+${COLOR_RESET} took\
+${COLOR_BOLD_YELLOW} \$(command_timer_elapsed)ms
 ${COLOR_RESET}\$ "
 
 # ls のカラーサポートを有効化し、エイリアスを追加
