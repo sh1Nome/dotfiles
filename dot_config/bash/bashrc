@@ -17,28 +17,67 @@ HISTFILESIZE=2000
 # 各コマンド実行後にウィンドウサイズを確認し、必要なら LINES と COLUMNS を更新
 shopt -s checkwinsize
 
-# Git プロンプト情報を取得する関数
-git_prompt_info() {
-  branch=$(git branch --show-current 2>/dev/null)
-  if [ -n "$branch" ]; then
-    echo "[$branch]"
+# Gitディレクトリかどうか判定
+is_git_repo() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1
+}
+
+# Gitのブランチ名を取得する
+git_branch_name() {
+  git branch --show-current 2>/dev/null
+}
+
+# Gitのステータスを取得する
+git_status() {
+  ! $(is_git_repo) && return
+  local status=""
+
+  # 未ステージング変更あり (add可)
+  # git status --porcelainで2文字目が空白以外の行がある
+  # 詳細はgit status --helpでPorcelain Formatを参照
+  if git status --porcelain 2>/dev/null | grep -q '^.[^[:space:]]'; then
+    status+="+"
+  fi
+
+  # ステージング変更あり (commit可)
+  # git status --porcelainで1文字目が空白または?以外の行がある
+  # 詳細はgit status --helpでPorcelain Formatを参照
+  if git status --porcelain 2>/dev/null | grep -q '^[^[:space:]|?]'; then
+    status+="*"
+  fi
+
+  # push/pull 状態
+  read pull push < <(git rev-list --left-right --count @{upstream}...HEAD 2>/dev/null || echo "0 0")
+  if [ "$push" -gt 0 ]; then
+    status+="↑$push"
+  fi
+  if [ "$pull" -gt 0 ]; then
+    status+="↓$pull"
+  fi
+
+  # 出力
+  if [ -n "$status" ]; then
+    echo "[$status]"
   fi
 }
 
 # ウィンドウタイトル設定
-SET_TITLE='\[\033]0;\W\a\]'
-# 色
-COLOR_GREEN='\[\033[01;32m\]'
-COLOR_BLUE='\[\033[01;34m\]'
-COLOR_YELLOW='\[\033[33m\]'
-COLOR_RESET='\[\033[00m\]'
+SET_TITLE='\[\e]0;\W\a\]'
+# デザイン
+COLOR_BOLD_RED='\[\e[1;31m\]'
+COLOR_BOLD_GREEN='\[\e[1;32m\]'
+COLOR_BOLD_YELLOW='\[\e[1;33m\]'
+COLOR_BOLD_BLUE='\[\e[1;34m\]'
+COLOR_BOLD_PURPLE='\[\e[1;35m\]'
+COLOR_BOLD_LIGHT_BLUE='\[\e[1;36m\]'
+COLOR_RESET='\[\e[00m\]'
 # プロンプト設定
 PS1="${SET_TITLE}\
-${COLOR_GREEN}\u@\h${COLOR_RESET}:\
-${COLOR_BLUE}\w\
-${COLOR_YELLOW}\$(git_prompt_info)\
-${COLOR_RESET}
-\$ "
+${COLOR_BOLD_LIGHT_BLUE}\W\
+${COLOR_RESET} \$(is_git_repo && echo on)\
+${COLOR_BOLD_PURPLE} \$(git_branch_name)\
+${COLOR_BOLD_RED} \$(git_status)
+${COLOR_RESET}\$ "
 
 # ls のカラーサポートを有効化し、エイリアスを追加
 if [ -x /usr/bin/dircolors ]; then
