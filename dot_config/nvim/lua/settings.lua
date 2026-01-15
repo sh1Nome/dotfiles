@@ -41,6 +41,11 @@ vim.opt.showtabline = 2 -- タブラインを常に表示
 vim.opt.wrap = false -- 行末で折り返さない
 vim.opt.colorcolumn = "80" -- 80文字目に縦線を表示
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_create_autocmd("TextYankPost", { -- ヤンクした範囲をハイライト
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
 
 -- 検索系
 vim.opt.ignorecase = true -- 大文字小文字を区別しない
