@@ -6,6 +6,7 @@ vim.opt.backup = false -- バックアップファイルを作成禁止
 vim.opt.swapfile = false -- スワップファイルを作成禁止
 vim.opt.backspace = { "indent", "eol", "start" } -- バックスペース有効化
 vim.opt.clipboard = { "unnamed", "unnamedplus" } -- システムクリップボードを利用
+vim.opt.updatetime = 1000 -- カーソル停止と判定されるまでの時間(ms)
 
 -- Windowsのときはgit bashを開く
 if vim.fn.has("win32") == 1 then
@@ -51,3 +52,4 @@ vim.api.nvim_create_autocmd("TextYankPost", { -- ヤンクした範囲をハイ�
 vim.opt.ignorecase = true -- 大文字小文字を区別しない
 vim.opt.incsearch = true -- 入力中に検索開始
 vim.opt.hlsearch = true -- 検索結果をハイライト
+vim.cmd("packadd nohlsearch") -- 自動で:nohlsearchを実行
