@@ -14,14 +14,12 @@
   // エディタ設定
   "editor.renderWhitespace": "all", // すべての空白文字を表示
   "editor.formatOnSave": false, // 保存時の自動フォーマットを無効化
-  "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッタをPrettierに設定
   "editor.fontFamily": "monospace", // フォントファミリーでmonospaceを指定
   "editor.smoothScrolling": true, // エディタでスムーズスクロールを有効化
   "editor.cursorSmoothCaretAnimation": "on", // カーソルのスムーズアニメーションを有効化
   "editor.lineNumbers": "relative", // 相対行番号表示を有効化
   "editor.guides.bracketPairs": "active", // アクティブな括弧ペアをハイライト
-  // ミニマップを無効化
-  "editor.minimap.enabled": false,
+  "editor.minimap.enabled": false, // ミニマップを無効化
   "editor.autoClosingBrackets": "always", // 括弧の自動閉じを常に有効
   "editor.autoClosingQuotes": "always", // 引用符の自動閉じを常に有効
   "editor.autoClosingDelete": "always", // 閉じ括弧や閉じ引用符の自動削除を常に有効
@@ -38,6 +36,7 @@
 
   // ワークベンチ設定
   "workbench.list.smoothScrolling": true, // リストでスムーズスクロールを有効化
+  "workbench.editor.showTabs": "none", // タブバーを非表示
 
   // ターミナルのスムーズスクロール
   "terminal.integrated.smoothScrolling": true, // ターミナルでスムーズスクロールを有効化
