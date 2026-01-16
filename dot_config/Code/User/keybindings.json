@@ -7,18 +7,6 @@
     "when": "terminal.active"
   },
   {
-    // エディタにフォーカスしているときのみ左のタブに移動
-    "key": "space h",
-    "command": "workbench.action.previousEditor",
-    "when": "neovim.mode == normal && editorTextFocus"
-  },
-  {
-    // エディタにフォーカスしているときのみ右のタブに移動
-    "key": "space l",
-    "command": "workbench.action.nextEditor",
-    "when": "neovim.mode == normal && editorTextFocus"
-  },
-  {
     // Neovimのインサートモード以外でエクスプローラーを開く
     "key": "space e",
     "command": "workbench.view.explorer",
@@ -37,12 +25,6 @@
     "when": "editorTextFocus && neovim.mode != insert"
   },
   {
-    // Neovimのインサートモード以外で開いているエディタの一覧を表示
-    "key": "space b",
-    "command": "workbench.action.showAllEditors",
-    "when": "editorTextFocus && neovim.mode != insert"
-  },
-  {
     // Neovimのインサートモード以外であいまい検索を開く
     "key": "space f",
     "command": "workbench.action.terminal.searchWorkspace",
@@ -56,16 +38,16 @@
     "args": " t"
   },
   {
+    // Neovimのインサートモード以外で通知一覧を表示
+    "key": "space n",
+    "command": "notifications.showList",
+    "when": "editorTextFocus && neovim.mode != insert"
+  },
+  {
     // NeovimのインサートモードでCtrl+yを押すと補完候補を確定
     "key": "ctrl+y",
     "command": "acceptSelectedSuggestion",
     "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus && neovim.mode == insert"
-  },
-    // Neovimのインサートモード以外で通知一覧を表示
-  {
-    "key": "space n",
-    "command": "notifications.showList",
-    "when": "editorTextFocus && neovim.mode != insert"
   }
 ]
 
