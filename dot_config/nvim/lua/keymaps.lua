@@ -3,10 +3,9 @@
 -- リーダーキーをスペースに設定
 vim.g.mapleader = " "
 
--- バッファ移動
-vim.keymap.set("n", "<leader>h", ":bprevious<CR>", { desc = "Previous buffer" }) -- 前のバッファへ
-vim.keymap.set("n", "<leader>l", ":bnext<CR>", { desc = "Next buffer" }) -- 次のバッファへ
 vim.keymap.set("n", "<leader>t", ":MdTableAlign<CR>", { desc = "Align a markdown table" }) -- マークダウンのテーブルを整形
+
+-- dial.nvimの設定
 vim.keymap.set("n", "<C-a>", function()
 	require("dial.map").manipulate("increment", "normal")
 end)
@@ -33,9 +32,6 @@ if not vim.g.vscode then
 
 	-- mini.pickのファイル検索を起動
 	vim.keymap.set("n", "<leader>p", ":Pick files<CR>", { desc = "Pick files" })
-
-	-- mini.pickのバッファ検索を起動
-	vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>", { desc = "Pick buffers" })
 
 	-- mini.pickの横断したあいまい検索を起動
 	vim.keymap.set("n", "<leader>f", function()
