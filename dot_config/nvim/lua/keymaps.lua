@@ -19,10 +19,20 @@ vim.keymap.set("x", "<C-x>", function()
 	require("dial.map").manipulate("decrement", "visual")
 end)
 
--- 競合するためVSCodeのNeovim拡張機能上では無効化
-if not vim.g.vscode then
+-- VSCode Neovimとの競合回避
+if vim.g.vscode then
+	local vscode = require("vscode")
+	-- VSCode Neovim用のLSPキーマップ
+	-- gd, KはVSCode Neovimでデフォルトで使えるため未設定
+	vim.keymap.set("n", "gr", function()
+		vscode.call("editor.action.referenceSearch.trigger")
+	end, { desc = "References" })
+else
 	-- LSPキーマップ
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
+	vim.keymap.set("n", "gr", function()
+		MiniExtra.pickers.lsp({ scope = "references" })
+	end, { desc = "References" })
 	vim.keymap.set("n", "K", function()
 		vim.lsp.buf.hover({ border = "single" })
 	end, { desc = "Hover" })
@@ -89,6 +99,7 @@ local function get_mini_align_mappings()
 	}
 end
 
+-- mini.files用のキーマップ設定を返す関数
 local function get_mini_files_mappings()
 	return {
 		go_in = "",

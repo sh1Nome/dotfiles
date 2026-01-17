@@ -9,9 +9,6 @@ MiniDeps.later(function()
 			["type-def"] = function()
 				vscode.call("editor.action.goToTypeDefinition")
 			end,
-			["refs"] = function()
-				vscode.call("editor.action.referenceSearch.trigger")
-			end,
 			["impl"] = function()
 				vscode.call("editor.action.goToImplementation")
 			end,
@@ -68,9 +65,6 @@ MiniDeps.later(function()
 		lsp_actions = {
 			["type-def"] = function()
 				MiniExtra.pickers.lsp({ scope = "type_definition" })
-			end,
-			["refs"] = function()
-				MiniExtra.pickers.lsp({ scope = "references" })
 			end,
 			["impl"] = function()
 				MiniExtra.pickers.lsp({ scope = "implementation" })
