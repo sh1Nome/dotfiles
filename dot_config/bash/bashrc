@@ -69,8 +69,15 @@ command_timer_start() {
   COMMAND_START_TIME=$(date '+%s%3N')
 }
 command_timer_elapsed() {
-  local now=$(date '+%s%3N')
-  echo " $((now - COMMAND_START_TIME))"
+  local elapsed=$(($(date '+%s%3N') - COMMAND_START_TIME))
+
+  if (( elapsed < 1000 )); then
+    echo " ${elapsed}ms"
+  elif (( elapsed < 60000 )); then
+    echo " $(( elapsed / 1000 )).$(( (elapsed % 1000) / 100 ))s"
+  else
+    echo " $(( elapsed / 60000 )).$(( (elapsed % 60000) / 6000 % 10 ))m"
+  fi
 }
 trap 'command_timer_start' DEBUG
 
@@ -91,7 +98,7 @@ ${COLOR_RESET}\$(is_git_repo && echo ' on')\
 ${COLOR_BOLD_PURPLE}\$(git_branch_name)\
 ${COLOR_BOLD_RED}\$(git_status)\
 ${COLOR_RESET} took\
-${COLOR_BOLD_YELLOW}\$(command_timer_elapsed)ms
+${COLOR_BOLD_YELLOW}\$(command_timer_elapsed)
 ${COLOR_RESET}\$ "
 
 # ls のカラーサポートを有効化し、エイリアスを追加
