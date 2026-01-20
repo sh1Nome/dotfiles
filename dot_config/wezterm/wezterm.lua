@@ -9,7 +9,7 @@ if wezterm.target_triple:find("windows") then
 else
 	config.window_decorations = "NONE"
 end
-config.window_background_opacity = 0.85 -- 背景の透明度（0.0-1.0）
+config.window_background_opacity = 0.7 -- 背景の透明度（0.0-1.0）
 
 -- タブ
 config.show_new_tab_button_in_tab_bar = false -- タブバーの「+」ボタンを非表示
