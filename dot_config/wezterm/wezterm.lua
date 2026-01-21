@@ -16,6 +16,7 @@ config.show_new_tab_button_in_tab_bar = false -- タブバーの「+」ボタン
 
 -- フォント
 config.font_size = 11 -- フォントサイズ
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- リガチャを無効化
 
 -- IME
 config.use_ime = true -- 日本語入力の有効化
