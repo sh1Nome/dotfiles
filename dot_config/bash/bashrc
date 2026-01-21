@@ -117,8 +117,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# エディター
+# 環境変数
 export EDITOR=nvim
+export LANG=ja_JP.UTF-8
 
 # miseのエイリアス
 alias x="mise x --"
