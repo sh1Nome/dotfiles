@@ -48,6 +48,11 @@ else
 		require("mini.pick").builtin.grep_live()
 	end, { desc = "Live grep" })
 
+	-- mini.pickのヘルプ検索を起動
+	vim.keymap.set("n", "<leader>h", function()
+		require("mini.pick").builtin.help()
+	end, { desc = "Help" })
+
 	-- mini.filesを起動
 	vim.keymap.set("n", "<leader>e", function()
 		local MiniFiles = require("mini.files")
