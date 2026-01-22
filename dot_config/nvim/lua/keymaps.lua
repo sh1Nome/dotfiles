@@ -3,7 +3,9 @@
 -- リーダーキーをスペースに設定
 vim.g.mapleader = " "
 
-vim.keymap.set("n", "<leader>t", ":MdTableAlign<CR>", { desc = "Align a markdown table" }) -- マークダウンのテーブルを整形
+vim.keymap.set("n", "<leader>t", function()
+	require("md-table-align").align_table()
+end, { desc = "Align a markdown table" }) -- マークダウンのテーブルを整形
 
 -- dial.nvimの設定
 vim.keymap.set("n", "<C-a>", function()
@@ -38,10 +40,14 @@ else
 	end, { desc = "Hover" })
 
 	-- floatmemoを開く
-	vim.keymap.set("n", "<leader>m", ":FloatmemoToggle<CR>", { desc = "Toggle floatmemo" })
+	vim.keymap.set("n", "<leader>m", function()
+		require("floatmemo").toggle()
+	end, { desc = "Toggle floatmemo" })
 
 	-- mini.pickのファイル検索を起動
-	vim.keymap.set("n", "<leader>p", ":Pick files<CR>", { desc = "Pick files" })
+	vim.keymap.set("n", "<leader>p", function()
+		require("mini.pick").builtin.files()
+	end, { desc = "Pick files" })
 
 	-- mini.pickの横断したあいまい検索を起動
 	vim.keymap.set("n", "<leader>f", function()
