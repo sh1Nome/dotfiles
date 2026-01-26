@@ -93,6 +93,13 @@ if not vim.g.vscode then
 			},
 		})
 
+		-- mini-pick-preview
+		add({
+			source = "sh1Nome/mini-pick-preview.nvim",
+			depends = { "nvim-mini/mini.nvim" },
+		})
+		require("mini-pick-preview").setup()
+
 		-- floatmemo
 		add({
 			source = "sh1Nome/floatmemo.nvim",
