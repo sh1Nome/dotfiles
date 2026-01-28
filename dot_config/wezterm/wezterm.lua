@@ -13,6 +13,29 @@ config.window_background_opacity = 0.75 -- 背景の透明度（0.0-1.0）
 
 -- タブ
 config.show_new_tab_button_in_tab_bar = false -- タブバーの「+」ボタンを非表示
+config.tab_bar_at_bottom = true -- タブバーをウィンドウの下に表示
+config.use_fancy_tab_bar = false -- レトロなタブバーを使用する
+local inactive_tab = {
+	bg_color = "#5c6d74", -- 非アクティブなタブの背景色
+	fg_color = "#ffffff", -- 非アクティブなタブの文字色
+}
+config.colors = {
+	tab_bar = {
+		background = "none",
+
+		-- アクティブタブ
+		active_tab = {
+			-- タブの背景色
+			bg_color = "#ae8b2d",
+			-- タブの文字色
+			fg_color = "#ffffff",
+		},
+
+		-- 非アクティブなタブ
+		inactive_tab = inactive_tab,
+		inactive_tab_hover = inactive_tab,
+	},
+}
 
 -- フォント
 config.font_size = 11 -- フォントサイズ
