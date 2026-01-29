@@ -48,7 +48,13 @@ if not vim.g.vscode then
 		require("mini.files").setup({
 			mappings = require("keymaps").get_mini_files_mappings(),
 		}) -- ファイラー
-		require("mini.pick").setup() -- ファイル/バッファピック
+		require("mini.pick").setup({
+			window = {
+				config = {
+					width = math.floor((vim.o.columns - 8) / 2),
+				},
+			},
+		}) -- ピッカー
 		local animate = require("mini.animate") -- アニメーション
 		animate.setup({
 			cursor = {
