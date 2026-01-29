@@ -2,7 +2,6 @@
 "aqua:delta" = "latest"
 "aqua:gh" = "latest"
 "gitlab:gitlab-org/cli" = "latest"
-"aqua:glow" = "latest"
 "core:go" = "latest"
 "core:java" = "latest"
 "aqua:neovim" = "latest"

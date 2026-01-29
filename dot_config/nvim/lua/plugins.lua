@@ -219,6 +219,16 @@ later(function()
 		},
 	})
 
+	-- マークダウンプレビュー
+	add({
+		source = "previm/previm",
+	})
+	if vim.fn.has("win32") == 1 then
+		vim.g.previm_open_cmd = "start"
+	else
+		vim.g.previm_open_cmd = "xdg-open"
+	end
+
 	add({
 		source = "sh1Nome/md-table-align.nvim", -- mdのテーブルを整形
 	})
