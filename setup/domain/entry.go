@@ -29,6 +29,8 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		// vscode
 		{Name: "settings.json", SrcRel: "dot_config/Code/User/settings.json", DstRel: ".config/Code/User/settings.json"},
 		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
+		// copilot
+		{Name: "skills", SrcRel: "dot_config/copilot/skills", DstRel: ".copilot/skills"},
 	}
 }
 
@@ -52,5 +54,7 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		// vscode
 		{Name: "settings.json", SrcRel: "dot_config/Code/User/settings.json", DstRel: "AppData/Roaming/Code/User/settings.json"},
 		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: "AppData/Roaming/Code/User/keybindings.json"},
+		// copilot
+		{Name: "skills", SrcRel: "dot_config/copilot/skills", DstRel: ".copilot/skills"},
 	}
 }
