@@ -10,7 +10,6 @@ import (
 
 // ExecuteLink はlinkユースケースを実行する
 func ExecuteLink() error {
-	manager := domain.NewManager()
 	osType := infrastructure.GetOSType()
 
 	// Windowsの場合はPowerShellの実行ポリシーを設定
@@ -38,6 +37,8 @@ func ExecuteLink() error {
 	}
 
 	// 管理しているdotfilesのシンボリックリンク作成
+	homeDir := infrastructure.GetHomeDir()
+	manager := domain.NewManager(&infrastructure.Linker{}, dotfilesDir, homeDir, osType)
 	manager.CreateDotfileLinks()
 
 	fmt.Println("シンボリックリンクを作成しました。")

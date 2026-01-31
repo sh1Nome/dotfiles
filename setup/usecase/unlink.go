@@ -10,14 +10,16 @@ import (
 
 // ExecuteUnlink はunlinkユースケースを実行する
 func ExecuteUnlink() error {
-	manager := domain.NewManager()
+	homeDir := infrastructure.GetHomeDir()
+	osType := infrastructure.GetOSType()
+	dotfilesDir := infrastructure.GetDotfilesDir()
+
+	manager := domain.NewManager(&infrastructure.Linker{}, dotfilesDir, homeDir, osType)
 
 	// 管理しているdotfilesのリンク削除
 	manager.RemoveDotfileLinks()
 
 	// vimデータディレクトリの削除
-	homeDir := infrastructure.GetHomeDir()
-	osType := infrastructure.GetOSType()
 	if err := tool.RemoveVimDataDir(homeDir, osType); err != nil {
 		return err
 	}

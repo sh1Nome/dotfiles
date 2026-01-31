@@ -18,8 +18,7 @@ Examples:
   setup link
   setup unlink
   setup list
-  setup --help
-`)
+  setup --help`)
 }
 
 // ShowLinkHelp はlinkサブコマンドのヘルプメッセージを表示する
@@ -29,8 +28,7 @@ func ShowLinkHelp() {
 Create symbolic links for dotfiles
 
 Options:
-  --help    Show this help message
-`)
+  --help    Show this help message`)
 }
 
 // ShowUnlinkHelp はunlinkサブコマンドのヘルプメッセージを表示する
@@ -40,8 +38,7 @@ func ShowUnlinkHelp() {
 Remove symbolic links for dotfiles
 
 Options:
-  --help    Show this help message
-`)
+  --help    Show this help message`)
 }
 
 // ShowListHelp はlistサブコマンドのヘルプメッセージを表示する
@@ -51,6 +48,5 @@ func ShowListHelp() {
 Show list of dotfile symbolic links
 
 Options:
-  --help    Show this help message
-`)
+  --help    Show this help message`)
 }

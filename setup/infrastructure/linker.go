@@ -5,27 +5,18 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/sh1Nome/dotfiles/setup/domain"
 )
 
+// Linker はlinkManager実装
+type Linker struct{}
+
 // CreateLinks はシンボリックリンクを作成する
-func CreateLinks(dotfilesDir, homeDir string, entries interface{}) {
-	// entries はスライスなので型アサーション
-	entryList, ok := entries.([]interface{})
-	if !ok {
-		// エントリがない場合のフォールバック
-		return
-	}
-
-	for _, e := range entryList {
-		entry, ok := e.(map[string]string)
-		if !ok {
-			continue
-		}
-		srcRel := entry["SrcRel"]
-		dstRel := entry["DstRel"]
-
-		src := filepath.Join(dotfilesDir, srcRel)
-		dst := filepath.Join(homeDir, dstRel)
+func (l *Linker) CreateLinks(dotfilesDir string, homeDir string, entries []domain.DotfileEntry) {
+	for _, e := range entries {
+		src := filepath.Join(dotfilesDir, e.SrcRel)
+		dst := filepath.Join(homeDir, e.DstRel)
 		_ = os.Remove(dst)
 		dstDir := filepath.Dir(dst)
 		if _, err := os.Stat(dstDir); os.IsNotExist(err) {
@@ -41,21 +32,9 @@ func CreateLinks(dotfilesDir, homeDir string, entries interface{}) {
 }
 
 // RemoveLinks はシンボリックリンクを削除する
-func RemoveLinks(homeDir string, entries interface{}) {
-	// entries はスライスなので型アサーション
-	entryList, ok := entries.([]interface{})
-	if !ok {
-		// エントリがない場合のフォールバック
-		return
-	}
-
-	for _, e := range entryList {
-		entry, ok := e.(map[string]string)
-		if !ok {
-			continue
-		}
-		dstRel := entry["DstRel"]
-		link := filepath.Join(homeDir, dstRel)
+func (l *Linker) RemoveLinks(homeDir string, entries []domain.DotfileEntry) {
+	for _, e := range entries {
+		link := filepath.Join(homeDir, e.DstRel)
 
 		info, err := os.Lstat(link)
 		if err != nil {
@@ -75,7 +54,7 @@ func RemoveLinks(homeDir string, entries interface{}) {
 }
 
 // ShowLinks はdotfilesのリンク情報を表示する
-func ShowLinks(homeDir, osType string, entryNames []string) {
+func (l *Linker) ShowLinks(homeDir string, osType string, entries []domain.DotfileEntry) {
 	fmt.Println("現在のdotfilesシンボリックリンク一覧:")
 
 	// Windows環境のみ、一部ディレクトリを除外（性能向上のため）
@@ -122,14 +101,14 @@ func ShowLinks(homeDir, osType string, entryNames []string) {
 		}
 		return nil
 	})
-	// entryNamesの順番で見つかったリンクを表示
-	for _, k := range entryNames {
-		if v, ok := found[k]; ok {
+	// entriesの順番で見つかったリンクを表示
+	for _, e := range entries {
+		if v, ok := found[e.Name]; ok {
 			fmt.Println(v)
-			delete(found, k)
+			delete(found, e.Name)
 		}
 	}
-	// entryNames以外のリンクがあれば「その他」として表示
+	// entries以外のリンクがあれば「その他」として表示
 	if len(found) > 0 {
 		fmt.Println("その他:")
 		for _, v := range found {
