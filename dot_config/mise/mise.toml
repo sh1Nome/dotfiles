@@ -4,28 +4,5 @@ run = '''
 mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
 '''
 
-[tasks.copilot-write]
-description = "Launch GitHub Copilot CLI with write tool enabled"
-run = '''
-cat << 'EOF'
-Select mode:
-  n) new
-  c) continue
-  r) resume
-EOF
-read -p "Enter (n/c/r): " mode
-
-if [ "$mode" = "n" ]; then
-  copilot --allow-tool 'write' --model claude-haiku-4.5
-elif [ "$mode" = "c" ]; then
-  copilot --allow-tool 'write' --model claude-haiku-4.5 --continue
-elif [ "$mode" = "r" ]; then
-  copilot --allow-tool 'write' --model claude-haiku-4.5 --resume
-else
-  echo "Invalid input: $mode"
-  exit 1
-fi
-'''
-
 [settings]
 windows_default_inline_shell_args = "C:/Progra~1/Git/bin/bash.exe --noprofile -c"
