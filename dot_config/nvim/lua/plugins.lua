@@ -76,6 +76,7 @@ if not vim.g.vscode then
 		require("mini.completion").setup() -- 補完
 		require("mini.cmdline").setup() -- コマンドライン
 		require("mini.trailspace").setup() -- 末尾の空白をハイライト
+		require("mini.visits").setup() -- ファイルアクセス履歴追跡
 		require("mini.git").setup() -- `:Git`コマンドを追加
 		-- 括弧補完
 		require("mini.pairs").setup({
