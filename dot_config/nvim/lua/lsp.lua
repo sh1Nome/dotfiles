@@ -30,7 +30,11 @@ MiniDeps.later(function()
 		}
 	else
 		-- Neovim環境: LSP + conform を使用
-		require("mason").setup()
+		require("mason").setup({
+			ui = {
+				border = "single",
+			},
+		})
 		require("mason-lspconfig").setup({
 			-- ここに書かれたlsをMasonで入れると自動的に`vim.lsp.enable`される
 			automatic_enable = {
