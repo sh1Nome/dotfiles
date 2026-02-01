@@ -49,6 +49,11 @@ else
 		require("mini.pick").builtin.files()
 	end, { desc = "Pick files" })
 
+	-- 最近訪問したファイルを起動
+	vim.keymap.set("n", "<leader>v", function()
+		MiniExtra.pickers.visit_paths()
+	end, { desc = "Pick visited files" })
+
 	-- mini.pickの横断したあいまい検索を起動
 	vim.keymap.set("n", "<leader>f", function()
 		require("mini.pick").builtin.grep_live()
