@@ -1,7 +1,8 @@
 [tools]
+"core:node" = "latest"
 "aqua:delta" = "latest"
 "aqua:gh" = "latest"
-"gitlab:gitlab-org/cli" = "latest"
 "aqua:neovim" = "latest"
-"core:node" = "latest"
+"aqua:ripgrep" = "latest"
 "npm:@github/copilot" = "latest"
+"gitlab:gitlab-org/cli" = "latest"
