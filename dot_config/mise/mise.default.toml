@@ -10,5 +10,5 @@
 "aqua:ttyd" = "latest"
 "aqua:usage" = "latest"
 "aqua:vhs" = "latest"
-"npm:@github/copilot" = "latest"
+"github:github/copilot-cli" = "latest"
 "gitlab:gitlab-org/cli" = "latest"
