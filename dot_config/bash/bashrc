@@ -120,10 +120,11 @@ fi
 # 環境変数
 export EDITOR=nvim
 export LANG=ja_JP.UTF-8
+# 以下は`PATH="$HOME/.local/share/mise/shims:$PATH"`と同義
+eval "$(mise activate bash --shims)"
 
 # エイリアス
-alias x="mise x --"
-alias cw="x copilot --allow-tool 'write' --model claude-haiku-4.5"
+alias cw="copilot --allow-tool 'write' --model claude-haiku-4.5"
 
 # ローカル設定ファイルの読み込み
 if [ -f ~/.bashrc.local ]; then
