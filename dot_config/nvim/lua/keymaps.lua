@@ -87,9 +87,9 @@ else
 				buf_name = ""
 			end
 			require("mini.files").open(buf_name, false)
+			-- mini.filesを開いたらcwdを表示する
+			require("mini.files").reveal_cwd()
 		end
-		-- mini.filesを開いたらcwdを表示する
-		require("mini.files").reveal_cwd()
 	end, { desc = "Toggle file explorer" })
 
 	-- mini.notifyの履歴を表示
