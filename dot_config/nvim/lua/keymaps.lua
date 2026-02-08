@@ -60,7 +60,7 @@ else
 	vim.keymap.set("n", "<leader>f", function()
 		local tool = is_git_repo() and "git" or "rg"
 		require("mini.pick").builtin.grep_live({ tool = tool })
-	end, { desc = "Live grep" })
+	end, { desc = "Live grep (C-o: glob)" })
 
 	-- 最近訪問したファイルを起動
 	vim.keymap.set("n", "<leader>v", function()
@@ -71,6 +71,11 @@ else
 	vim.keymap.set("n", "<leader>h", function()
 		require("mini.pick").builtin.help()
 	end, { desc = "Help" })
+
+	-- mini.pickの最後のpickerを再開
+	vim.keymap.set("n", "<leader>r", function()
+		require("mini.pick").builtin.resume()
+	end, { desc = "Resume picker" })
 
 	-- mini.filesを起動
 	vim.keymap.set("n", "<leader>e", function()
@@ -100,15 +105,6 @@ else
 			commands = { "bash" },
 		})
 	end, { desc = "Float shell" })
-	-- マークダウンをプレビューする（markdown ファイルのみ）
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "markdown",
-		callback = function()
-			vim.keymap.set("n", "<leader>r", function()
-				vim.cmd("PrevimOpen")
-			end, { desc = "Preview markdown", buffer = true })
-		end,
-	})
 end
 
 -- mini.align用のキーマップ設定を返す関数
