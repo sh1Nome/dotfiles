@@ -44,20 +44,28 @@ else
 		require("floatmemo").toggle()
 	end, { desc = "Toggle floatmemo" })
 
-	-- mini.pickのファイル検索を起動
+	-- gitリポジトリかどうかを判定
+	local function is_git_repo()
+		local result = vim.system({ "git", "rev-parse", "--git-dir" }, { text = true }):wait()
+		return result.code == 0
+	end
+
+	-- mini.pickのファイル検索を起動（gitリポジトリならgit、そうでないならrg）
 	vim.keymap.set("n", "<leader>p", function()
-		require("mini.pick").builtin.files()
+		local tool = is_git_repo() and "git" or "rg"
+		require("mini.pick").builtin.files({ tool = tool })
 	end, { desc = "Pick files" })
+
+	-- mini.pickの横断したあいまい検索を起動（gitリポジトリならgit、そうでないならrg）
+	vim.keymap.set("n", "<leader>f", function()
+		local tool = is_git_repo() and "git" or "rg"
+		require("mini.pick").builtin.grep_live({ tool = tool })
+	end, { desc = "Live grep" })
 
 	-- 最近訪問したファイルを起動
 	vim.keymap.set("n", "<leader>v", function()
 		MiniExtra.pickers.visit_paths()
 	end, { desc = "Pick visited files" })
-
-	-- mini.pickの横断したあいまい検索を起動
-	vim.keymap.set("n", "<leader>f", function()
-		require("mini.pick").builtin.grep_live()
-	end, { desc = "Live grep" })
 
 	-- mini.pickのヘルプ検索を起動
 	vim.keymap.set("n", "<leader>h", function()
