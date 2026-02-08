@@ -1,5 +1,5 @@
 -- LSP設定
-MiniDeps.later(function()
+require("mini.deps").later(function()
 	local lsp_actions
 
 	if vim.g.vscode then
@@ -68,19 +68,19 @@ MiniDeps.later(function()
 		-- LSP操作のテーブル定義
 		lsp_actions = {
 			["type-def"] = function()
-				MiniExtra.pickers.lsp({ scope = "type_definition" })
+				require("mini.extra").pickers.lsp({ scope = "type_definition" })
 			end,
 			["impl"] = function()
-				MiniExtra.pickers.lsp({ scope = "implementation" })
+				require("mini.extra").pickers.lsp({ scope = "implementation" })
 			end,
 			["code-action"] = vim.lsp.buf.code_action,
 			["rename"] = vim.lsp.buf.rename,
 			["diag"] = function()
-				MiniExtra.pickers.diagnostic({ scope = "current" })
+				require("mini.extra").pickers.diagnostic({ scope = "current" })
 			end,
 			["format"] = conform.format,
 			["symbol"] = function()
-				MiniExtra.pickers.lsp({ scope = "document_symbol" })
+				require("mini.extra").pickers.lsp({ scope = "document_symbol" })
 			end,
 		}
 	end

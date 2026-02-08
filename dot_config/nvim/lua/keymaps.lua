@@ -33,7 +33,7 @@ else
 	-- LSPキーマップ
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
 	vim.keymap.set("n", "gr", function()
-		MiniExtra.pickers.lsp({ scope = "references" })
+		require("mini.extra").pickers.lsp({ scope = "references" })
 	end, { desc = "References" })
 	vim.keymap.set("n", "K", function()
 		vim.lsp.buf.hover({ border = "single" })
@@ -64,7 +64,7 @@ else
 
 	-- 最近訪問したファイルを起動
 	vim.keymap.set("n", "<leader>v", function()
-		MiniExtra.pickers.visit_paths()
+		require("mini.extra").pickers.visit_paths()
 	end, { desc = "Pick visited files" })
 
 	-- mini.pickのヘルプ検索を起動
@@ -79,23 +79,22 @@ else
 
 	-- mini.filesを起動
 	vim.keymap.set("n", "<leader>e", function()
-		local MiniFiles = require("mini.files")
 		-- mini.filesをトグルする（開いているバッファ）
-		if not MiniFiles.close() then
+		if not require("mini.files").close() then
 			local buf_name = vim.api.nvim_buf_get_name(0)
 			-- URL形式のバッファ名はローカルファイルシステムのパスではないため、空文字列を渡す
 			if buf_name:match("^[a-z]+://") then
 				buf_name = ""
 			end
-			MiniFiles.open(buf_name, false)
+			require("mini.files").open(buf_name, false)
 		end
 		-- mini.filesを開いたらcwdを表示する
-		MiniFiles.reveal_cwd()
+		require("mini.files").reveal_cwd()
 	end, { desc = "Toggle file explorer" })
 
 	-- mini.notifyの履歴を表示
 	vim.keymap.set("n", "<leader>n", function()
-		MiniNotify.show_history()
+		require("mini.notify").show_history()
 	end, { desc = "Show notifications" })
 
 	-- floatcliの設定
