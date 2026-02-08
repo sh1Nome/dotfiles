@@ -21,7 +21,7 @@ end
 -- `:DepsUpdate`でプラグインをアップデート
 -- `:DepsClean`で不要なプラグインを削除
 require("mini.deps").setup({ path = { package = path_package } })
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local add, now, later = require("mini.deps").add, require("mini.deps").now, require("mini.deps").later
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
@@ -88,8 +88,7 @@ if not vim.g.vscode then
 		})
 		require("mini.extra").setup() -- 追加
 
-		local miniclue = require("mini.clue") -- キーマップを表示
-		miniclue.setup({
+		require("mini.clue").setup({
 			-- リーダーキーのみトリガー
 			triggers = {
 				{ mode = "n", keys = "<Leader>" }, -- ノーマルモード
@@ -98,7 +97,7 @@ if not vim.g.vscode then
 			window = {
 				delay = 0, -- 遅延なしで表示
 			},
-		})
+		}) -- キーマップを表示
 
 		-- mini-pick-preview
 		add({
