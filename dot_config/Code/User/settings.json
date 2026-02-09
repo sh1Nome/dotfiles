@@ -52,17 +52,6 @@
   // GitHub Copilot設定
   "github.copilot.nextEditSuggestions.enabled": true, // 次回編集提案機能を有効化（コードの次の変更を予測して提案）
 
-  // Copilot Chatのコミットメッセージ生成ルール設定
-  "github.copilot.chat.commitMessageGeneration.instructions": [
-    { "text": "日本語で書いてください" },
-    { "text": "一行目に[]で囲んだプレフィックスを書いてください" },
-    { "text": "プレフィックスはfix, add, update, removeから選んでください" },
-    { "text": "プレフィックスの後にコミットの要約を書いてください" },
-    { "text": "2行目は空行にしてください" },
-    { "text": "3行目以降に変更した理由を書いてください" },
-    { "text": "冗長な表現は避けてください" }
-  ],
-
   // 拡張機能を別のプロセスで実行
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
