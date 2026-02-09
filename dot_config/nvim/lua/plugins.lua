@@ -73,6 +73,15 @@ if not vim.g.vscode then
 			},
 		})
 		require("mini.cursorword").setup() -- カーソル下の単語ハイライト
+		require("mini.indentscope").setup({
+			draw = {
+				delay = 0, -- 遅延なし
+				animation = require("mini.indentscope").gen_animation.none(), -- アニメーションを無効化
+			},
+			options = {
+				indent_at_cursor = false, -- カーソル列を無視
+			},
+		}) -- インデントガイド
 		require("mini.completion").setup() -- 補完
 		require("mini.cmdline").setup() -- コマンドライン
 		require("mini.trailspace").setup() -- 末尾の空白をハイライト
@@ -119,16 +128,6 @@ if not vim.g.vscode then
 			source = "sh1Nome/floatcli.nvim",
 		})
 		require("floatcli").setup()
-
-		-- インデントガイド
-		add({
-			source = "saghen/blink.indent",
-		})
-		require("blink.indent").setup({
-			static = {
-				char = "▏", -- デフォルトだと太いため設定
-			},
-		})
 
 		-- lsp
 		add({
