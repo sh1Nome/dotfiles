@@ -210,7 +210,6 @@ later(function()
 			-- ここからカスタム
 			augend.constant.alias.bool, -- true, false
 			augend.constant.alias.Bool, -- True, False
-			augend.constant.new({ elements = { "あり", "なし" } }),
 			augend.constant.new({
 				elements = { "[ ]", "[x]" }, -- マークダウンのチェックボックス
 				word = false, -- 単語の境界になくてもマッチする
