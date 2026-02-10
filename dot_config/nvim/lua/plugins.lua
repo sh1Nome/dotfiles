@@ -87,14 +87,13 @@ if not vim.g.vscode then
 		require("mini.trailspace").setup() -- 末尾の空白をハイライト
 		require("mini.visits").setup() -- ファイルアクセス履歴追跡
 		require("mini.git").setup() -- `:Git`コマンドを追加
-		-- 括弧補完
 		require("mini.pairs").setup({
 			mappings = {
 				-- バッククオートを無効化
 				-- マークダウンでコードブロックを書くときに邪魔になるため
 				["`"] = false,
 			},
-		})
+		}) -- 括弧補完
 		require("mini.extra").setup() -- 追加
 
 		require("mini.clue").setup({
@@ -128,6 +127,14 @@ if not vim.g.vscode then
 			source = "sh1Nome/floatcli.nvim",
 		})
 		require("floatcli").setup()
+
+		-- 翻訳プラグイン
+		add({
+			source = "potamides/pantran.nvim",
+		})
+		require("pantran").setup({
+			default_engine = "google",
+		})
 
 		-- lsp
 		add({

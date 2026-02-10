@@ -5,7 +5,7 @@ vim.opt.fileencoding = "utf-8" -- 文字エンコード
 vim.opt.backup = false -- バックアップファイルを作成禁止
 vim.opt.swapfile = false -- スワップファイルを作成禁止
 vim.opt.backspace = { "indent", "eol", "start" } -- バックスペース有効化
-vim.opt.clipboard = { "unnamed", "unnamedplus" } -- システムクリップボードを利用
+vim.opt.clipboard = { "unnamedplus" } -- システムクリップボードを利用（xclipなどが必要）
 vim.opt.updatetime = 1000 -- カーソル停止と判定されるまでの時間(ms)
 
 -- Windowsのときはgit bashを開く
