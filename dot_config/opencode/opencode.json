@@ -19,6 +19,9 @@
       "git diff *": "allow",
       "rg *": "allow"
     },
-    "skill": "allow"
+    "skill": "allow",
+    "todoread": "allow",
+    "question": "allow",
+    "share": "disabled"
   }
 }
