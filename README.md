@@ -20,6 +20,8 @@ Neovimのキーマップはleaderキーのあとに1文字だけ使える制約�
 * Neovim
 * Git
 * VSCode
+* Skills
+* opencode
 
 ## セットアップ
 
