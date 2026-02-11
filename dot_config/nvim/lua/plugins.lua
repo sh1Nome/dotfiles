@@ -128,14 +128,6 @@ if not vim.g.vscode then
 		})
 		require("floatcli").setup()
 
-		-- 翻訳プラグイン
-		add({
-			source = "potamides/pantran.nvim",
-		})
-		require("pantran").setup({
-			default_engine = "google",
-		})
-
 		-- lsp
 		add({
 			-- `:h lspconfig-all`ですべての設定を見る
