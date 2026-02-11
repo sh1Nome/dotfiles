@@ -11,4 +11,5 @@
 "aqua:usage" = "latest"
 "aqua:vhs" = "latest"
 "github:github/copilot-cli" = "latest"
+"github:anomalyco/opencode" = "latest"
 "gitlab:gitlab-org/cli" = "latest"
