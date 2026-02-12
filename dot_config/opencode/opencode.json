@@ -21,7 +21,8 @@
     },
     "skill": "allow",
     "todoread": "allow",
-    "question": "allow",
-    "share": "disabled"
-  }
+    "question": "allow"
+  },
+  "share": "disabled",
+  "theme": "system"
 }
