@@ -21,8 +21,12 @@
     },
     "skill": "allow",
     "todoread": "allow",
+    "todowrite": "allow",
     "question": "allow"
   },
   "share": "disabled",
-  "theme": "system"
+  "theme": "system",
+  "tui": {
+    "diff_style": "stacked"
+  }
 }
