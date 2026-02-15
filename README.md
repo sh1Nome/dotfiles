@@ -21,6 +21,7 @@ Neovimのキーマップはleaderキーのあとに1文字だけ使える制約�
 * Git
 * VSCode
 * Skills
+* opencode
 
 ## セットアップ
 

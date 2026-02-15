@@ -31,6 +31,9 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: ".config/Code/User/keybindings.json"},
 		// claude
 		{Name: "skills", SrcRel: "dot_config/claude/skills", DstRel: ".claude/skills"},
+		// opencode
+		{Name: "opencode.json", SrcRel: "dot_config/opencode/opencode.json", DstRel: ".config/opencode/opencode.json"},
+		{Name: "plugins", SrcRel: "dot_config/opencode/plugins", DstRel: ".config/opencode/plugins"},
 	}
 }
 
@@ -56,5 +59,8 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		{Name: "keybindings.json", SrcRel: "dot_config/Code/User/keybindings.json", DstRel: "AppData/Roaming/Code/User/keybindings.json"},
 		// claude
 		{Name: "skills", SrcRel: "dot_config/claude/skills", DstRel: ".claude/skills"},
+		// opencode
+		{Name: "opencode.json", SrcRel: "dot_config/opencode/opencode.json", DstRel: ".config/opencode/opencode.json"},
+		{Name: "plugins", SrcRel: "dot_config/opencode/plugins", DstRel: ".config/opencode/plugins"},
 	}
 }
