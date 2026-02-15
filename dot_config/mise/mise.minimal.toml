@@ -4,5 +4,4 @@
 "aqua:neovim" = "latest"
 "aqua:ripgrep" = "latest"
 "github:github/copilot-cli" = "latest"
-"github:anomalyco/opencode" = "latest"
 "gitlab:gitlab-org/cli" = "latest"
