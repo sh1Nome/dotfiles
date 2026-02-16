@@ -42,7 +42,7 @@
     "question": "allow"
   },
   "share": "disabled",
-  "theme": "system",
+  "theme": "transparent",
   "tui": {
     "diff_style": "stacked"
   }

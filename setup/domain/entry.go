@@ -34,6 +34,7 @@ func LinuxManagedDotfiles() []DotfileEntry {
 		// opencode
 		{Name: "opencode.json", SrcRel: "dot_config/opencode/opencode.json", DstRel: ".config/opencode/opencode.json"},
 		{Name: "plugins", SrcRel: "dot_config/opencode/plugins", DstRel: ".config/opencode/plugins"},
+		{Name: "transparent.json", SrcRel: "dot_config/opencode/themes/transparent.json", DstRel: ".config/opencode/themes/transparent.json"},
 	}
 }
 
@@ -62,5 +63,6 @@ func WindowsManagedDotfiles() []DotfileEntry {
 		// opencode
 		{Name: "opencode.json", SrcRel: "dot_config/opencode/opencode.json", DstRel: ".config/opencode/opencode.json"},
 		{Name: "plugins", SrcRel: "dot_config/opencode/plugins", DstRel: ".config/opencode/plugins"},
+		{Name: "transparent.json", SrcRel: "dot_config/opencode/themes/transparent.json", DstRel: ".config/opencode/themes/transparent.json"},
 	}
 }
