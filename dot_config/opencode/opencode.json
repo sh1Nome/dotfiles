@@ -34,7 +34,10 @@
     "bash": {
       "git log *": "allow",
       "git diff *": "allow",
-      "rg *": "allow"
+      "rg *": "allow",
+      "grep *": "allow",
+      "head *": "allow",
+      "tail *": "allow"
     },
     "skill": "allow",
     "todoread": "allow",
