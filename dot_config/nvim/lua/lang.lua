@@ -43,6 +43,7 @@ require("mini.deps").later(function()
 				"jdtls", -- Java
 				"ts_ls", -- JavaScript, TypeScript
 				"pyright", -- Python
+				"clangd", -- C
 			},
 		})
 
