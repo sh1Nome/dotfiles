@@ -14,7 +14,7 @@
   // エディタ設定
   "editor.renderWhitespace": "all", // すべての空白文字を表示
   "editor.formatOnSave": false, // 保存時の自動フォーマットを無効化
-  "editor.fontFamily": "monospace", // フォントファミリーでmonospaceを指定
+  "editor.fontFamily": "Noto Sans Mono CJK JP", // フォントを設定
   "editor.smoothScrolling": true, // エディタでスムーズスクロールを有効化
   "editor.cursorSmoothCaretAnimation": "on", // カーソルのスムーズアニメーションを有効化
   "editor.lineNumbers": "relative", // 相対行番号表示を有効化
