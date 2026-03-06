@@ -52,6 +52,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 end)
 
 -- フォント
+config.font = wezterm.font("Noto Sans Mono CJK JP") -- フォントを指定
 config.font_size = 11 -- フォントサイズ
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- リガチャを無効化
 
