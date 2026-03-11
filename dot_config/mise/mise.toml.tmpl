@@ -1,0 +1,38 @@
+{{ if .miseMinimal }}
+[tools]
+"aqua:delta" = "latest"
+"aqua:gh" = "latest"
+"aqua:neovim" = "latest"
+"aqua:ripgrep" = "latest"
+"github:github/copilot-cli" = "latest"
+"github:anomalyco/opencode" = "latest"
+"gitlab:gitlab-org/cli" = "latest"
+{{ else }}
+[tools]
+"core:go" = "latest"
+"core:java" = "latest"
+"core:node" = "latest"
+"core:python" = "latest"
+"aqua:delta" = "latest"
+"aqua:gh" = "latest"
+"aqua:neovim" = "latest"
+"aqua:ripgrep" = "latest"
+"aqua:ttyd" = "latest"
+"aqua:usage" = "latest"
+"aqua:vhs" = "latest"
+"github:github/copilot-cli" = "latest"
+"github:anomalyco/opencode" = "latest"
+"gitlab:gitlab-org/cli" = "latest"
+{{ end }}
+
+[tasks.list-tool-backends]
+description = "Show the backend for each tool managed by mise"
+run = '''
+mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
+'''
+
+[settings]
+windows_default_inline_shell_args = "C:/Progra~1/Git/bin/bash.exe --noprofile -c"
+
+[settings.python]
+compile = false
