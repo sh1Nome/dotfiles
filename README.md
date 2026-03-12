@@ -1,74 +1,49 @@
 # dotfiles
 
-本リポジトリは、LinuxおよびWindows環境で利用できる各種設定ファイル（dotfiles）を管理しています。
+Linux および Windows 環境で利用できる各種設定ファイルを管理しています。
 
 ## 方針
 
 本リポジトリは、シンプルな構成を心がけています。  
-必要になったものを追加し、使わなくなったものを（できるだけ）削除します。  
-DebianとWindows、またNeovimとVSCodeで同じように開発できることを重視しています。  
+必要になったものを追加し、使わなくなったものを削除します。  
+Linux と Windows 、また Neovim と VS Code で同じように開発できることを重視しています。  
 操作は主にキーボードで行い、マウスは補助的に使う方針です。  
-Neovimのキーマップはleaderキーのあとに1文字だけ使える制約で設定しています。
+Neovim のキーマップは leader キーのあとに1文字だけ使える制約で設定しています。
 
 ## 前提
 
-このリポジトリを利用するには、以下が必要です。
+* Git
+* chezmoi
+* mise
+* Noto Sans Mono CJK
 
-* [管理しているツール](#管理しているツール)のインストール
-* Noto Sans Mono CJK フォントのインストール
+## セットアップ
+
+1. `chezmoi init git@github.com:sh1Nome/dotfiles.git`
+    * https の場合は `chezmoi init https://github.com/sh1Nome/dotfiles.git`
+1. `chezmoi -v apply`
+1. `mise install`
+
+### ツールのインストール
+
+mise で管理しているものを除き、ツールのインストーラーは用意していません。
 
 ## 管理しているツール
 
-* Fcitx5（Linux）
+* Fcitx5 ( Linux )
 * Wezterm
 * Bash
 * mise
 * Vim
 * Neovim
 * Git
-* VSCode
+* VS Code
 * Skills
 * opencode
 
-## セットアップ
+##  VS Code の拡張機能
 
-`setup/bin`配下のバイナリを実行したあとに`mise install`を実行してください。  
-注意：dotfilesリポジトリの設定ファイルを相対パスで参照しているので、バイナリは移動しないでください。
-
-### サブコマンド説明
-
-* `link`：シンボリックリンクの作成（ツールのインストールは未対応）
-* `unlink`：シンボリックリンクの削除
-  * Vimのデータディレクトリも削除（Linuxの場合は`~/.vim`、Windowsの場合は`~/vimfiles`）
-  * neovimのデータディレクトリも削除（Linuxの場合は`~/.local/share/nvim`、Windowsの場合は`~/AppData/Local/nvim-data`）
-* `list`：現在作成されているシンボリックリンク一覧を表示
-
-### Windows環境の注意
-
-このリポジトリのセットアップは、`$PROFILE`および`$APPDATA`のパスを変更していないことが前提です。  
-これらのパスを変更している場合は、dotfilesのリンク先や動作に問題が生じる可能性があります。  
-なお、Windows環境でsetupスクリプトを実行すると、PowerShellの実行ポリシーが自動でRemoteSignedに変更されます。
-
-### アーキテクチャ
-
-AMD64のみ対応しています。  
-詳細は`setup/build.sh`を確認してください。
-
-## VSCodeの拡張機能
-
-`.vscode`ディレクトリで、VSCodeの推奨拡張機能を管理しています。
-
-### 推奨拡張機能のインストール
-
-このリポジトリをルートにVSCodeを開くと、`.vscode/extensions.json`に記載された推奨拡張機能のインストールを促す通知が表示されます。これにより、環境を簡単に統一できます。
-
-## Tips
-
-Windows環境とWSL環境どちらでも使いたい場合、Windows環境にdotfilesをクローンして、WSL環境から`/mnt/c/`以下のクローンしたdotfilesにシンボリックリンクを貼る運用がおすすめです。
-
-## 開発者向けガイド
-
-### ビルド方法
-
-`setup/build.sh`でビルドできます。
+`chezmoi -v apply` の実行時に VS Code の拡張機能がインストールされます。。
+インストールする拡張機能は `run_install_vscode_extensions.sh` に定義しています。  
+`code` コマンドが使えない場合、スキップされます。
 

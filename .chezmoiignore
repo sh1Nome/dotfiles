@@ -1,0 +1,11 @@
+README.md
+
+{{ if ne .chezmoi.os "linux" }}
+.config/Code
+.config/fcitx5
+.config/nvim
+{{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+AppData
+{{ end }}
