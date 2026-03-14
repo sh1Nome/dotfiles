@@ -4,8 +4,10 @@ README.md
 .config/Code
 .config/fcitx5
 .config/nvim
+.chezmoiscripts/*.sh
 {{ end }}
 
 {{ if ne .chezmoi.os "windows" }}
 AppData
+.chezmoiscripts/*.ps1
 {{ end }}
