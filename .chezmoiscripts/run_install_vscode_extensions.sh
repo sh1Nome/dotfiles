@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Install VSCode extensions
 
 # Check if code command exists
