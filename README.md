@@ -43,7 +43,7 @@ mise で管理しているものを除き、ツールのインストーラーは
 
 ##  VS Code の拡張機能
 
-`chezmoi -v apply` の実行時に VS Code の拡張機能がインストールされます。。
+`chezmoi -v apply` の実行時に VS Code の拡張機能がインストールされます。  
 インストールする拡張機能は `run_install_vscode_extensions.sh` に定義しています。  
 `code` コマンドが使えない場合、スキップされます。
 
