@@ -125,7 +125,12 @@ export COPILOT_MODEL=claude-haiku-4.5
 # Windowsのmiseはshimsしかサポートしていない
 eval "$(mise activate bash --shims)"
 
-# エイリアス
-# WindowsのVSCode NeovimがNeovimを見つけられない問題を回避
-alias code="mise exec -- code"
-
+# 関数
+# Windows の VS Code Neovim が Neovim を見つけられない問題を回避
+code() {
+    mise exec -- code "$@"
+}
+# chezmoi cd がシェルを起動してしまう問題を回避
+chezmoi-cd() {
+    cd $(chezmoi source-path)
+}
