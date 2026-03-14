@@ -1,4 +1,3 @@
-{{ if .miseMinimal }}
 [tools]
 "aqua:delta" = "latest"
 "aqua:gh" = "latest"
@@ -7,22 +6,15 @@
 "github:github/copilot-cli" = "latest"
 "github:anomalyco/opencode" = "latest"
 "gitlab:gitlab-org/cli" = "latest"
-{{ else }}
-[tools]
+
+{{ if not .miseMinimal }}
 "core:go" = "latest"
 "core:java" = "latest"
 "core:node" = "latest"
 "core:python" = "latest"
-"aqua:delta" = "latest"
-"aqua:gh" = "latest"
-"aqua:neovim" = "latest"
-"aqua:ripgrep" = "latest"
 "aqua:ttyd" = "latest"
 "aqua:usage" = "latest"
 "aqua:vhs" = "latest"
-"github:github/copilot-cli" = "latest"
-"github:anomalyco/opencode" = "latest"
-"gitlab:gitlab-org/cli" = "latest"
 {{ end }}
 
 [tasks.list-tool-backends]
