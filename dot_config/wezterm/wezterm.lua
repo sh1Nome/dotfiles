@@ -12,8 +12,20 @@ end
 
 -- タブ
 config.show_new_tab_button_in_tab_bar = false -- タブバーの「+」ボタンを非表示
-config.show_close_tab_button_in_tabs = false -- タブバーの「x」ボタンを非表示
+config.use_fancy_tab_bar = false -- レトロなタブバーを使用する
 config.tab_max_width = 32 -- タブの最大幅
+
+-- タブバーの表示カスタマイズ
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+	local title = tab.active_pane.title
+	-- パディング分を確保してテキストを切り詰め
+	if wezterm.column_width(title) > max_width - 4 then
+		title = wezterm.truncate_right(title, max_width - (4 + wezterm.column_width(".."))) .. ".."
+	end
+	return {
+		{ Text = "  " .. title .. "  " },
+	}
+end)
 
 -- フォント
 config.font = wezterm.font("Noto Sans Mono CJK JP") -- フォントを指定
