@@ -45,7 +45,6 @@
     "question": "allow"
   },
   "share": "disabled",
-  "theme": "transparent",
   "tui": {
     "diff_style": "stacked"
   }
