@@ -1,5 +1,5 @@
 -- LSP設定
-require("mini.deps").later(function()
+require("plugins").later(function()
 	local lsp_actions
 
 	if vim.g.vscode then
@@ -30,6 +30,8 @@ require("mini.deps").later(function()
 		}
 	else
 		-- Neovim環境: LSP + conform を使用
+		-- `:h lspconfig-all`ですべての設定を見る
+		-- `:Mason`でグラフィカルなステータスウィンドウを開く
 		require("mason").setup({
 			ui = {
 				border = "single",
