@@ -37,6 +37,7 @@ vim.opt.softtabstop = 2 -- タブキー押下時の文字幅
 vim.opt.tabstop = 2 -- タブ文字の表示幅
 vim.opt.shiftwidth = 2 -- インデント幅
 vim.opt.pumheight = 10 -- ポップアップメニューの最大行数
+vim.opt.pumborder = "single" -- ポップアップメニューのボーダー
 vim.opt.list = true -- 不可視文字を表示
 vim.opt.listchars = { space = "·", tab = "▸ ", eol = "¬", nbsp = "_" } -- 不可視文字の表示方法
 vim.opt.laststatus = 2 -- ステータスラインを常に表示
@@ -49,6 +50,7 @@ vim.opt.wrap = false -- 行末で折り返さない
 vim.opt.colorcolumn = "80" -- 80文字目に縦線を表示
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) -- フロートウィンドウの背景を透明化
 vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" }) -- フロートボーダーの背景を透明化
+vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" }) -- ポップアップメニューの背景を透明化
 vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#CC6600" }) -- ビジュアルモード選択時のハイライト
 vim.api.nvim_create_autocmd("TextYankPost", { -- ヤンクした範囲をハイライト
 	callback = function()
