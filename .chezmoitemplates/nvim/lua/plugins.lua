@@ -1,27 +1,23 @@
--- プラグイン系設定
+-- プラグイン系設定 (vim.pack対応)
 
--- mini.nvimをインストール
-local path_package = vim.fn.stdpath("data") .. "/site"
-local mini_path = path_package .. "/pack/deps/start/mini.nvim"
-if not vim.loop.fs_stat(mini_path) then
-	vim.cmd('echo "Installing `mini.nvim`" | redraw')
-	local clone_cmd = {
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/nvim-mini/mini.nvim",
-		mini_path,
-	}
-	vim.fn.system(clone_cmd)
-	vim.cmd("packadd mini.nvim | helptags ALL")
-	vim.cmd('echo "Installed `mini.nvim`" | redraw')
+-- vim.packの初期化とConfig関数の定義
+local Config = {}
+
+-- mini.nvimをロード
+vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
+
+-- ローディングヘルパーの定義
+local misc = require("mini.misc")
+Config.now = function(f)
+	misc.safely("now", f)
+end
+Config.later = function(f)
+	misc.safely("later", f)
 end
 
--- mini.nvimのモジュールとプラグインを有効化
--- `:DepsUpdate`でプラグインをアップデート
--- `:DepsClean`で不要なプラグインを削除
-require("mini.deps").setup({ path = { package = path_package } })
-local add, now, later = require("mini.deps").add, require("mini.deps").now, require("mini.deps").later
+-- プラグイン追加用の短縮記法
+local add = vim.pack.add
+local now, later = Config.now, Config.later
 
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
@@ -107,47 +103,27 @@ if not vim.g.vscode then
 			},
 		}) -- キーマップを表示
 
-		-- mini-pick-preview
+		-- プラグイン一括追加: 自作, LSP, フォーマッタ
 		add({
-			source = "sh1Nome/mini-pick-preview.nvim",
-			depends = { "nvim-mini/mini.nvim" },
+			"https://github.com/sh1Nome/mini-pick-preview.nvim",
+			"https://github.com/sh1Nome/floatmemo.nvim",
+			"https://github.com/sh1Nome/floatcli.nvim",
+			"https://github.com/neovim/nvim-lspconfig",
+			"https://github.com/mason-org/mason.nvim",
+			"https://github.com/mason-org/mason-lspconfig.nvim",
+			"https://github.com/stevearc/conform.nvim",
 		})
+
+		-- mini-pick-preview
 		require("mini-pick-preview").setup()
 
 		-- floatmemo
-		add({
-			source = "sh1Nome/floatmemo.nvim",
-		})
 		require("floatmemo").setup({
 			border = "single",
 			extension = "md",
 		})
 		-- floatcli
-		add({
-			source = "sh1Nome/floatcli.nvim",
-		})
 		require("floatcli").setup()
-
-		-- lsp
-		add({
-			-- `:h lspconfig-all`ですべての設定を見る
-			source = "neovim/nvim-lspconfig",
-		})
-		add({
-			-- `:Mason`でグラフィカルなステータスウィンドウを開く
-			source = "mason-org/mason.nvim",
-		})
-		add({
-			source = "mason-org/mason-lspconfig.nvim",
-			depends = {
-				"mason-org/mason.nvim",
-				"neovim/nvim-lspconfig",
-			},
-		})
-		add({
-			-- フォーマット
-			source = "stevearc/conform.nvim",
-		})
 	end)
 end
 
@@ -196,9 +172,14 @@ later(function()
 		mappings = require("keymaps").get_mini_align_mappings(),
 	}) -- 整列
 
+	-- プラグイン一括追加: dial, previm, md-table-align
 	add({
-		source = "monaqa/dial.nvim", -- <C-a>と<C-x>の拡張
+		"https://github.com/monaqa/dial.nvim",
+		"https://github.com/previm/previm",
+		"https://github.com/sh1Nome/md-table-align.nvim",
 	})
+
+	-- <C-a>と<C-x>の拡張
 	local augend = require("dial.augend")
 	require("dial.config").augends:register_group({
 		default = {
@@ -217,16 +198,11 @@ later(function()
 	})
 
 	-- マークダウンプレビュー
-	add({
-		source = "previm/previm",
-	})
 	if vim.fn.has("win32") == 1 then
 		vim.g.previm_open_cmd = "start"
 	else
 		vim.g.previm_open_cmd = "xdg-open"
 	end
-
-	add({
-		source = "sh1Nome/md-table-align.nvim", -- mdのテーブルを整形
-	})
 end)
+
+return Config
