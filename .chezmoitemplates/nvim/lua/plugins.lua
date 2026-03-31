@@ -108,6 +108,7 @@ if not vim.g.vscode then
 			"https://github.com/sh1Nome/mini-pick-preview.nvim",
 			"https://github.com/sh1Nome/floatmemo.nvim",
 			"https://github.com/sh1Nome/floatcli.nvim",
+			"https://github.com/sh1Nome/yank-git-remote-url.nvim",
 			"https://github.com/neovim/nvim-lspconfig",
 			"https://github.com/mason-org/mason.nvim",
 			"https://github.com/mason-org/mason-lspconfig.nvim",
@@ -124,6 +125,45 @@ if not vim.g.vscode then
 		})
 		-- floatcli
 		require("floatcli").setup()
+
+		-- yank-git-remote-url
+		require("yank-git-remote-url").setup({
+			providers = {
+				{
+					match = function(host)
+						return host:find("github") ~= nil
+					end,
+					build_url = function(host, repo_path, commit, rel_path, start_line, end_line)
+						local base = ("https://%s/%s/blob/%s/%s"):format(host, repo_path, commit, rel_path)
+						if not start_line then
+							return base
+						end
+						if start_line == end_line then
+							return base .. "#L" .. start_line
+						end
+						return base .. "#L" .. start_line .. "-L" .. end_line
+					end,
+				},
+				{
+					match = function(host)
+						return host:find("gitlab") ~= nil
+					end,
+					build_url = function(host, repo_path, commit, rel_path, start_line, end_line)
+						local base = ("https://%s/%s/-/blob/%s/%s"):format(host, repo_path, commit, rel_path)
+						if not start_line then
+							return base
+						end
+						if start_line == end_line then
+							return base .. "#L" .. start_line
+						end
+						return base .. "#L" .. start_line .. "-" .. end_line
+					end,
+				},
+			},
+		})
+		vim.api.nvim_create_user_command("YankGitRemoteUrl", function(opts)
+			require("yank-git-remote-url").yank(opts.range, opts.line1, opts.line2)
+		end, { range = true, desc = "Open current file on GitHub/GitLab" })
 	end)
 end
 
