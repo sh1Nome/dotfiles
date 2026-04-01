@@ -163,7 +163,7 @@ if not vim.g.vscode then
 		})
 		vim.api.nvim_create_user_command("YankGitRemoteUrl", function(opts)
 			require("yank-git-remote-url").yank(opts.range, opts.line1, opts.line2)
-		end, { range = true, desc = "Open current file on GitHub/GitLab" })
+		end, { range = true, desc = "Copy remote URL to clipboard" })
 	end)
 end
 
