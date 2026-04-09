@@ -38,8 +38,12 @@ if not vim.g.vscode then
 
 	-- 遅延ロード: 初回使用時で十分なもの
 	later(function()
-		require("mini.icons").setup() -- アイコン
-		require("mini.statusline").setup() -- ステータスライン
+		require("mini.icons").setup({
+			style = "ascii",
+		}) -- アイコン
+		require("mini.statusline").setup({
+			use_icons = false,
+		}) -- ステータスライン
 		require("mini.diff").setup() -- 差分表示
 		require("mini.files").setup({
 			mappings = require("keymaps").get_mini_files_mappings(),
