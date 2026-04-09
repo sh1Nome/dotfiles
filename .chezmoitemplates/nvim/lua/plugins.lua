@@ -19,6 +19,47 @@ end
 local add = vim.pack.add
 local now, later = Config.now, Config.later
 
+-- 全プラグインをアップデートするコマンド
+vim.api.nvim_create_user_command("PackUpdate", function()
+	vim.pack.update()
+end, { desc = "Update all plugins managed by vim.pack" })
+
+-- 非アクティブなプラグインを削除するコマンド
+vim.api.nvim_create_user_command("PackClean", function()
+	-- 非アクティブなプラグイン名の一覧
+	local inactive = vim.iter(vim.pack.get())
+		:filter(function(x)
+			return not x.active
+		end)
+		:map(function(x)
+			return x.spec.name
+		end)
+		:totable()
+
+	-- 非アクティブなプラグインがない
+	if vim.tbl_isempty(inactive) then
+		vim.notify("No inactive plugins to clean", vim.log.levels.INFO)
+		return
+	end
+
+	-- プラグイン一覧を表示
+	print("The following inactive plugins will be deleted:")
+	for _, name in ipairs(inactive) do
+		print("  - " .. name)
+	end
+
+	-- 確認
+	local response = vim.fn.input("Continue? (y/n): ")
+
+	if response ~= "y" then
+		vim.notify("Cancelled", vim.log.levels.INFO)
+		return
+	end
+
+	vim.pack.del(inactive)
+	vim.notify(string.format("Deleted %d plugin(s)", #inactive), vim.log.levels.INFO)
+end, { desc = "Delete all inactive plugins managed by vim.pack" })
+
 -- 競合するためVSCodeのNeovim拡張機能上では無効化
 if not vim.g.vscode then
 	-- 即時ロード
