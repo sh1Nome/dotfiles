@@ -176,38 +176,11 @@ later(function()
 		mappings = require("keymaps").get_mini_align_mappings(),
 	}) -- 整列
 
-	-- プラグイン一括追加: dial, previm, md-table-align
+	-- プラグイン一括追加: md-table-align, yank-git-remote-url.nvim
 	add({
-		"https://github.com/monaqa/dial.nvim",
-		"https://github.com/previm/previm",
 		"https://github.com/sh1Nome/md-table-align.nvim",
 		"https://github.com/sh1Nome/yank-git-remote-url.nvim",
 	})
-
-	-- <C-a>と<C-x>の拡張
-	local augend = require("dial.augend")
-	require("dial.config").augends:register_group({
-		default = {
-			-- nvimのデフォルト動作に近づける`nrformats (default "bin,hex")`
-			augend.integer.alias.decimal_int,
-			augend.integer.alias.hex,
-			augend.integer.alias.binary,
-			-- ここからカスタム
-			augend.constant.alias.bool, -- true, false
-			augend.constant.alias.Bool, -- True, False
-			augend.constant.new({
-				elements = { "[ ]", "[x]" }, -- マークダウンのチェックボックス
-				word = false, -- 単語の境界になくてもマッチする
-			}),
-		},
-	})
-
-	-- マークダウンプレビュー
-	if vim.fn.has("win32") == 1 then
-		vim.g.previm_open_cmd = "start"
-	else
-		vim.g.previm_open_cmd = "xdg-open"
-	end
 
 	-- yank-git-remote-url
 	require("yank-git-remote-url").setup({

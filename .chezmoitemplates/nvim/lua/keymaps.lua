@@ -7,20 +7,6 @@ vim.keymap.set("n", "<leader>t", function()
 	require("md-table-align").align_table()
 end, { desc = "Align a markdown table" }) -- マークダウンのテーブルを整形
 
--- dial.nvimの設定
-vim.keymap.set("n", "<C-a>", function()
-	require("dial.map").manipulate("increment", "normal")
-end)
-vim.keymap.set("n", "<C-x>", function()
-	require("dial.map").manipulate("decrement", "normal")
-end)
-vim.keymap.set("x", "<C-a>", function()
-	require("dial.map").manipulate("increment", "visual")
-end)
-vim.keymap.set("x", "<C-x>", function()
-	require("dial.map").manipulate("decrement", "visual")
-end)
-
 -- VSCode Neovimとの競合回避
 if vim.g.vscode then
 	local vscode = require("vscode")
