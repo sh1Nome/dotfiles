@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "notification": [
+      {
+        "type": "command",
+        "bash": "notify-send 'Copilot' 'Reply completed' && paplay /usr/share/sounds/freedesktop/stereo/complete.oga 2>/dev/null || true"
+      }
+    ]
+  }
+}
