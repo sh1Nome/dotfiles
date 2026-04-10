@@ -36,10 +36,14 @@
       "git log *": "allow",
       "git diff *": "allow",
       "git show *": "allow",
-      "rg *": "allow",
-      "grep *": "allow",
-      "head *": "allow",
-      "tail *": "allow"
+      "gh issue list *": "allow",
+      "gh issue view *": "allow",
+      "gh pr list *": "allow",
+      "gh pr view *": "allow",
+      "glab issue list *": "allow",
+      "glab issue view *": "allow",
+      "glab mr list *": "allow",
+      "glab mr view *": "allow"
     },
     "skill": "allow",
     "todoread": "allow",
