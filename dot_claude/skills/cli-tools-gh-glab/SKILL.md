@@ -1,6 +1,6 @@
 ---
 name: cli-tools-gh-glab
-description: GitHub または GitLab で Issue、PR/MR、CI 実行状況を確認する時に参照する。
+description: gh/glab で GitHub/GitLab の Issue・PR/MR・CI 状況を確認・管理します。GitHub/GitLab の作業状況を確認したい時に使用します。
 ---
 
 # CLI ツールスキル（gh / glab）
