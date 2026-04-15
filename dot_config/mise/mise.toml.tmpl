@@ -17,14 +17,5 @@
 "aqua:charmbracelet/vhs" = "latest"
 {{ end }}
 
-[tasks.list-tool-backends]
-description = "Show the backend for each tool managed by mise"
-run = '''
-mise ls | awk '{print $1}' | xargs -n1 mise tool | grep '^Backend:'
-'''
-
-[settings]
-windows_default_inline_shell_args = "C:/Progra~1/Git/bin/bash.exe --noprofile -c"
-
 [settings.python]
 compile = false
