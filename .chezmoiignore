@@ -10,4 +10,5 @@ README.md
 {{ if ne .chezmoi.os "windows" }}
 AppData
 .chezmoiscripts/*.ps1
+.config/wezterm/start_ucrt64.cmd
 {{ end }}
