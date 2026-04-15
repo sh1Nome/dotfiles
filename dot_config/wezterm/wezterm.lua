@@ -37,7 +37,7 @@ config.use_ime = true -- 日本語入力の有効化
 
 -- シェル設定
 if wezterm.target_triple:find("windows") then
-	config.default_prog = { "C:\\Progra~1\\Git\\bin\\bash.exe" } -- Windows環境でGit Bashを使用
+	config.default_prog = { wezterm.config_dir .. "/start_ucrt64.cmd" } -- Windows環境でmsys2を使用
 else
 	config.default_prog = { "bash" } -- Unix環境でbashを使用
 end
