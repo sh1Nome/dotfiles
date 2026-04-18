@@ -33,7 +33,7 @@ require("plugins").later(function()
 		-- `:h lspconfig-all`ですべての設定を見る
 		-- `:Mason`でグラフィカルなステータスウィンドウを開く
 		-- 使用中の LSP
-		-- lua_ls, gopls, jdtls, ts_ls, pyright, clangd
+		-- lua_ls, gopls, jdtls, ts_ls, pyright, clangd, rust-analyzer
 		require("mason").setup({
 			ui = {
 				border = "single",
