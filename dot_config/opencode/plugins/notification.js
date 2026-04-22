@@ -9,16 +9,11 @@ export const NotificationPlugin = async ({
 }) => {
   // プラットフォーム固有の通知を送信
   const sendNotification = async (title, message) => {
+    await $`printf "\e]777;notify;%s;%s\e\\" ${title} ${message}`;
     if (process.platform === "linux") {
       // Linux: notify-send で通知してから paplay で音を鳴らす
-      await $`notify-send ${title} ${message}`;
       await $`paplay /usr/share/sounds/freedesktop/stereo/complete.oga`;
-    } else if (process.platform === "win32") {
-      // Windows: システムサウンドで音を鳴らす
-      // Windowsのトースト通知は実装が複雑そうなので未対応
-      await $`powershell -NoProfile -Command "(New-Object Media.SoundPlayer 'C:\\Windows\\Media\\notify.wav').PlaySync()"`;
     }
-    // その他のプラットフォームは何もしない
   };
 
   // プラグインのハンドラーオブジェクトを返す
