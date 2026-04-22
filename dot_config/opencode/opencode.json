@@ -4,6 +4,9 @@
   "model": "github-copilot/claude-haiku-4.5",
   "small_model": "github-copilot/gpt-5-mini",
   "agent": {
+    "plan": {
+      "disable": true
+    },
     "general": {
       "model": "github-copilot/gpt-5-mini"
     },
@@ -50,7 +53,7 @@
     "skill": "allow",
     "todoread": "allow",
     "todowrite": "allow",
-    "question": "allow"
+    "question": "deny"
   },
   "share": "disabled",
   "tui": {
