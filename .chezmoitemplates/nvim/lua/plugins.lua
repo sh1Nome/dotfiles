@@ -91,9 +91,11 @@ if not vim.g.vscode then
 		}) -- ファイラー
 		require("mini.pick").setup({
 			window = {
-				config = {
-					width = math.floor((vim.o.columns - 8) / 2),
-				},
+				config = function()
+					return {
+						width = math.floor((vim.o.columns - 8) / 2),
+					}
+				end,
 			},
 		}) -- ピッカー
 		local animate = require("mini.animate") -- アニメーション
