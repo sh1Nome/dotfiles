@@ -7,6 +7,7 @@ vim.opt.swapfile = false -- スワップファイルを作成禁止
 vim.opt.backspace = { "indent", "eol", "start" } -- バックスペース有効化
 vim.opt.clipboard = { "unnamed", "unnamedplus" } -- システムクリップボードを利用
 vim.opt.updatetime = 1000 -- カーソル停止と判定されるまでの時間(ms)
+vim.opt.shellcmdflag = "-c" -- シェルに渡されるフラグ（デフォルトが -c だが、 msys2 では指定が必要）
 
 -- 表示系
 vim.opt.showcmd = true -- コマンドを表示
