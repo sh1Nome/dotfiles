@@ -1,0 +1,10 @@
+approval_policy = "untrusted"
+sandbox_mode = "read-only"
+
+[tui]
+status_line = ["current-dir", "git-branch", "model-with-reasoning", "fast-mode", "task-progress", "context-used", "five-hour-limit", "weekly-limit"]
+
+notifications = true
+notification_method = "osc9"
+notification_condition = "always"
+
