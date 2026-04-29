@@ -58,5 +58,6 @@
   "share": "disabled",
   "tui": {
     "diff_style": "stacked"
-  }
+  },
+  "autoupdate": false
 }
