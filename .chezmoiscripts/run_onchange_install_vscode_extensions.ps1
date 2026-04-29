@@ -19,3 +19,4 @@ $extensions = @(
 foreach ($ext in $extensions) {
   code --install-extension $ext
 }
+
