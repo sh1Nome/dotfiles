@@ -64,6 +64,23 @@ export const NotificationPlugin = async ({
     }
   };
 
+  /**
+   * セッションがサブエージェント実行かどうかを判定
+   * @param {string} sessionID - セッションID
+   * @returns {Promise<boolean>} サブエージェント実行の場合は true、それ以外は false
+   */
+  const isSubagentSession = async (sessionID) => {
+    try {
+      const session = await client.session.get({
+        path: { id: sessionID },
+      });
+
+      return !!session.data?.parentID;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return {
     /**
      * イベント発生時のハンドラー
@@ -74,6 +91,12 @@ export const NotificationPlugin = async ({
      */
     event: async ({ event }) => {
       if (event.type === "permission.asked" || event.type === "session.idle") {
+        // サブエージェント実行の場合は通知しない
+        const isSubagent = await isSubagentSession(event.properties.sessionID);
+        if (isSubagent) {
+          return;
+        }
+
         const message = await getLatestMessage(event.properties.sessionID);
 
         await sendNotification("OpenCode", message);
