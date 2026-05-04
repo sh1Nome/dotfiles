@@ -40,28 +40,28 @@ else
 	vim.keymap.set("n", "<leader>p", function()
 		local tool = is_git_repo() and "git" or "rg"
 		require("mini.pick").builtin.files({ tool = tool })
-	end, { desc = "Pick files" })
+	end, { desc = "Pick files (S-Tab: show keymaps)" })
 
 	-- mini.pickの横断したあいまい検索を起動（gitリポジトリならgit、そうでないならrg）
 	vim.keymap.set("n", "<leader>f", function()
 		local tool = is_git_repo() and "git" or "rg"
 		require("mini.pick").builtin.grep_live({ tool = tool })
-	end, { desc = "Live grep (C-o: glob)" })
+	end, { desc = "Live grep (C-o: glob, S-Tab: show keymaps)" })
 
 	-- 最近訪問したファイルを起動
 	vim.keymap.set("n", "<leader>v", function()
 		require("mini.extra").pickers.visit_paths()
-	end, { desc = "Pick visited files" })
+	end, { desc = "Pick visited files (S-Tab: show keymaps)" })
 
 	-- mini.pickのヘルプ検索を起動
 	vim.keymap.set("n", "<leader>h", function()
 		require("mini.pick").builtin.help()
-	end, { desc = "Help" })
+	end, { desc = "Help (S-Tab: show keymaps)" })
 
 	-- mini.pickの最後のpickerを再開
 	vim.keymap.set("n", "<leader>r", function()
 		require("mini.pick").builtin.resume()
-	end, { desc = "Resume picker" })
+	end, { desc = "Resume picker (S-Tab: show keymaps)" })
 
 	-- mini.filesを起動
 	vim.keymap.set("n", "<leader>e", function()

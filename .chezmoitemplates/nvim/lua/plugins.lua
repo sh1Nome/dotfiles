@@ -90,6 +90,9 @@ if not vim.g.vscode then
 			mappings = require("keymaps").get_mini_files_mappings(),
 		}) -- ファイラー
 		require("mini.pick").setup({
+			mappings = {
+				choose_marked = "<C-q>",
+			},
 			window = {
 				config = function()
 					return {
@@ -147,6 +150,9 @@ if not vim.g.vscode then
 			},
 			window = {
 				delay = 0, -- 遅延なしで表示
+				config = {
+					width = "auto", -- サイズを自動調整
+				},
 			},
 		}) -- キーマップを表示
 
