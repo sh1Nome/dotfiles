@@ -22,8 +22,14 @@ else
 		require("mini.extra").pickers.lsp({ scope = "references" })
 	end, { desc = "References" })
 	vim.keymap.set("n", "K", function()
-		vim.lsp.buf.hover({ border = "single" })
-	end, { desc = "Hover" })
+		-- vim.fn.line(".") は 1 始まり、vim.diagnostic.get() の lnum は 0 始まり
+		local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+		if #diagnostics > 0 then
+			vim.diagnostic.open_float({ border = "single" })
+		else
+			vim.lsp.buf.hover({ border = "single" })
+		end
+	end, { desc = "Hover or show diagnostics" })
 
 	-- floatmemoを開く
 	vim.keymap.set("n", "<leader>m", function()
