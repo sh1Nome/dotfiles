@@ -4,6 +4,7 @@ README.md
 .config/Code
 .config/fcitx5
 .config/nvim
+.config/dunst
 .chezmoiscripts/*.sh
 {{ end }}
 

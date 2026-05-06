@@ -1,0 +1,50 @@
+# dunst(5) のすべての設定オプションを参照
+
+# 全体の設定
+[global]
+    # 通知の大きさ
+    width = 300
+    height = (0, 300)
+
+    # 通知間の余白
+    gap_size = 10
+
+    # 通知を右下に配置
+    origin = bottom-right
+
+    # フォント設定
+    font = Noto Sans Mono CJK JP
+
+    # 色
+    background = "#222222"
+    foreground = "#ffffff"
+    frame_color = "#a0a0a0"
+
+    # アイコンを表示しない
+    icon_position = off
+
+    # 10 秒で閉じる
+    timeout = 10
+
+# wezterm の設定
+[wezterm]
+    # アプリ名
+    appname = "wezterm"
+    # 緊急度
+    urgency = normal
+    # wezterm の通知が消えない問題への対策
+    override_dbus_timeout = 10
+
+# 緊急度ごとの設定
+[urgency_normal]
+    # 枠の色
+    frame_color = "#5e5086"
+    # 一時停止レベル（40 で停止した場合、 normal は通知しない）、デフォルト値を使用
+    override_pause_level = 30
+[urgency_critical]
+    # 枠の色
+    frame_color = "#d54e53"
+    # 自動で閉じない
+    timeout = 0
+    # 一時停止レベル（40 で停止した場合、 critical は通知する）、デフォルト値を使用
+    override_pause_level = 60
