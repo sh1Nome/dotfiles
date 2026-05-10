@@ -54,7 +54,10 @@
     "skill": "allow",
     "todoread": "allow",
     "todowrite": "allow",
-    "question": "deny"
+    "question": "deny",
+    "external_directory": {
+      "*": "ask"
+    }
   },
   "share": "disabled",
   "tui": {
