@@ -1,5 +1,5 @@
 approval_policy = "untrusted"
-sandbox_mode = "read-only"
+sandbox_mode = "workspace-write"
 
 [tui]
 status_line = ["current-dir", "git-branch", "model-with-reasoning", "fast-mode", "task-progress", "context-used", "five-hour-limit", "weekly-limit"]
