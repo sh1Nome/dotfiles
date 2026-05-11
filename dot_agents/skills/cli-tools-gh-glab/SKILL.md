@@ -26,3 +26,12 @@ description: gh/glab で GitHub/GitLab の Issue・PR/MR・CI 状況を確認・
 * Issue 確認: `glab issue` コマンド（詳細は `glab issue --help`）
 * MR 確認: `glab mr` コマンド（詳細は `glab mr --help`）
 * CI 確認: `glab ci` コマンド（詳細は `glab ci --help`）
+
+### MR コメント確認
+
+* `glab mr note ls` - MR のコメントを確認するときに使用
+
+### CI 情報確認
+
+* `glab ci get` - MR の CI 情報を確認する、ジョブ名を特定するときに使用
+* `glab ci trace (ジョブ名)` - CI のエラーの原因を確認するときに使用
