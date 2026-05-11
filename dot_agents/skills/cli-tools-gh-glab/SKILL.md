@@ -29,7 +29,7 @@ description: gh/glab で GitHub/GitLab の Issue・PR/MR・CI 状況を確認・
 
 ### MR コメント確認
 
-* `glab mr note ls` - MR のコメントを確認するときに使用
+* `glab mr note list` - MR のコメントを確認するときに使用
 
 ### CI 情報確認
 
