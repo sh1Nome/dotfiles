@@ -49,7 +49,10 @@
       "glab issue view *": "allow",
       "glab mr list *": "allow",
       "glab mr view *": "allow",
-      "glab mr diff *": "allow"
+      "glab mr diff *": "allow",
+      "glab mr note list *": "allow",
+      "glab ci get *": "allow",
+      "glab ci trace *": "allow"
     },
     "skill": "allow",
     "todoread": "allow",
