@@ -12,6 +12,7 @@
     name = {{ .gitUserName }} # Gitのユーザー名
     email = {{ .gitEmail }} # Gitのメールアドレス
 {{ if .gitEnableCredential }}
-[credential]
+[credential] # https://git-scm.com/doc/credential-helpers
+    helper = wincred # git-credential-wincred を指定
     provider = generic # GCM の汎用向けホスト認証プロバイダー
 {{ end }}
