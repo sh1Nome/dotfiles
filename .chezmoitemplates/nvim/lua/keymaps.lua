@@ -69,6 +69,11 @@ else
 		require("mini.pick").builtin.resume()
 	end, { desc = "Resume picker (S-Tab: show keymaps)" })
 
+	-- zk-nvimのコマンドパレット
+	vim.keymap.set("n", "<leader>z", function()
+		require("pickers").zk_commands()
+	end, { desc = "Zk commands (S-Tab: show keymaps)" })
+
 	-- mini.filesを起動
 	vim.keymap.set("n", "<leader>e", function()
 		-- mini.filesをトグルする（開いているバッファ）
