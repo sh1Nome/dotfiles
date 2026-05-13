@@ -163,6 +163,7 @@ if not vim.g.vscode then
 			"https://github.com/mason-org/mason.nvim",
 			"https://github.com/mason-org/mason-lspconfig.nvim",
 			"https://github.com/stevearc/conform.nvim",
+			"https://github.com/zk-org/zk-nvim",
 			"https://github.com/itchyny/vim-qfedit",
 		})
 
@@ -176,6 +177,11 @@ if not vim.g.vscode then
 		})
 		-- floatcli
 		require("floatcli").setup()
+
+		-- zk
+		require("zk").setup({
+			picker = "minipick",
+		})
 	end)
 end
 
