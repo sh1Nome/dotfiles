@@ -1,0 +1,6 @@
+[note]
+language = "ja"
+filename = "{{id}}"
+extension = "md"
+template = "default.md"
+
