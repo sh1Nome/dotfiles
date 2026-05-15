@@ -96,6 +96,33 @@ else
 			commands = { "bash" },
 		})
 	end, { desc = "Float shell" })
+
+	-- quickfixウィンドウが開いているか判定
+	local function is_quickfix_open()
+		return vim.iter(vim.fn.getwininfo()):any(function(wininfo)
+			return wininfo.quickfix == 1
+		end)
+	end
+
+	-- quickfixのトグル
+	vim.keymap.set("n", "<leader>q", function()
+		if is_quickfix_open() then
+			vim.cmd("cclose")
+		else
+			vim.cmd("copen")
+		end
+	end, { desc = "Toggle quickfix" })
+
+	-- quickfixウィンドウから出たら自動的に閉じる
+	vim.api.nvim_create_autocmd("WinEnter", {
+		callback = function()
+			local current_win = vim.api.nvim_get_current_win()
+			local current_win_quickfix = vim.fn.getwininfo(current_win)[1].quickfix
+			if is_quickfix_open() and current_win_quickfix ~= 1 then
+				vim.cmd("cclose")
+			end
+		end,
+	})
 end
 
 -- mini.align用のキーマップ設定を返す関数
