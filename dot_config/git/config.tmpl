@@ -16,3 +16,6 @@
     helper = wincred # git-credential-wincred を指定
     provider = generic # GCM の汎用向けホスト認証プロバイダー
 {{ end }}
+[alias]
+    wip = "!git add -A && git commit -m 'wip'"
+    copy-hash = "!printf '\\e]52;c;%s\\e\\\\' \"$(git rev-parse HEAD | base64)\""
