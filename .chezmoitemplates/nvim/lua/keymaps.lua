@@ -143,7 +143,15 @@ local function get_mini_files_mappings()
 	}
 end
 
+-- mini.pick用のキーマップ設定を返す関数
+local function get_mini_pick_mappings()
+	return {
+		choose_marked = "<C-q>",
+	}
+end
+
 return {
 	get_mini_align_mappings = get_mini_align_mappings,
 	get_mini_files_mappings = get_mini_files_mappings,
+	get_mini_pick_mappings = get_mini_pick_mappings,
 }

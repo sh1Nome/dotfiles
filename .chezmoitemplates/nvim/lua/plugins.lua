@@ -90,9 +90,7 @@ if not vim.g.vscode then
 			mappings = require("keymaps").get_mini_files_mappings(),
 		}) -- ファイラー
 		require("mini.pick").setup({
-			mappings = {
-				choose_marked = "<C-q>",
-			},
+			mappings = require("keymaps").get_mini_pick_mappings(),
 			window = {
 				config = function()
 					return {
