@@ -1,16 +1,23 @@
 [core]
     autocrlf = false # 改行コードを自動変換しない
     ignorecase = false # 大文字小文字を区別する
-    quotepath = false # パスをクォートせずUTF-8表示
+    quotepath = false # パスをクォートせず UTF-8 表示
+    pager = delta # ページャーを delta に設定
 [pull]
-    rebase = true # pull時にrebaseする
+    rebase = true # pull 時に rebase する
 [fetch]
     prune = true # 取得時に不要ブランチを自動削除
 [color]
     ui = auto # 色表示を自動判定
+[interactive]
+    diffFilter = delta --color-only # 対話型コマンドを delta にパイプ
+[delta]
+    navigate = true  # n, N でセクションを移動
+[merge]
+    conflictStyle = zdiff3 # 競合時に元のテキストも表示
 [user]
-    name = {{ .gitUserName }} # Gitのユーザー名
-    email = {{ .gitEmail }} # Gitのメールアドレス
+    name = {{ .gitUserName }} # Git のユーザー名
+    email = {{ .gitEmail }} # Git のメールアドレス
 {{ if .gitEnableCredential }}
 [credential] # https://git-scm.com/doc/credential-helpers
     helper = wincred # git-credential-wincred を指定
