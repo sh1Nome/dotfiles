@@ -3,3 +3,6 @@ gitUserName = "{{ promptString "Git user name" }}"
 gitEmail = "{{ promptString "Git email address" }}"
 gitEnableCredential = {{ promptBool "Enable credential provider (generic)" }}
 miseMinimal = {{ promptBool "Minimal mise setup" }}
+
+[diff]
+    pager = "delta"
