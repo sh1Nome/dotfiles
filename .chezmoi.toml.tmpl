@@ -1,6 +1,7 @@
 [data]
 gitUserName = "{{ promptString "Git user name" }}"
 gitEmail = "{{ promptString "Git email address" }}"
+gitSigningkey = "{{ promptString "Git signing key (leave empty to skip)" }}"
 gitEnableCredential = {{ promptBool "Enable credential provider (generic)" }}
 miseMinimal = {{ promptBool "Minimal mise setup" }}
 

@@ -20,6 +20,13 @@
 [user]
     name = {{ .gitUserName }} # Git のユーザー名
     email = {{ .gitEmail }} # Git のメールアドレス
+{{ if ne .gitSigningkey "" }}
+    signingkey = {{ .gitSigningkey }} # Git の署名用の公開鍵のパス
+[commit]
+    gpgsign = true # すべてのコミットで署名する
+[gpg]
+    format = ssh # 署名時に使用するフォーマット
+{{ end }}
 {{ if .gitEnableCredential }}
 [credential] # https://git-scm.com/doc/credential-helpers
     helper = wincred # git-credential-wincred を指定
