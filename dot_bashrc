@@ -126,6 +126,10 @@ export GLAB_PAGER=delta
 # 以下は`PATH="$HOME/.local/share/mise/shims:$PATH"`と同義
 # Windowsのmiseはshimsしかサポートしていない
 eval "$(mise activate bash --shims)"
+# aqua があるときだけ PATH に追加
+if command -v aqua >/dev/null 2>&1; then
+  export PATH="$(aqua root-dir)/bin:$PATH"
+fi
 
 # 関数
 # Windows の VS Code Neovim が Neovim を見つけられない問題を回避
