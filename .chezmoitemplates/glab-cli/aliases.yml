@@ -1,0 +1,1 @@
+mysprint: '!glab issue list --assignee @me --iteration $(glab iteration list --output json --jq "max_by(.id).id")'

@@ -6,6 +6,7 @@ Makefile
 .config/fcitx5
 .config/nvim
 .config/dunst
+.config/glab-cli
 .chezmoiscripts/*.sh
 {{ end }}
 
