@@ -39,3 +39,9 @@ vim.api.nvim_create_user_command("PandocToClipboard", pandoc_to_clipboard, {
 	nargs = 1,
 	range = true,
 })
+
+vim.api.nvim_create_user_command("SnippetPick", function()
+	MiniSnippets.expand({ match = false })
+end, {
+	desc = "Pick and expand snippets",
+})

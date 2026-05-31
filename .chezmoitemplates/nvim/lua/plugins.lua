@@ -138,6 +138,20 @@ if not vim.g.vscode then
 				["`"] = false,
 			},
 		}) -- 括弧補完
+		require("mini.snippets").setup({
+			snippets = {
+				{
+					prefix = "",
+					body = '<pre><code class="">\n\n</code></pre>',
+					desc = "Code block with language",
+				},
+				{
+					prefix = "",
+					body = "<details><summary></summary>\n\n</details>",
+					desc = "Details/summary",
+				},
+			},
+		}) -- スニペット
 		require("mini.extra").setup() -- 追加
 
 		require("mini.clue").setup({
