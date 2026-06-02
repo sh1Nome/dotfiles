@@ -2,6 +2,7 @@
   "askUser": false,
   "autoUpdate": false,
   "banner": "never",
+  "bashEnv": true,
   "beep": false,
   "footer": {
     "showModelEffort": true,
