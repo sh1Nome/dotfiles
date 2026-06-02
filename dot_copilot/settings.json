@@ -19,5 +19,6 @@
   "includeCoAuthoredBy": false,
   "model": "claude-haiku-4.5",
   "mouse": false,
-  "respectGitignore": true
+  "respectGitignore": true,
+  "showReasoning": false
 }
