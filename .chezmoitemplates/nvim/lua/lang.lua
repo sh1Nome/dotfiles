@@ -41,6 +41,9 @@ require("plugins").later(function()
 		})
 		require("mason-lspconfig").setup()
 
+		-- mason で管理していない ls
+		vim.lsp.enable("zk")
+
 		-- 個別のフォーマッター設定
 		local conform = require("conform")
 		conform.setup({
