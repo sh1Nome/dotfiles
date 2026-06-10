@@ -1,9 +1,11 @@
-.PHONY: help build-zk install-zk uninstall-zk mkdir-usr-local-bin
+.PHONY: help build-zk install-zk uninstall-zk mkdir-usr-local-bin install-claude uninstall-claude
 
 help:
-	@echo "build-zk      Build zk from source"
-	@echo "install-zk    Install zk to /usr/local/bin"
-	@echo "uninstall-zk  Uninstall zk from /usr/local/bin"
+	@echo "build-zk         Build zk from source"
+	@echo "install-zk       Install zk to /usr/local/bin"
+	@echo "uninstall-zk     Uninstall zk from /usr/local/bin"
+	@echo "install-claude   Install Claude Code"
+	@echo "uninstall-claude Uninstall Claude Code"
 
 ZK_REPO ?= https://github.com/zk-org/zk.git
 ZK_BUILD_DIR := .zk-build
@@ -36,3 +38,14 @@ install-zk: mkdir-usr-local-bin $(ZK_BINARY)
 
 uninstall-zk:
 	rm -f /usr/local/bin/zk*
+
+install-claude:
+ifeq ($(OS),Windows_NT)
+	powershell -Command "irm https://claude.ai/install.ps1 | iex"
+else
+	curl -fsSL https://claude.ai/install.sh | bash
+endif
+
+uninstall-claude:
+	rm -f ~/.local/bin/claude
+	rm -rf ~/.local/share/claude
