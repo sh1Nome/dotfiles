@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "agentStop": [
+      {
+        "type": "command",
+        "powershell": "Add-Type -AssemblyName System.Windows.Forms,System.Drawing;$n=[System.Windows.Forms.NotifyIcon]::new();$n.Icon=[System.Drawing.SystemIcons]::Information;$n.Visible=$true;$n.ShowBalloonTip(5000,'copilot','agentStop',[System.Windows.Forms.ToolTipIcon]::Info)",
+        "bash": "notify-send copilot agentStop"
+      }
+    ]
+  }
+}

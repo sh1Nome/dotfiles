@@ -4,4 +4,3 @@
 .agents/skills/cli-tools-gh-glab
 .agents/skills/coding-implementation
 .copilot/permissions-config.json
-.copilot/hooks

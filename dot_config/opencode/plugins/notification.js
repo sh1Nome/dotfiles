@@ -23,9 +23,6 @@ export const NotificationPlugin = async ({
    */
   const sendNotification = async (title, message) => {
     await $`printf "\e]777;notify;%s;%s\e\\" "${title}" "${message}"`;
-    if (process.platform === "linux") {
-      await $`paplay /usr/share/sounds/freedesktop/stereo/complete.oga`;
-    }
   };
 
   /**
