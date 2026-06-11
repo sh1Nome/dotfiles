@@ -5,8 +5,11 @@
     "pr": ""
   },
   "permissions": {
-    "defaultMode": "acceptEdits",
-    "deny": ["Read(//**/.env)", "Read(//**/.env.*)"]
+    "deny": [
+      "Read(//**/.env)",
+      "Read(//**/.env.*)"
+    ],
+    "defaultMode": "acceptEdits"
   },
   "hooks": {
     "Stop": [
@@ -41,23 +44,23 @@
       }
     ]
   },
+  "defaultShell": "bash",
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline.sh",
     "padding": 2
   },
-  "defaultShell": "bash",
   "language": "japanese",
   "alwaysThinkingEnabled": true,
-  "effortLevel": "medium",
+  "effortLevel": "auto",
   "fastModePerSessionOptIn": true,
-  "externalEditorContext": true,
-  "tui": "fullscreen",
-  "theme": "dark",
   "autoUpdatesChannel": "latest",
+  "tui": "fullscreen",
   "autoMemoryEnabled": false,
-  "autoConnectIde": false,
-  "autoInstallIdeExtension": false,
   "disableAutoMode": "disable",
-  "disableDeepLinkRegistration": "disable"
+  "theme": "dark",
+  "disableDeepLinkRegistration": "disable",
+  "externalEditorContext": true,
+  "autoConnectIde": false,
+  "autoInstallIdeExtension": false
 }
