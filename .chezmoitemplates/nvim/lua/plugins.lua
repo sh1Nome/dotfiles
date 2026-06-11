@@ -142,12 +142,12 @@ if not vim.g.vscode then
 			snippets = {
 				{
 					prefix = "",
-					body = '<pre><code class="">\n\n</code></pre>',
+					body = '<pre><code class="$0">\n\n</code></pre>',
 					desc = "Code block with language",
 				},
 				{
 					prefix = "",
-					body = "<details><summary></summary>\n\n</details>",
+					body = "<details><summary>$0</summary>\n\n</details>",
 					desc = "Details/summary",
 				},
 			},
