@@ -94,9 +94,14 @@ else
 		require("mini.notify").show_history()
 	end, { desc = "Show notifications" })
 
+	-- スニペットを選択して展開
+	vim.keymap.set("n", "<leader>s", function()
+		require("mini.snippets").expand({ match = false })
+	end, { desc = "Pick and expand snippets" })
+
 	-- floatcliの設定
 	-- bashを開く
-	vim.keymap.set("n", "<leader>s", function()
+	vim.keymap.set("n", "<leader>b", function()
 		require("floatcli").open({
 			commands = { "bash" },
 		})
