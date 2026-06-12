@@ -3,3 +3,5 @@
 .agents/skills/cli-tools-gh-glab
 .agents/skills/coding-implementation
 .copilot/permissions-config.json
+.claude/skills/inspect
+.agents/skills/inspect
