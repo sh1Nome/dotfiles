@@ -8,3 +8,5 @@ notifications = true
 notification_method = "osc9"
 notification_condition = "always"
 
+[features]
+codex_git_commit = false
