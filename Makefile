@@ -1,4 +1,4 @@
-.PHONY: help build-zk install-zk uninstall-zk mkdir-usr-local-bin install-claude uninstall-claude
+.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-claude uninstall-claude
 
 help:
 	@echo "build-zk         Build zk from source"
@@ -23,8 +23,8 @@ else
 	ZK_BINARY = $(ZK_BUILD_DIR)/zk
 endif
 
-mkdir-usr-local-bin:
-	mkdir -p /usr/local/bin
+mkdir-local-bin:
+	mkdir -p ~/.local/bin
 
 build-zk: $(ZK_BINARY)
 
@@ -32,12 +32,12 @@ $(ZK_BINARY):
 	git clone $(ZK_REPO) $(ZK_BUILD_DIR)
 	cd $(ZK_BUILD_DIR) && $(MAKE_CMD) build
 
-install-zk: mkdir-usr-local-bin $(ZK_BINARY)
-	mv $(ZK_BINARY) /usr/local/bin/
+install-zk: mkdir-local-bin $(ZK_BINARY)
+	mv $(ZK_BINARY) ~/.local/bin/
 	rm -rf ./$(ZK_BUILD_DIR)
 
 uninstall-zk:
-	rm -f /usr/local/bin/zk*
+	rm -f ~/.local/bin/zk*
 
 install-claude:
 ifeq ($(OS),Windows_NT)
