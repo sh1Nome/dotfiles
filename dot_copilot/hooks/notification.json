@@ -4,15 +4,15 @@
     "agentStop": [
       {
         "type": "command",
-        "powershell": "Add-Type -AssemblyName System.Windows.Forms,System.Drawing;$n=[System.Windows.Forms.NotifyIcon]::new();$n.Icon=[System.Drawing.SystemIcons]::Information;$n.Visible=$true;$n.ShowBalloonTip(5000,'copilot','agentStop',[System.Windows.Forms.ToolTipIcon]::Info)",
-        "bash": "notify-send copilot agentStop"
+        "powershell": "sh -c 'notify copilot agentStop'",
+        "bash": "notify copilot agentStop"
       }
     ],
     "permissionRequest": [
       {
         "type": "command",
-        "powershell": "Add-Type -AssemblyName System.Windows.Forms,System.Drawing;$n=[System.Windows.Forms.NotifyIcon]::new();$n.Icon=[System.Drawing.SystemIcons]::Information;$n.Visible=$true;$n.ShowBalloonTip(5000,'copilot','permissionRequest',[System.Windows.Forms.ToolTipIcon]::Info)",
-        "bash": "notify-send copilot permissionRequest"
+        "powershell": "sh -c 'notify copilot permissionRequest'",
+        "bash": "notify copilot permissionRequest"
       }
     ]
   }

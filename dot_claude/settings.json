@@ -18,11 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            {{ if eq .chezmoi.os "windows" }}
-            "command": "Add-Type -AssemblyName System.Windows.Forms,System.Drawing;$n=[System.Windows.Forms.NotifyIcon]::new();$n.Icon=[System.Drawing.SystemIcons]::Information;$n.Visible=$true;$n.ShowBalloonTip(5000,'Claude','Stop',[System.Windows.Forms.ToolTipIcon]::Info)"
-            {{ else }}
-            "command": "notify-send Claude Stop"
-            {{ end }}
+            "command": "sh -c 'notify Claude Stop'"
           }
         ]
       }
@@ -33,12 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            {{ if eq .chezmoi.os "linux" }}
-            "command": "notify-send Claude Notification"
-            {{ end }}
-            {{ if eq .chezmoi.os "windows" }}
-            "command": "Add-Type -AssemblyName System.Windows.Forms,System.Drawing;$n=[System.Windows.Forms.NotifyIcon]::new();$n.Icon=[System.Drawing.SystemIcons]::Information;$n.Visible=$true;$n.ShowBalloonTip(5000,'Claude','Notification',[System.Windows.Forms.ToolTipIcon]::Info)"
-            {{ end }}
+            "command": "sh -c 'notify Claude Notification'"
           }
         ]
       }

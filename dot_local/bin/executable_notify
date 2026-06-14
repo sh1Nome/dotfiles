@@ -1,0 +1,15 @@
+#!/bin/sh
+title="$1"
+message="$2"
+
+if [ "$OS" = "Windows_NT" ]; then
+    powershell.exe -Command "
+        Add-Type -AssemblyName System.Windows.Forms,System.Drawing;
+        \$n = [System.Windows.Forms.NotifyIcon]::new();
+        \$n.Icon = [System.Drawing.SystemIcons]::Information;
+        \$n.Visible = \$true;
+        \$n.ShowBalloonTip(5000, '${title}', '${message}', [System.Windows.Forms.ToolTipIcon]::Info)
+    "
+else
+    notify-send "$title" "$message"
+fi
