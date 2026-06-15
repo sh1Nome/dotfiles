@@ -7,6 +7,8 @@ Makefile
 .config/nvim
 .config/dunst
 .config/glab-cli
+.config/xfce4
+.config/autostart
 .chezmoiscripts/*.sh
 {{ end }}
 
