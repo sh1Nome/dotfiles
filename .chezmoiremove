@@ -1,7 +1,7 @@
-.config/opencode/themes
 .agents/skills/grill-me/LICENSE
 .agents/skills/cli-tools-gh-glab
 .agents/skills/coding-implementation
-.copilot/permissions-config.json
-.claude/skills/inspect
 .agents/skills/inspect
+.claude/skills/inspect
+.config/opencode/themes
+.copilot/permissions-config.json
