@@ -10,7 +10,7 @@
 "aqua:jqlang/jq" = "latest"
 "gitlab:gitlab-org/cli" = "latest"
 
-{{ if not .miseMinimal }}
+{{- if not .miseMinimal }}
 "core:go" = "latest"
 "core:java" = "latest"
 "core:node" = "latest"
@@ -20,7 +20,7 @@
 "aqua:jdx/usage" = "latest"
 "aqua:charmbracelet/vhs" = "latest"
 "github:aquaproj/aqua" = "latest"
-{{ end }}
+{{- end }}
 
 [settings.python]
 compile = false

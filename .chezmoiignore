@@ -3,7 +3,7 @@ Makefile
 .config/xfce4/xfconf/xfce-perchannel-xml/displays.xml
 .config/xfce4/desktop
 
-{{ if ne .chezmoi.os "linux" }}
+{{- if ne .chezmoi.os "linux" }}
 .config/Code
 .config/fcitx5
 .config/nvim
@@ -12,10 +12,10 @@ Makefile
 .config/xfce4
 .config/autostart
 .chezmoiscripts/*.sh
-{{ end }}
+{{- end }}
 
-{{ if ne .chezmoi.os "windows" }}
+{{- if ne .chezmoi.os "windows" }}
 AppData
 .chezmoiscripts/*.ps1
 .config/wezterm/start_ucrt64.cmd
-{{ end }}
+{{- end }}
