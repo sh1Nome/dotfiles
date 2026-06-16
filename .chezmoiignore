@@ -1,5 +1,7 @@
 README.md
 Makefile
+.config/xfce4/xfconf/xfce-perchannel-xml/displays.xml
+.config/xfce4/desktop
 
 {{ if ne .chezmoi.os "linux" }}
 .config/Code
