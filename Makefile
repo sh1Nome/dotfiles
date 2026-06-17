@@ -1,7 +1,6 @@
 .PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-claude uninstall-claude
 
 help:
-	@echo "build-zk         Build zk from source"
 	@echo "install-zk       Install zk to /usr/local/bin"
 	@echo "uninstall-zk     Uninstall zk from /usr/local/bin"
 	@echo "install-claude   Install Claude Code"
