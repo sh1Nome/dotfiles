@@ -136,10 +136,6 @@ fi
 code() {
     mise exec -- code "$@"
 }
-# Copilot CLI に write ツールの使用を許可する
-copilot-write() {
-    copilot --allow-tool='write'
-}
 # chezmoi cd がシェルを起動してしまう問題を回避
 chezmoi-cd() {
     cd $(chezmoi source-path)

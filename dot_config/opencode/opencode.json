@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "enabled_providers": ["github-copilot", "openai"],
+  "enabled_providers": ["openai"],
   "agent": {
     "plan": {
       "disable": true

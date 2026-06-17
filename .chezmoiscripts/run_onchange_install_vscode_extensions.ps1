@@ -9,7 +9,6 @@ if (-not (Get-Command code -ErrorAction SilentlyContinue)) {
 # Define extensions to install
 $extensions = @(
   "ms-vscode-remote.vscode-remote-extensionpack",
-  "github.copilot",
   "ms-ceintl.vscode-language-pack-ja",
   "asvetliakov.vscode-neovim",
   "ritwickdey.liveserver"
