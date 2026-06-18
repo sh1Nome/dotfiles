@@ -1,15 +1,20 @@
 .PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-claude uninstall-claude
 
+UNAME_S := $(shell uname -s)
+
 help:
 	@echo "install-zk       Install zk"
 	@echo "uninstall-zk     Uninstall zk"
 	@echo "install-claude   Install Claude Code"
 	@echo "uninstall-claude Uninstall Claude Code"
+ifeq ($(UNAME_S),Linux)
+	@echo "install-keyd     Install keyd"
+	@echo "uninstall-keyd   Uninstall keyd"
+endif
 
 ZK_REPO ?= https://github.com/zk-org/zk.git
 ZK_BUILD_DIR := .zk-build
 
-UNAME_S := $(shell uname -s)
 ifneq (,$(findstring MINGW,$(UNAME_S)))
 	MAKE_CMD ?= mingw32-make
 else
@@ -48,3 +53,23 @@ endif
 uninstall-claude:
 	rm -f ~/.local/bin/claude
 	rm -rf ~/.local/share/claude
+
+ifeq ($(UNAME_S),Linux)
+.PHONY: install-keyd uninstall-keyd
+
+KEYD_REPO ?= https://github.com/rvaiya/keyd.git
+KEYD_BUILD_DIR := .keyd-build
+
+install-keyd:
+	git clone $(KEYD_REPO) $(KEYD_BUILD_DIR)
+	cd $(KEYD_BUILD_DIR) && make && sudo make install
+	sudo systemctl enable --now keyd
+	rm -rf ./$(KEYD_BUILD_DIR)
+
+uninstall-keyd:
+	sudo systemctl disable --now keyd
+	git clone $(KEYD_REPO) $(KEYD_BUILD_DIR)
+	cd $(KEYD_BUILD_DIR) && sudo make uninstall
+	sudo systemctl daemon-reload
+	rm -rf ./$(KEYD_BUILD_DIR)
+endif
