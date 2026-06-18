@@ -5,7 +5,6 @@
 .claude/skills/inspect
 .config/opencode/themes
 .copilot/permissions-config.json
-
-# .copilot
-# .codex
-# .config/opencode
+.copilot
+.codex
+.config/opencode
