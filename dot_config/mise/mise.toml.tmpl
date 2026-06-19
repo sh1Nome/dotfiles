@@ -19,8 +19,6 @@
 "npm:typescript-language-server" = "latest"
 "npm:pyright" = "latest"
 "github:clangd/clangd" = "latest"
-"http:jdtls" = { version = "0", url = "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz" }
-
 "aqua:JohnnyMorganz/StyLua" = "latest"
 "npm:sql-formatter" = "latest"
 "npm:prettier" = "latest"
@@ -29,6 +27,14 @@
 "aqua:jdx/usage" = "latest"
 "aqua:charmbracelet/vhs" = "latest"
 "github:aquaproj/aqua" = "latest"
+{{- end }}
+
+{{- if not .miseMinimal }}
+[tools."http:jdtls"]
+version = "latest"
+url = "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-{{ "{{" }} version {{ "}}" }}.tar.gz"
+version_list_url = "https://download.eclipse.org/jdtls/snapshots/latest.txt"
+version_regex = 'jdt-language-server-(.+)\.tar\.gz'
 {{- end }}
 
 [settings.python]
