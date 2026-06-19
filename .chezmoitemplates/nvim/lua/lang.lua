@@ -31,18 +31,16 @@ require("plugins").later(function()
 	else
 		-- Neovim環境: LSP + conform を使用
 		-- `:h lspconfig-all`ですべての設定を見る
-		-- `:Mason`でグラフィカルなステータスウィンドウを開く
-		-- 使用中の LSP
-		-- lua_ls, gopls, jdtls, ts_ls, pyright, clangd, rust-analyzer
-		require("mason").setup({
-			ui = {
-				border = "single",
-			},
+		vim.lsp.enable({
+			"lua_ls",
+			"gopls",
+			"jdtls",
+			"ts_ls",
+			"pyright",
+			"clangd",
+			"rust_analyzer",
+			"zk",
 		})
-		require("mason-lspconfig").setup()
-
-		-- mason で管理していない ls
-		vim.lsp.enable("zk")
 
 		-- 個別のフォーマッター設定
 		local conform = require("conform")
