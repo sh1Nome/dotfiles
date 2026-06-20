@@ -7,9 +7,7 @@ description: Git コマンド実行時には必ず --no-pager オプションを
 
 ## 理由
 
-Git は `pager = delta` で設定されており、diff、show などの出力が delta にパイプされます。  
-delta は出力をフォーマット・着色するため、AI が出力を正確に解析しにくくなります。  
-`--no-pager` オプションを付加することで、delta をバイパスして標準の git 出力を得られます。
+Git は `pager = delta` で設定されているため、`--no-pager` を付加して標準出力を得ます。
 
 ## 使い方
 
@@ -22,10 +20,14 @@ git --no-pager show HEAD
 
 ## 出力制限
 
-出力が巨大になる可能性のあるコマンド（例：git log）は、制限をかけます。  
-git が対応していれば組み込みオプション（-n など）を使い、なければパイプで制限します。
+出力が巨大になる可能性のあるコマンドは制限をかけます。組み込みオプション（`-n` など）を優先し、なければパイプで制限します。
 
 ```bash
 git --no-pager log -n 20
+
+# 組み込みオプションがない場合:
+# Linux
 git --no-pager log --all | head -n 20
+# Windows PowerShell
+git --no-pager log --all | Select-Object -First 20
 ```
