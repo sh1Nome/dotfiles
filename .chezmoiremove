@@ -8,3 +8,5 @@
 .copilot
 .codex
 .config/opencode
+.config/mise/mise.default.toml
+.config/mise/mise.minimal.toml
