@@ -2,7 +2,13 @@
 .agents/skills/cli-tools-gh-glab
 .agents/skills/coding-implementation
 .agents/skills/inspect
+.agents/skills/grill-me
+.agents/skills/handoff
+.agents/skills/write-a-skill
 .claude/skills/inspect
+.claude/skills/grill-me
+.claude/skills/handoff
+.claude/skills/write-a-skill
 .config/opencode/themes
 .copilot/permissions-config.json
 .copilot
