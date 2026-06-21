@@ -48,41 +48,37 @@ local function md_preview()
 
 	local resource_path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
 
-	vim.system(
-		{
-			"pandoc",
-			"--standalone",
-			"--embed-resources",
-			"--resource-path",
-			resource_path,
-			"-f",
-			"markdown",
-			"-t",
-			"html",
-		},
-		{ stdin = input_text },
-		function(result)
-			vim.schedule(function()
-				if result.code ~= 0 then
-					vim.notify("pandoc error: " .. result.stderr, vim.log.levels.ERROR)
-					return
-				end
+	vim.system({
+		"pandoc",
+		"--standalone",
+		"--embed-resources",
+		"--resource-path",
+		resource_path,
+		"-f",
+		"markdown",
+		"-t",
+		"html",
+	}, { stdin = input_text }, function(result)
+		vim.schedule(function()
+			if result.code ~= 0 then
+				vim.notify("pandoc error: " .. result.stderr, vim.log.levels.ERROR)
+				return
+			end
 
-				local f = io.open(output_file, "w")
-				if not f then
-					vim.notify("Failed to write preview file", vim.log.levels.ERROR)
-					return
-				end
-				f:write(result.stdout)
-				f:close()
+			local f = io.open(output_file, "w")
+			if not f then
+				vim.notify("Failed to write preview file", vim.log.levels.ERROR)
+				return
+			end
+			f:write(result.stdout)
+			f:close()
 
-				local _, err = vim.ui.open(output_file)
-				if err then
-					vim.notify("Failed to open browser: " .. err, vim.log.levels.ERROR)
-				end
-			end)
-		end
-	)
+			local _, err = vim.ui.open(output_file)
+			if err then
+				vim.notify("Failed to open browser: " .. err, vim.log.levels.ERROR)
+			end
+		end)
+	end)
 end
 
 vim.api.nvim_create_autocmd("FileType", {
