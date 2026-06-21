@@ -76,15 +76,10 @@ local function md_preview()
 				f:write(result.stdout)
 				f:close()
 
-				local open_cmd = vim.fn.has("win32") == 1 and { "cmd", "/c", "start", output_file }
-					or { "xdg-open", output_file }
-				vim.system(open_cmd, {}, function(open_result)
-					vim.schedule(function()
-						if open_result.code ~= 0 then
-							vim.notify("Failed to open browser", vim.log.levels.ERROR)
-						end
-					end)
-				end)
+				local _, err = vim.ui.open(output_file)
+				if err then
+					vim.notify("Failed to open browser: " .. err, vim.log.levels.ERROR)
+				end
 			end)
 		end
 	)
