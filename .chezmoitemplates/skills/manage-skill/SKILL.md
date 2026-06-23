@@ -26,8 +26,8 @@ git remote が `sh1nome/dotfiles` かどうかで構成が異なる。
 | パス | 役割 |
 |------|------|
 | `.chezmoitemplates/skills/<name>/SKILL.md` | スキル本体（フロントマター付き） |
-| `dot_claude/skills/<name>/SKILL.md.tmpl` | `~/.claude/skills/` 向けテンプレート参照 |
-| `dot_agents/skills/<name>/SKILL.md.tmpl` | `~/.agents/skills/` 向けテンプレート参照 |
+| `dot_claude/exact_skills/<name>/SKILL.md.tmpl` | `~/.claude/skills/` 向けテンプレート参照 |
+| `dot_agents/exact_skills/<name>/SKILL.md.tmpl` | `~/.agents/skills/` 向けテンプレート参照 |
 
 tmpl ファイルは以下の1行のみ：
 
