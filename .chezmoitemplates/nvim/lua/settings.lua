@@ -1,6 +1,13 @@
 -- エディタ設定
 
 -- システム系
+-- mise で nvim を起動すると mise で管理した全ツールの install ディレクトリが PATH に追加される。
+-- bin/ に Unix スクリプト（拡張子なし）が含まれるツールは Windows で実行できない。
+-- mise shims は Windows 用実行ファイルをラップした .exe を提供するため、shims を先頭に置くことで解決する。
+if vim.fn.has("win32") == 1 then
+	local mise_shims = vim.fn.expand("$LOCALAPPDATA") .. "\\mise\\shims"
+	vim.env.PATH = mise_shims .. ";" .. vim.env.PATH
+end
 vim.opt.fileencoding = "utf-8" -- 文字エンコード
 vim.opt.backup = false -- バックアップファイルを作成禁止
 vim.opt.swapfile = false -- スワップファイルを作成禁止
