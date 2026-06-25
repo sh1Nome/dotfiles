@@ -13,7 +13,6 @@
 "core:java" = "latest"
 "core:node" = "latest"
 "core:python" = "latest"
-"core:rust" = { version = "latest", components = ["rust-analyzer"] }
 
 "aqua:LuaLS/lua-language-server" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
@@ -40,9 +39,3 @@ version_regex = 'jdt-language-server-(.+)\.tar\.gz'
 [settings.python]
 compile = false
 
-[env]
-{{ if eq .chezmoi.os "windows" -}}
-RUSTUP_TOOLCHAIN = 'stable-x86_64-pc-windows-gnu'
-{{- else if eq .chezmoi.os "linux" -}}
-RUSTUP_TOOLCHAIN = 'stable-x86_64-unknown-linux-gnu'
-{{- end }}

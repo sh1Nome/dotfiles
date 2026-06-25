@@ -1,4 +1,4 @@
-.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-claude uninstall-claude
+.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-claude uninstall-claude install-rust uninstall-rust
 
 UNAME_S := $(shell uname -s)
 
@@ -13,6 +13,8 @@ help:
 	@echo "uninstall-zk     Uninstall zk"
 	@echo "install-claude   Install Claude Code"
 	@echo "uninstall-claude Uninstall Claude Code"
+	@echo "install-rust     Install Rust via rustup"
+	@echo "uninstall-rust   Uninstall Rust via rustup"
 ifeq ($(UNAME_S),Linux)
 	@echo "install-keyd     Install keyd"
 	@echo "uninstall-keyd   Uninstall keyd"
@@ -51,6 +53,17 @@ endif
 uninstall-claude:
 	rm -f ~/.local/bin/claude
 	rm -rf ~/.local/share/claude
+
+
+install-rust:
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+uninstall-rust:
+	@if command -v rustup >/dev/null 2>&1; then \
+		rustup self uninstall; \
+	else \
+		echo "rustup not found, skipping"; \
+	fi
 
 
 ifeq ($(UNAME_S),Linux)
