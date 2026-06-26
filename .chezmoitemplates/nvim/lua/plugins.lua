@@ -186,9 +186,19 @@ if not vim.g.vscode then
 		require("floatmemo").setup({
 			border = "single",
 			extension = "md",
+			width = 50,
+			height = 100,
+			row = 0,
+			col = 50,
 		})
 		-- floatcli
-		require("floatcli").setup()
+		require("floatcli").setup({
+			border = "single",
+			width = 100,
+			height = 50,
+			row = 50,
+			col = 0,
+		})
 
 		-- zk
 		require("zk").setup({
