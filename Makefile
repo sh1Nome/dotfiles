@@ -27,6 +27,13 @@ mkdir-local-bin:
 ZK_REPO ?= https://github.com/zk-org/zk.git
 ZK_BUILD_DIR := .zk-build
 
+MY_ZK_USE_SSH := $(shell chezmoi data | jq '.gitSigningkey != ""')
+ifeq ($(MY_ZK_USE_SSH),true)
+	MY_ZK_REPO := git@github.com:sh1nome/my-zk.git
+else
+	MY_ZK_REPO := https://github.com/sh1nome/my-zk.git
+endif
+
 ifneq (,$(findstring MINGW,$(UNAME_S)))
 	ZK_BINARY = $(ZK_BUILD_DIR)/zk.exe
 else
@@ -38,9 +45,11 @@ install-zk: mkdir-local-bin
 	cd $(ZK_BUILD_DIR) && $(MAKE_CMD) build
 	mv $(ZK_BINARY) ~/.local/bin/
 	rm -rf ./$(ZK_BUILD_DIR)
+	test -d ~/git/my-zk || (mkdir -p ~/git && git clone $(MY_ZK_REPO) ~/git/my-zk)
 
 uninstall-zk:
 	rm -f ~/.local/bin/zk*
+	rm -rf ~/git/my-zk
 
 
 install-claude:

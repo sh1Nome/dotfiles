@@ -123,6 +123,7 @@ export LANG=ja_JP.UTF-8
 export GH_PAGER=delta
 export GLAB_PAGER=delta
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export ZK_NOTEBOOK_DIR=~/git/my-zk
 # 以下は`PATH="$HOME/.local/share/mise/shims:$PATH"`と同義
 # Windowsのmiseはshimsしかサポートしていない
 eval "$(mise activate bash --shims)"
@@ -139,4 +140,7 @@ code() {
 # chezmoi cd がシェルを起動してしまう問題を回避
 chezmoi-cd() {
     cd $(chezmoi source-path)
+}
+zk-cd() {
+    cd "$ZK_NOTEBOOK_DIR"
 }

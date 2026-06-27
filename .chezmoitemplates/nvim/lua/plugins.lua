@@ -160,6 +160,9 @@ if not vim.g.vscode then
 				{ mode = "n", keys = "<Leader>" }, -- ノーマルモード
 				{ mode = "x", keys = "<Leader>" }, -- ビジュアルモード
 			},
+			clues = {
+				{ mode = "n", keys = "<Leader>z", desc = "zk commands" },
+			},
 			window = {
 				delay = 0, -- 遅延なしで表示
 				config = {
