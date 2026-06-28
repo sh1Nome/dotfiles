@@ -1,0 +1,70 @@
+#!/bin/sh
+set -eu
+
+if [ "${1:-}" = "--help" ]; then
+  cat <<'EOF'
+Usage: git zk-commit
+
+Commit each changed Markdown note individually using its frontmatter title.
+
+For each changed .md file, the commit message is derived from the YAML
+frontmatter title field. Files without a title are skipped with a warning.
+
+Prefix is determined automatically from the file status:
+  add     New file
+  update  Modified file
+  remove  Deleted file
+
+Requirements:
+  ZK_NOTEBOOK_DIR  Path to the zk notebook (e.g. ~/git/my-zk)
+EOF
+  exit 0
+fi
+
+if [ -z "${ZK_NOTEBOOK_DIR:-}" ]; then
+    printf 'error: ZK_NOTEBOOK_DIR is not set\n' >&2
+    exit 1
+fi
+
+cd "$ZK_NOTEBOOK_DIR"
+
+_extract_title() {
+    # YAML frontmatter の title を抽出する
+    # /^---$/{f++; next} : --- が出るたびに f をインクリメントして行をスキップ
+    # f==1              : 最初の --- と次の --- の間（frontmatter 内）
+    # /^title:/         : title: で始まる行を対象にする
+    # sub(...)          : "title: " プレフィックスを除去して値だけ残す
+    awk '/^---$/{f++; next} f==1 && /^title:/{sub(/^title:[[:space:]]*/,""); print; exit}'
+}
+
+# IFS=  : 行頭・行末のスペースやタブを read が勝手に除去しないようにする
+# read -r : バックスラッシュをエスケープとして解釈しないようにする
+git status --porcelain | while IFS= read -r line; do
+    case "$line" in
+        *.md) ;;
+        *) continue ;;
+    esac
+
+    x=$(printf '%s' "$line" | cut -c1)
+    y=$(printf '%s' "$line" | cut -c2)
+    file=$(printf '%s' "$line" | cut -c4-)
+
+    if [ "$x" = "D" ] || [ "$y" = "D" ]; then
+        prefix="remove"
+        title=$(git show "HEAD:$file" 2>/dev/null | _extract_title)
+    elif [ "$x" = "?" ] || [ "$x" = "A" ]; then
+        prefix="add"
+        title=$(_extract_title < "$file")
+    else
+        prefix="update"
+        title=$(_extract_title < "$file")
+    fi
+
+    if [ -z "$title" ]; then
+        printf 'warning: no title found in %s, skipping\n' "$file" >&2
+        continue
+    fi
+
+    git add -- "$file"
+    git commit -m "$prefix: $title"
+done
