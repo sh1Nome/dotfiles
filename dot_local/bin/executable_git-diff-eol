@@ -1,0 +1,46 @@
+#!/bin/sh
+set -eu
+
+if [ "${1:-}" = "--help" ]; then
+  cat <<'EOF'
+Usage: git diff-eol [<commit>] [<commit>]
+
+Show files whose line endings changed between two references.
+
+Arguments:
+  (none)             Compare working tree against index
+  <commit>           Compare working tree against <commit>
+  <commit> <commit>  Compare two commits
+EOF
+  exit 0
+fi
+
+get_eol() {
+  local result
+  result=$(file - | grep -oE 'CRLF|CR' || true)
+  echo "${result:-LF}"
+}
+
+if [ $# -eq 0 ]; then
+  files=$(git diff --diff-filter=M --name-only)
+elif [ $# -eq 1 ]; then
+  files=$(git diff --diff-filter=M --name-only "$1")
+else
+  files=$(git diff --diff-filter=M --name-only "$1" "$2")
+fi
+
+for p in $files; do
+  if [ $# -eq 0 ]; then
+    a=$(git show ":$p" | get_eol)
+  else
+    a=$(git show "$1:$p" | get_eol)
+  fi
+
+  if [ $# -lt 2 ]; then
+    b=$(get_eol < "$p")
+  else
+    b=$(git show "$2:$p" | get_eol)
+  fi
+
+  [ "$a" != "$b" ] && echo "$p: $a -> $b"
+done
