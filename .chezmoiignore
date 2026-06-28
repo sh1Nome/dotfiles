@@ -1,7 +1,7 @@
 README.md
 Makefile
-.local/bin/claude
-.local/bin/zk
+.local/bin/claude*
+.local/bin/zk*
 
 {{- if ne .chezmoi.os "linux" }}
 .config/Code
