@@ -22,14 +22,12 @@ get_eol() {
 }
 
 if [ $# -eq 0 ]; then
-  files=$(git diff --diff-filter=M --name-only)
+  git diff --diff-filter=M --name-only
 elif [ $# -eq 1 ]; then
-  files=$(git diff --diff-filter=M --name-only "$1")
+  git diff --diff-filter=M --name-only "$1"
 else
-  files=$(git diff --diff-filter=M --name-only "$1" "$2")
-fi
-
-for p in $files; do
+  git diff --diff-filter=M --name-only "$1" "$2"
+fi | while IFS= read -r p; do
   if [ $# -eq 0 ]; then
     a=$(git show ":$p" | get_eol)
   else
