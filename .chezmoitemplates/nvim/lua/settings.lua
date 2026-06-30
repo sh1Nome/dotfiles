@@ -41,6 +41,11 @@ vim.opt.tabstop = 2 -- タブ文字の表示幅
 vim.opt.shiftwidth = 2 -- インデント幅
 vim.opt.pumheight = 10 -- ポップアップメニューの最大行数
 vim.opt.pumborder = "single" -- ポップアップメニューのボーダー
+vim.diagnostic.config({
+	float = {
+		border = "single", -- 診断ウィンドウのボーダー
+	},
+})
 vim.opt.list = true -- 不可視文字を表示
 vim.opt.listchars = { space = "·", tab = "▸ ", eol = "¬", nbsp = "_" } -- 不可視文字の表示方法
 vim.opt.laststatus = 2 -- ステータスラインを常に表示
