@@ -40,8 +40,18 @@ vim.api.nvim_create_user_command("PandocToClipboard", pandoc_to_clipboard, {
 	range = true,
 })
 
---- カレントバッファを HTML に変換してブラウザで開く
-local function md_preview()
+--- カレントバッファを指定形式に変換してブラウザで開く
+local md_preview_formats = { "html5", "revealjs" }
+
+--- @param opts table ユーザーコマンドのオプション（fargs を含む）
+local function md_preview(opts)
+	local format = opts.fargs[1] or "html5"
+
+	if not vim.tbl_contains(md_preview_formats, format) then
+		vim.notify("Unknown format: " .. format, vim.log.levels.ERROR)
+		return
+	end
+
 	local lines = vim.fn.getline(1, "$")
 	local input_text = table.concat(lines, "\n")
 	local output_file = vim.fn.stdpath("data") .. "/preview.html"
@@ -57,7 +67,7 @@ local function md_preview()
 		"-f",
 		"markdown",
 		"-t",
-		"html",
+		format,
 	}, { stdin = input_text }, function(result)
 		vim.schedule(function()
 			if result.code ~= 0 then
@@ -84,6 +94,11 @@ end
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "markdown",
 	callback = function()
-		vim.api.nvim_buf_create_user_command(0, "MdPreview", md_preview, {})
+		vim.api.nvim_buf_create_user_command(0, "MdPreview", md_preview, {
+			nargs = "?",
+			complete = function()
+				return md_preview_formats
+			end,
+		})
 	end,
 })
