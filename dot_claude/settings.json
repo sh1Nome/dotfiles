@@ -45,7 +45,6 @@
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "alwaysThinkingEnabled": true,
-  "effortLevel": "auto",
   "fastModePerSessionOptIn": true,
   "autoUpdatesChannel": "latest",
   "tui": "fullscreen",
