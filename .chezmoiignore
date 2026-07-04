@@ -11,6 +11,7 @@ Makefile
 .config/glab-cli
 .config/xfce4
 .config/autostart
+.config/mimeapps.list
 .chezmoiscripts/*.sh
 {{- end }}
 
