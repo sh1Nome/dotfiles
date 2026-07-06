@@ -65,11 +65,39 @@ git_status() {
 
 # コマンド実行時間を測定
 COMMAND_START_TIME=
+# 直前に確定したコマンドの経過時間（ミリ秒）。PS1 からはこれを整形して表示する
+COMMAND_ELAPSED_MS=
+# 実行時間がこの秒数以上のコマンドが終わったら通知する
+NOTIFY_THRESHOLD_SEC=10
 command_timer_start() {
-  COMMAND_START_TIME=$(date '+%s%3N')
+  # DEBUG trapは1コマンド中に複数回発火しうるため、未設定のときだけ開始時刻を記録する
+  COMMAND_START_TIME=${COMMAND_START_TIME:-$(date '+%s%3N')}
+}
+# PROMPT_COMMANDから呼び出し、経過時間の確定と通知判定を親シェルで一度だけ行う
+command_timer_stop() {
+  # シェル起動直後の最初のプロンプトなど、開始時刻が無ければ何もしない
+  if [ -z "$COMMAND_START_TIME" ]; then
+    return
+  fi
+
+  COMMAND_ELAPSED_MS=$(($(date '+%s%3N') - COMMAND_START_TIME))
+
+  # 閾値以上なら通知する。プロンプト表示をブロックしないようバックグラウンドで実行し、
+  # ジョブ制御メッセージが出ないようサブシェルで包む
+  if (( COMMAND_ELAPSED_MS >= NOTIFY_THRESHOLD_SEC * 1000 )); then
+    ( notify bash Done & )
+  fi
+
+  # 次のコマンドで再記録されるようにリセットする（重複通知の防止も兼ねる）
+  COMMAND_START_TIME=
 }
 command_timer_elapsed() {
-  local elapsed=$(($(date '+%s%3N') - COMMAND_START_TIME))
+  # 未確定（初回プロンプトなど）の場合は何も表示しない
+  if [ -z "$COMMAND_ELAPSED_MS" ]; then
+    return
+  fi
+
+  local elapsed=$COMMAND_ELAPSED_MS
 
   if (( elapsed < 1000 )); then
     echo " ${elapsed}ms"
@@ -80,6 +108,7 @@ command_timer_elapsed() {
   fi
 }
 trap 'command_timer_start' DEBUG
+PROMPT_COMMAND='command_timer_stop'
 
 # ウィンドウタイトル設定
 SET_TITLE='\[\e]0;\W\a\]'
