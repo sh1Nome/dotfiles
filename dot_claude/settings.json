@@ -54,5 +54,6 @@
   "disableDeepLinkRegistration": "disable",
   "externalEditorContext": true,
   "autoConnectIde": false,
-  "autoInstallIdeExtension": false
+  "autoInstallIdeExtension": false,
+  "model": "opus"
 }
