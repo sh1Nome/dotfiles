@@ -12,6 +12,7 @@
     ],
     "defaultMode": "acceptEdits"
   },
+  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -54,6 +55,5 @@
   "disableDeepLinkRegistration": "disable",
   "externalEditorContext": true,
   "autoConnectIde": false,
-  "autoInstallIdeExtension": false,
-  "model": "opus"
+  "autoInstallIdeExtension": false
 }
