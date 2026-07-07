@@ -46,6 +46,15 @@
     "command": "sh ~/.claude/statusline.sh",
     "padding": 2
   },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "jdtls-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
+  },
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "alwaysThinkingEnabled": true,
