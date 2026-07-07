@@ -1,15 +1,6 @@
 -- エディタ設定
 
 -- システム系
--- mise で nvim を起動すると mise の install ディレクトリが PATH に入る。
--- Unix スクリプト（拡張子なし）を Windows で実行できないため mise shims を優先する。
--- ただし mise の shim で win32yank ( yy, dd 等 ) を実行すると、コンソールのウィンドウが開く。
--- nvim_bin を shims より先頭に置き nvim_bin にある本物の win32yank を使わせることで解決。
-if vim.fn.has("win32") == 1 then
-	local nvim_bin = vim.fn.fnamemodify(vim.v.progpath, ":h")
-	local mise_shims = vim.fn.expand("$LOCALAPPDATA") .. "\\mise\\shims"
-	vim.env.PATH = nvim_bin .. ";" .. mise_shims .. ";" .. vim.env.PATH
-end
 vim.opt.fileencoding = "utf-8" -- 文字エンコード
 vim.opt.backup = false -- バックアップファイルを作成禁止
 vim.opt.swapfile = false -- スワップファイルを作成禁止

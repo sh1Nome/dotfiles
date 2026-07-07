@@ -1,4 +1,4 @@
-.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-claude uninstall-claude install-rust uninstall-rust
+.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-neovim uninstall-neovim install-claude uninstall-claude install-rust uninstall-rust
 
 UNAME_S := $(shell uname -s)
 
@@ -11,6 +11,8 @@ endif
 help:
 	@echo "install-zk       Install zk"
 	@echo "uninstall-zk     Uninstall zk"
+	@echo "install-neovim   Install Neovim"
+	@echo "uninstall-neovim Uninstall Neovim"
 	@echo "install-claude   Install Claude Code"
 	@echo "uninstall-claude Uninstall Claude Code"
 	@echo "install-rust     Install Rust via rustup"
@@ -50,6 +52,21 @@ install-zk: mkdir-local-bin
 uninstall-zk:
 	rm -f ~/.local/bin/zk*
 	rm -rf ~/git/my-zk
+
+
+install-neovim:
+ifeq ($(OS),Windows_NT)
+	winget install --id Neovim.Neovim
+else
+	sudo dnf install -y neovim
+endif
+
+uninstall-neovim:
+ifeq ($(OS),Windows_NT)
+	winget uninstall --id Neovim.Neovim
+else
+	sudo dnf remove -y neovim
+endif
 
 
 install-claude:
