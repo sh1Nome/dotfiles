@@ -171,6 +171,16 @@ if not vim.g.vscode then
 			},
 		}) -- キーマップを表示
 
+		-- mini.clueはデフォルトでlistedバッファと一部の特殊な非listedバッファにのみトリガーを張る。
+		-- schedule_wrapでトリガーを最後に張り<nowait>を有効に保つ（:h map-nowait）。
+		vim.api.nvim_create_autocmd("BufWinEnter", {
+			callback = vim.schedule_wrap(function(ev)
+				if vim.api.nvim_buf_is_valid(ev.buf) and vim.fn.buflisted(ev.buf) ~= 1 then
+					MiniClue.ensure_buf_triggers(ev.buf)
+				end
+			end),
+		})
+
 		-- プラグイン一括追加: 自作, LSP, フォーマッタ
 		add({
 			"https://github.com/sh1Nome/mini-pick-preview.nvim",
