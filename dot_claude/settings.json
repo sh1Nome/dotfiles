@@ -60,7 +60,7 @@
   "alwaysThinkingEnabled": true,
   "fastModePerSessionOptIn": true,
   "autoUpdatesChannel": "latest",
-  "tui": "fullscreen",
+  "tui": "default",
   "autoMemoryEnabled": false,
   "disableAutoMode": "disable",
   "theme": "dark",
