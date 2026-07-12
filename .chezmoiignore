@@ -1,4 +1,5 @@
 README.md
+docs
 Makefile
 .local/bin/claude*
 .local/bin/zk*
