@@ -3,7 +3,7 @@ sandbox_mode = "workspace-write"
 approvals_reviewer = "user"
 
 [tui]
-status_line = ["current-dir", "git-branch", "model-with-reasoning", "fast-mode", "task-progress", "context-used", "five-hour-limit", "weekly-limit"]
+status_line = ["current-dir", "git-branch", "model-with-reasoning", "fast-mode", "permissions", "approval-mode", "task-progress", "context-used", "total-input-tokens", "total-output-tokens", "five-hour-limit", "weekly-limit"]
 
 notifications = true
 notification_method = "osc9"
