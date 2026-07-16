@@ -17,50 +17,50 @@ HISTFILESIZE=2000
 # 各コマンド実行後にウィンドウサイズを確認し、必要なら LINES と COLUMNS を更新
 shopt -s checkwinsize
 
-# Gitディレクトリかどうか判定
-is_git_repo() {
-  git rev-parse --is-inside-work-tree >/dev/null 2>&1
-}
+# プロンプト表示用のGit情報を1回のstatus実行で更新する
+GIT_PROMPT_PREFIX=
+GIT_PROMPT_BRANCH=
+GIT_PROMPT_STATUS=
+update_git_prompt() {
+  local line record xy branch status="" ahead=0 behind=0
+  local has_unstaged=0 has_staged=0
 
-# Gitのブランチ名を取得する
-git_branch_name() {
-  ! $(is_git_repo) && return
-  local branch=$(git branch --show-current)
-  echo " $branch"
-}
+  while IFS= read -r line; do
+    case "$line" in
+      '# branch.head '*)
+        branch=${line#\# branch.head }
+        ;;
+      '# branch.ab '*)
+        read -r ahead behind <<< "${line#\# branch.ab }"
+        ahead=${ahead#+}
+        behind=${behind#-}
+        ;;
+      [12u]' '*)
+        read -r record xy _ <<< "$line"
+        [ "${xy:0:1}" != "." ] && has_staged=1
+        [ "${xy:1:1}" != "." ] && has_unstaged=1
+        ;;
+      '? '*)
+        has_unstaged=1
+        ;;
+    esac
+  done < <(git status --porcelain=v2 --branch 2>/dev/null)
 
-# Gitのステータスを取得する
-git_status() {
-  ! $(is_git_repo) && return
-  local status=""
-
-  # 未ステージング変更あり (add可)
-  # git status --porcelainで2文字目が空白以外の行がある
-  # 詳細はgit status --helpでPorcelain Formatを参照
-  if git status --porcelain 2>/dev/null | grep -q '^.[^[:space:]]'; then
-    status+="+"
+  GIT_PROMPT_PREFIX=
+  GIT_PROMPT_BRANCH=
+  GIT_PROMPT_STATUS=
+  if [ -z "$branch" ]; then
+    return
   fi
 
-  # ステージング変更あり (commit可)
-  # git status --porcelainで1文字目が空白または?以外の行がある
-  # 詳細はgit status --helpでPorcelain Formatを参照
-  if git status --porcelain 2>/dev/null | grep -q '^[^[:space:]|?]'; then
-    status+="*"
-  fi
+  (( has_unstaged )) && status+="+"
+  (( has_staged )) && status+="*"
+  (( ahead > 0 )) && status+="↑$ahead"
+  (( behind > 0 )) && status+="↓$behind"
 
-  # push/pull 状態
-  read pull push < <(git rev-list --left-right --count @{upstream}...HEAD 2>/dev/null || echo "0 0")
-  if [ "$push" -gt 0 ]; then
-    status+="↑$push"
-  fi
-  if [ "$pull" -gt 0 ]; then
-    status+="↓$pull"
-  fi
-
-  # 出力
-  if [ -n "$status" ]; then
-    echo " [$status]"
-  fi
+  GIT_PROMPT_PREFIX=" on"
+  GIT_PROMPT_BRANCH=" $branch"
+  [ -n "$status" ] && GIT_PROMPT_STATUS=" [$status]"
 }
 
 # コマンド実行時間を測定
@@ -87,9 +87,6 @@ command_timer_stop() {
   if (( COMMAND_ELAPSED_MS >= NOTIFY_THRESHOLD_SEC * 1000 )); then
     ( notify bash Done & )
   fi
-
-  # 次のコマンドで再記録されるようにリセットする（重複通知の防止も兼ねる）
-  COMMAND_START_TIME=
 }
 command_timer_elapsed() {
   # 未確定（初回プロンプトなど）の場合は何も表示しない
@@ -107,8 +104,13 @@ command_timer_elapsed() {
     echo " $(( elapsed / 60000 )).$(( (elapsed % 60000) / 6000 % 10 ))m"
   fi
 }
+update_prompt() {
+  command_timer_stop
+  update_git_prompt
+  COMMAND_START_TIME=
+}
 trap 'command_timer_start' DEBUG
-PROMPT_COMMAND='command_timer_stop'
+PROMPT_COMMAND='update_prompt'
 
 # ウィンドウタイトル設定
 SET_TITLE='\[\e]0;\W\a\]'
@@ -123,9 +125,9 @@ COLOR_RESET='\[\e[00m\]'
 # プロンプト設定
 PS1="${SET_TITLE}\
 ${COLOR_BOLD_LIGHT_BLUE}\W\
-${COLOR_RESET}\$(is_git_repo && echo ' on')\
-${COLOR_BOLD_PURPLE}\$(git_branch_name)\
-${COLOR_BOLD_RED}\$(git_status)\
+${COLOR_RESET}\${GIT_PROMPT_PREFIX}\
+${COLOR_BOLD_PURPLE}\${GIT_PROMPT_BRANCH}\
+${COLOR_BOLD_RED}\${GIT_PROMPT_STATUS}\
 ${COLOR_RESET} took\
 ${COLOR_BOLD_YELLOW}\$(command_timer_elapsed)
 ${COLOR_RESET}\$ "
