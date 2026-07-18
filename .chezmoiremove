@@ -1,3 +1,4 @@
 .copilot/permissions-config.json
 .copilot
 .config/opencode
+.codex/rules/default.rules
