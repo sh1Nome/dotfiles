@@ -55,10 +55,10 @@
   "autoMemoryEnabled": false,
   "disableAutoMode": "disable",
   "theme": "dark",
+  "inputNeededNotifEnabled": false,
+  "agentPushNotifEnabled": false,
   "disableDeepLinkRegistration": "disable",
   "externalEditorContext": true,
   "autoConnectIde": false,
-  "autoInstallIdeExtension": false,
-  "agentPushNotifEnabled": false,
-  "inputNeededNotifEnabled": false
+  "autoInstallIdeExtension": false
 }
