@@ -58,5 +58,7 @@
   "disableDeepLinkRegistration": "disable",
   "externalEditorContext": true,
   "autoConnectIde": false,
-  "autoInstallIdeExtension": false
+  "autoInstallIdeExtension": false,
+  "agentPushNotifEnabled": false,
+  "inputNeededNotifEnabled": false
 }
