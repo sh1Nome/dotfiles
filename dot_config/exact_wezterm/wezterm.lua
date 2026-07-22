@@ -42,4 +42,37 @@ else
 	config.default_prog = { "bash" } -- Unix環境でbashを使用
 end
 
+-- スクロールバックを nvim で開く
+local io = require("io")
+local os = require("os")
+
+wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
+	local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
+
+	local name = os.tmpname()
+	local f = io.open(name, "w+")
+	f:write(text)
+	f:flush()
+	f:close()
+
+	window:perform_action(
+		wezterm.action.SpawnCommandInNewTab({
+			args = { "nvim", "-R", name },
+		}),
+		pane
+	)
+
+	-- nvim がファイルを読み込み終える前に削除しないよう待機する
+	wezterm.sleep_ms(1000)
+	os.remove(name)
+end)
+
+config.keys = {
+	{
+		key = "E",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.EmitEvent("trigger-nvim-with-scrollback"),
+	},
+}
+
 return config
