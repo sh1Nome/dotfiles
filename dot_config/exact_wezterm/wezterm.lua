@@ -55,9 +55,16 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
 	f:flush()
 	f:close()
 
+	local env = {}
+	if wezterm.target_triple:find("windows") then
+		-- vim.packがgit実行ファイルを要求するが、通常のWindows PATHにはmsys2が含まれないため追加する
+		env.PATH = "C:\\msys64\\ucrt64\\bin;" .. (os.getenv("PATH") or "")
+	end
+
 	window:perform_action(
 		wezterm.action.SpawnCommandInNewTab({
-			args = { "nvim", "-R", name },
+			args = { "nvim", name },
+			set_environment_variables = env,
 		}),
 		pane
 	)
