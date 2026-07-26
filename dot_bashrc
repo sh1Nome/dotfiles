@@ -170,3 +170,8 @@ chezmoi-cd() {
 zk-cd() {
     cd "$ZK_NOTEBOOK_DIR"
 }
+
+# aqua はたまにしか使わないため、root-dir ごと消してクリーンな状態に戻す
+aqua-prune() {
+    rm -rf "$(aqua root-dir)"
+}
