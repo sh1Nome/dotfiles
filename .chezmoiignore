@@ -18,6 +18,7 @@ Makefile
 
 {{- if eq .chezmoi.os "linux" }}
 .config/xfce4/xfconf/xfce-perchannel-xml/displays.xml
+.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 .config/xfce4/desktop
 .config/nvim/nvim-pack-lock.json
 .config/fcitx5/conf/cached_layouts
