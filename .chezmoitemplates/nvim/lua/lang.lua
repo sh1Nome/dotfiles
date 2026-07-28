@@ -1,11 +1,12 @@
 -- LSP設定
-require("plugins").later(function()
-	local lsp_actions
+local M = {}
 
+-- lsp_actionsはlater内で構築されるため、later実行後にのみ有効
+require("plugins").later(function()
 	if vim.g.vscode then
 		-- VSCode環境: VSCodeコマンドのみ使用
 		local vscode = require("vscode")
-		lsp_actions = {
+		M.lsp_actions = {
 			["type-def"] = function()
 				vscode.call("editor.action.goToTypeDefinition")
 			end,
@@ -62,7 +63,7 @@ require("plugins").later(function()
 		})
 
 		-- LSP操作のテーブル定義
-		lsp_actions = {
+		M.lsp_actions = {
 			["type-def"] = function()
 				require("mini.extra").pickers.lsp({ scope = "type_definition" })
 			end,
@@ -80,35 +81,6 @@ require("plugins").later(function()
 			end,
 		}
 	end
-
-	-- Lコマンド定義
-	vim.api.nvim_create_user_command("L", function(opts)
-		local action = opts.args
-		if action == "" then
-			vim.notify(
-				"Usage: :L <action>\nAvailable actions: " .. table.concat(vim.tbl_keys(lsp_actions), ", "),
-				vim.log.levels.INFO
-			)
-			return
-		end
-		if lsp_actions[action] then
-			lsp_actions[action]()
-		else
-			vim.notify("Unknown action: " .. action, vim.log.levels.ERROR)
-		end
-	end, {
-		nargs = "?",
-		complete = function(_, cmd, _)
-			-- コマンド行から「:L 」の後の入力文字列を抽出
-			local input = cmd:match("^%s*L%s+(%S*)$") or ""
-			local actions = vim.tbl_keys(lsp_actions)
-			if input == "" then
-				return actions
-			end
-			return vim.tbl_filter(function(action)
-				-- 入力で始まるアクション名をフィルタリング
-				return action:find("^" .. input)
-			end, actions)
-		end,
-	})
 end)
+
+return M

@@ -102,3 +102,86 @@ vim.api.nvim_create_autocmd("FileType", {
 		})
 	end,
 })
+
+-- 全プラグインをアップデートするコマンド
+vim.api.nvim_create_user_command("PackUpdate", function()
+	vim.pack.update()
+end, { desc = "Update all plugins managed by vim.pack" })
+
+-- 非アクティブなプラグインを削除するコマンド
+vim.api.nvim_create_user_command("PackClean", function()
+	-- 非アクティブなプラグイン名の一覧
+	local inactive = vim.iter(vim.pack.get())
+		:filter(function(x)
+			return not x.active
+		end)
+		:map(function(x)
+			return x.spec.name
+		end)
+		:totable()
+
+	-- 非アクティブなプラグインがない
+	if vim.tbl_isempty(inactive) then
+		vim.notify("No inactive plugins to clean", vim.log.levels.INFO)
+		return
+	end
+
+	-- プラグイン一覧を表示
+	print("The following inactive plugins will be deleted:")
+	for _, name in ipairs(inactive) do
+		print("  - " .. name)
+	end
+
+	-- 確認
+	local response = vim.fn.input("Continue? (y/n): ")
+
+	if response ~= "y" then
+		vim.notify("Cancelled", vim.log.levels.INFO)
+		return
+	end
+
+	vim.pack.del(inactive)
+	vim.notify(string.format("Deleted %d plugin(s)", #inactive), vim.log.levels.INFO)
+end, { desc = "Delete all inactive plugins managed by vim.pack" })
+
+-- プラグインのロードを待つコマンド群
+-- laterのキューは登録順に実行されるため、init.luaのrequire順により
+-- plugins.luaのプラグイン追加とlang.luaのlsp_actions構築が先に完了する
+require("plugins").later(function()
+	local lsp_actions = require("lang").lsp_actions
+
+	-- Lコマンド定義
+	vim.api.nvim_create_user_command("L", function(opts)
+		local action = opts.args
+		if action == "" then
+			vim.notify(
+				"Usage: :L <action>\nAvailable actions: " .. table.concat(vim.tbl_keys(lsp_actions), ", "),
+				vim.log.levels.INFO
+			)
+			return
+		end
+		if lsp_actions[action] then
+			lsp_actions[action]()
+		else
+			vim.notify("Unknown action: " .. action, vim.log.levels.ERROR)
+		end
+	end, {
+		nargs = "?",
+		complete = function(_, cmd, _)
+			-- コマンド行から「:L 」の後の入力文字列を抽出
+			local input = cmd:match("^%s*L%s+(%S*)$") or ""
+			local actions = vim.tbl_keys(lsp_actions)
+			if input == "" then
+				return actions
+			end
+			return vim.tbl_filter(function(action)
+				-- 入力で始まるアクション名をフィルタリング
+				return action:find("^" .. input)
+			end, actions)
+		end,
+	})
+
+	vim.api.nvim_create_user_command("YankGitRemoteUrl", function(opts)
+		require("yank-git-remote-url").yank(opts.range, opts.line1, opts.line2)
+	end, { range = true, desc = "Copy remote URL to clipboard" })
+end)
