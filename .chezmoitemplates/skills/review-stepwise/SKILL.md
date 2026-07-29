@@ -51,6 +51,6 @@ try-catch で囲み、エラーを呼び出し元に伝播させる。
 
 ## 評価基準
 
-* コードレビュー: coding-standards スキルの基準で評価する
-* ドキュメントレビュー: documentation-writing スキルの基準で評価する
+* コードレビュー: write-code スキルの基準で評価する
+* ドキュメントレビュー: write-documentation スキルの基準で評価する
 * 修正の必要がない項目には言及しない
