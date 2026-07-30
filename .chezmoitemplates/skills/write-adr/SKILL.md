@@ -12,7 +12,7 @@ description: 会話内容から Nygard 形式の Architecture Decision Record (A
 3. 出力先を決める。既定は `docs/adr`、存在しなければユーザーに確認する
 4. 出力先の既存 ADR を走査し、最大番号 + 1 を4桁ゼロ埋めで採番する
 5. タイトルを英語のケバブケースに変換してスラッグとし、ファイル名を `NNNN-<slug>.md` とする
-6. write-documentation スキルを使い、各セクションの文章を書く・推敲する
+6. write-prose スキルを使い、各セクションの文章を書く・推敲する
 7. 出力形式に従って CommonMark でファイルを書き込む
 8. この決定が置き換える既存 ADR があれば、その Status を `Superseded by ADR-NNNN` に書き換える
 
