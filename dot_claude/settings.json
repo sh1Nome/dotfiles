@@ -8,6 +8,29 @@
     "pr": ""
   },
   "permissions": {
+    "allow": [
+      "mcp__claude-in-chrome__find",
+      "mcp__claude-in-chrome__get_page_text",
+      "mcp__claude-in-chrome__gif_creator",
+      "mcp__claude-in-chrome__list_connected_browsers",
+      "mcp__claude-in-chrome__read_console_messages",
+      "mcp__claude-in-chrome__read_network_requests",
+      "mcp__claude-in-chrome__read_page",
+      "mcp__claude-in-chrome__resize_window",
+      "mcp__claude-in-chrome__shortcuts_list",
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "mcp__claude-design__get_claude_design_prompt",
+      "mcp__claude-design__get_conversation",
+      "mcp__claude-design__get_project",
+      "mcp__claude-design__list_comments",
+      "mcp__claude-design__list_design_systems",
+      "mcp__claude-design__list_files",
+      "mcp__claude-design__list_members",
+      "mcp__claude-design__list_projects",
+      "mcp__claude-design__read_design_skill",
+      "mcp__claude-design__read_file",
+      "mcp__claude-design__render_preview"
+    ],
     "deny": [
       "Read(//**/.env)",
       "Read(//**/.env.*)",
