@@ -38,7 +38,7 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "model": "opus",
+  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
@@ -72,7 +72,7 @@
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "alwaysThinkingEnabled": true,
-  "effortLevel": "medium",
+  "effortLevel": "xhigh",
   "fastModePerSessionOptIn": true,
   "autoUpdatesChannel": "latest",
   "tui": "default",
