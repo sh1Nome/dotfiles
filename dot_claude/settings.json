@@ -1,7 +1,9 @@
 {
   "respectGitignore": true,
   "env": {
-    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+    "CLAUDE_CODE_GIT_BASH_PATH": "C:\\msys64\\usr\\bin\\bash.exe",
+    "CLAUDE_CODE_USE_POWERSHELL_TOOL": "0"
   },
   "attribution": {
     "commit": "",
