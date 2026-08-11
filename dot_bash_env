@@ -1,3 +1,8 @@
+# 実行中に外部コマンド(aqua等)経由で子プロセスがBASH_ENVを継承し、
+# 本ファイルを再帰的に読み込むことを防ぐため、実行中だけ値を退避して外す
+_bash_env_path=$BASH_ENV
+unset BASH_ENV
+
 export EDITOR=nvim
 export LANG=ja_JP.UTF-8
 export GH_PAGER=delta
@@ -11,3 +16,6 @@ eval "$(mise activate bash --shims)"
 if command -v aqua >/dev/null 2>&1; then
   export PATH="$(aqua root-dir)/bin:$PATH"
 fi
+
+export BASH_ENV=$_bash_env_path
+unset _bash_env_path
