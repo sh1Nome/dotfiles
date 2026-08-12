@@ -41,3 +41,4 @@ PATH の構築を含む環境変数の定義を `.bashrc` から `~/.bash_env` �
 - `settings.json` に理由の読み取りにくい設定を増やさずに済む
 - Claude Code を WezTerm 以外の経路から起動すると継承チェーンが働かず、mise 等の PATH が Bash ツールに届かない
 - 環境変数は WezTerm の対話シェル → claude.exe → Bash ツールの bash という3段階の継承を経て届くため、挙動の把握にはこの経路全体の理解が必要になる
+- `.bash_env` 内で bash を起動する子プロセス（aqua root-dir 経由の ldd など）は `BASH_ENV` を継承し再帰的に source してしまうため、source中だけ退避・unsetして復元している
