@@ -77,7 +77,7 @@
   "effortLevel": "xhigh",
   "fastModePerSessionOptIn": true,
   "autoUpdatesChannel": "latest",
-  "tui": "default",
+  "tui": "fullscreen",
   "autoMemoryEnabled": false,
   "disableAutoMode": "disable",
   "theme": "dark",
