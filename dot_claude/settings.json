@@ -1,7 +1,6 @@
 {
   "respectGitignore": true,
   "env": {
-    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
     "CLAUDE_CODE_GIT_BASH_PATH": "C:/msys64/usr/bin/bash.exe",
     "CLAUDE_CODE_USE_POWERSHELL_TOOL": "0"
   },
@@ -40,7 +39,6 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
@@ -74,7 +72,6 @@
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
   "fastModePerSessionOptIn": true,
   "autoUpdatesChannel": "latest",
   "tui": "fullscreen",
