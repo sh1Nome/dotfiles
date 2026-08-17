@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+if [ "${1:-}" = "--help" ]; then
+  cat <<'EOF'
+Usage: git resign <n>
+
+Re-sign the last <n> commits (e.g. after rotating the signing key).
+Each commit is amended in place with a fresh signature via a
+non-interactive rebase, keeping messages, dates, and content untouched.
+EOF
+  exit 0
+fi
+
+case "${1:-}" in
+  ''|*[!0-9]*|0)
+    printf 'error: <n> must be a positive integer\n' >&2
+    exit 1
+    ;;
+esac
+
+git rebase --exec 'git commit --amend --no-edit -S' "HEAD~$1"
