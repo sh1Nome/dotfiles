@@ -7,7 +7,6 @@ export EDITOR=nvim
 export LANG=ja_JP.UTF-8
 export GH_PAGER=delta
 export GLAB_PAGER=delta
-export ZK_NOTEBOOK_DIR=~/git/my-zk
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 # 以下は`PATH="$HOME/.local/share/mise/shims:$PATH"`と同義
 # Windowsのmiseはshimsしかサポートしていない
@@ -15,6 +14,13 @@ eval "$(mise activate bash --shims)"
 # aqua があるときだけ PATH に追加
 if command -v aqua >/dev/null 2>&1; then
   export PATH="$(aqua root-dir)/bin:$PATH"
+fi
+
+# my-zk を ghq 管理下から特定し、zk のノートブックディレクトリにする（未 clone なら空のまま）
+if command -v ghq >/dev/null 2>&1; then
+  _zk_repo=$(ghq list --exact --full-path my-zk | head -n1)
+  [ -n "$_zk_repo" ] && export ZK_NOTEBOOK_DIR=$_zk_repo
+  unset _zk_repo
 fi
 
 export BASH_ENV=$_bash_env_path

@@ -16,6 +16,12 @@
     line-numbers = true # 行番号を表示
 [merge]
     conflictStyle = zdiff3 # 競合時に元のテキストも表示
+[ghq]
+    root = {{ .chezmoi.sourceDir }} # chezmoi のソースディレクトリを優先的に検索
+{{- if ne .ghqRoot "" }}
+    root = {{ .ghqRoot }} # ユーザー定義の追加ルート
+{{- end }}
+    root = ~/ghq # ghq のデフォルトルート（新規 clone 先はこれが優先される）
 [user]
     name = {{ .gitUserName }} # Git のユーザー名
     email = {{ .gitEmail }} # Git のメールアドレス

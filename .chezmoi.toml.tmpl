@@ -1,9 +1,10 @@
 [data]
 gitUserName = "{{ promptString "Git user name" }}"
 gitEmail = "{{ promptString "Git email address" }}"
-gitSigningkey = "{{ promptString "Git signing key (leave empty to skip)" }}"
+gitSigningkey = "{{ promptString "Git signing public key path, e.g. ~/.ssh/id_ed25519.pub or C:/Users/you/.ssh/id_ed25519.pub; use / as separator (leave empty to skip)" }}"
 gitEnableCredential = {{ promptBool "Enable credential provider (generic)" }}
 miseMinimal = {{ promptBool "Minimal mise setup" }}
+ghqRoot = "{{ promptString "Additional ghq root directory, e.g. ~/myprojects or C:/Users/you/myprojects; use / as separator (leave empty to skip)" }}"
 
 [diff]
     pager = "delta"

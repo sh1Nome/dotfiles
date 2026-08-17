@@ -152,12 +152,11 @@ fi
 export BASH_ENV=~/.bash_env
 source "$BASH_ENV"
 
-# chezmoi cd がシェルを起動してしまう問題を回避
-chezmoi-cd() {
-    cd $(chezmoi source-path)
-}
-zk-cd() {
-    cd "$ZK_NOTEBOOK_DIR"
+# ghq と fzf でリポジトリを選択して cd する
+ghq-cd() {
+    local repo
+    repo=$(ghq list --full-path | fzf) || return
+    cd "$repo" || return
 }
 
 # aqua はたまにしか使わないため、root-dir ごと消してクリーンな状態に戻す
