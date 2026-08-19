@@ -152,6 +152,9 @@ fi
 export BASH_ENV=~/.bash_env
 source "$BASH_ENV"
 
+# fzf の統合
+FZF_CTRL_T_COMMAND='' FZF_ALT_C_COMMAND='' eval "$(fzf --bash)"
+
 # ghq と fzf でリポジトリを選択して cd する
 ghq-cd() {
     local repo
