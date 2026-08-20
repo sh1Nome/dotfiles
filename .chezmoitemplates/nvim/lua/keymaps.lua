@@ -19,7 +19,7 @@ else
 	-- LSPキーマップ
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
 	vim.keymap.set("n", "gr", function()
-		require("mini.extra").pickers.lsp({ scope = "references" })
+		require("fzf-lua").lsp_references()
 	end, { desc = "References" })
 	vim.keymap.set("n", "K", function()
 		vim.lsp.buf.hover({ border = "single" })
@@ -30,38 +30,25 @@ else
 		require("floatmemo").toggle()
 	end, { desc = "Toggle floatmemo" })
 
-	-- gitリポジトリかどうかを判定
-	local function is_git_repo()
-		local result = vim.system({ "git", "rev-parse", "--git-dir" }, { text = true }):wait()
-		return result.code == 0
-	end
-
-	-- mini.pickのファイル検索を起動（gitリポジトリならgit、そうでないならrg）
+	-- fzf-luaのファイル検索を起動
 	vim.keymap.set("n", "<leader>p", function()
-		local tool = is_git_repo() and "git" or "rg"
-		require("mini.pick").builtin.files({ tool = tool })
-	end, { desc = "Pick files (S-Tab: show keymaps)" })
+		require("fzf-lua").files()
+	end, { desc = "Pick files" })
 
-	-- mini.pickの横断したあいまい検索を起動（gitリポジトリならgit、そうでないならrg）
+	-- fzf-luaの横断したあいまい検索（live grep）を起動
 	vim.keymap.set("n", "<leader>f", function()
-		local tool = is_git_repo() and "git" or "rg"
-		require("mini.pick").builtin.grep_live({ tool = tool })
-	end, { desc = "Live grep (C-o: glob, S-Tab: show keymaps)" })
+		require("fzf-lua").live_grep()
+	end, { desc = "Live grep" })
 
-	-- 最近訪問したファイルを起動
-	vim.keymap.set("n", "<leader>v", function()
-		require("mini.extra").pickers.visit_paths()
-	end, { desc = "Pick visited files (S-Tab: show keymaps)" })
-
-	-- mini.pickのヘルプ検索を起動
+	-- fzf-luaのヘルプ検索を起動
 	vim.keymap.set("n", "<leader>h", function()
-		require("mini.pick").builtin.help()
-	end, { desc = "Help (S-Tab: show keymaps)" })
+		require("fzf-lua").helptags()
+	end, { desc = "Help" })
 
-	-- mini.pickの最後のpickerを再開
+	-- fzf-luaの最後のpickerを再開
 	vim.keymap.set("n", "<leader>r", function()
-		require("mini.pick").builtin.resume()
-	end, { desc = "Resume picker (S-Tab: show keymaps)" })
+		require("fzf-lua").resume()
+	end, { desc = "Resume picker" })
 
 	-- zk-nvim
 	vim.keymap.set("n", "<leader>zn", function()
@@ -155,15 +142,7 @@ local function get_mini_files_mappings()
 	}
 end
 
--- mini.pick用のキーマップ設定を返す関数
-local function get_mini_pick_mappings()
-	return {
-		choose_marked = "<C-q>",
-	}
-end
-
 return {
 	get_mini_align_mappings = get_mini_align_mappings,
 	get_mini_files_mappings = get_mini_files_mappings,
-	get_mini_pick_mappings = get_mini_pick_mappings,
 }

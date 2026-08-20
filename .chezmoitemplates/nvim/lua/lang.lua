@@ -65,19 +65,19 @@ require("plugins").later(function()
 		-- LSP操作のテーブル定義
 		M.lsp_actions = {
 			["type-def"] = function()
-				require("mini.extra").pickers.lsp({ scope = "type_definition" })
+				require("fzf-lua").lsp_typedefs()
 			end,
 			["impl"] = function()
-				require("mini.extra").pickers.lsp({ scope = "implementation" })
+				require("fzf-lua").lsp_implementations()
 			end,
 			["code-action"] = vim.lsp.buf.code_action,
 			["rename"] = vim.lsp.buf.rename,
 			["diag"] = function()
-				require("mini.extra").pickers.diagnostic({ scope = "current" })
+				require("fzf-lua").diagnostics_document()
 			end,
 			["format"] = conform.format,
 			["symbol"] = function()
-				require("mini.extra").pickers.lsp({ scope = "document_symbol" })
+				require("fzf-lua").lsp_document_symbols()
 			end,
 		}
 	end

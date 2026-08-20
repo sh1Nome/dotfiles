@@ -48,16 +48,6 @@ if not vim.g.vscode then
 		require("mini.files").setup({
 			mappings = require("keymaps").get_mini_files_mappings(),
 		}) -- ファイラー
-		require("mini.pick").setup({
-			mappings = require("keymaps").get_mini_pick_mappings(),
-			window = {
-				config = function()
-					return {
-						width = math.floor((vim.o.columns - 8) / 2),
-					}
-				end,
-			},
-		}) -- ピッカー
 		local animate = require("mini.animate") -- アニメーション
 		animate.setup({
 			cursor = {
@@ -88,7 +78,6 @@ if not vim.g.vscode then
 		require("mini.completion").setup() -- 補完
 		require("mini.cmdline").setup() -- コマンドライン
 		require("mini.trailspace").setup() -- 末尾の空白をハイライト
-		require("mini.visits").setup() -- ファイルアクセス履歴追跡
 		require("mini.git").setup() -- `:Git`コマンドを追加
 		require("mini.pairs").setup({
 			mappings = {
@@ -111,7 +100,6 @@ if not vim.g.vscode then
 				},
 			},
 		}) -- スニペット
-		require("mini.extra").setup() -- 追加
 
 		require("mini.clue").setup({
 			-- リーダーキーのみトリガー
@@ -140,19 +128,29 @@ if not vim.g.vscode then
 			end),
 		})
 
-		-- プラグイン一括追加: 自作, LSP, フォーマッタ
+		-- プラグイン一括追加: 自作, LSP, フォーマッタ, ピッカー
 		add({
-			"https://github.com/sh1Nome/mini-pick-preview.nvim",
 			"https://github.com/sh1Nome/floatmemo.nvim",
 			"https://github.com/sh1Nome/floatcli.nvim",
 			"https://github.com/neovim/nvim-lspconfig",
 			"https://github.com/stevearc/conform.nvim",
 			"https://github.com/zk-org/zk-nvim",
 			"https://github.com/itchyny/vim-qfedit",
+			"https://github.com/ibhagwan/fzf-lua",
 		})
 
-		-- mini-pick-preview
-		require("mini-pick-preview").setup()
+		-- fzf-lua
+		require("fzf-lua").setup({
+			winopts = {
+				border = "single",
+				preview = { border = "single" },
+			},
+			grep = {
+				hidden = true,
+				no_ignore = false,
+			},
+		}) -- ピッカー
+		require("fzf-lua").register_ui_select() -- vim.ui.select()をfzf-luaに置き換え
 
 		-- floatmemo
 		require("floatmemo").setup({
@@ -174,7 +172,7 @@ if not vim.g.vscode then
 
 		-- zk
 		require("zk").setup({
-			picker = "minipick",
+			picker = "fzf_lua",
 		})
 	end)
 end
