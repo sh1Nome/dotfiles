@@ -47,11 +47,11 @@ install-zk: mkdir-local-bin
 	cd $(ZK_BUILD_DIR) && $(MAKE_CMD) build
 	mv $(ZK_BINARY) ~/.local/bin/
 	rm -rf ./$(ZK_BUILD_DIR)
-	test -d ~/git/my-zk || (mkdir -p ~/git && git clone $(MY_ZK_REPO) ~/git/my-zk)
+	ghq get $(MY_ZK_REPO)
 
 uninstall-zk:
 	rm -f ~/.local/bin/zk*
-	rm -rf ~/git/my-zk
+	repo=$$(ghq list --exact --full-path my-zk) && [ -n "$$repo" ] && rm -rf "$$repo" || true
 
 
 install-neovim:
