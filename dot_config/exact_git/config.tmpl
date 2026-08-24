@@ -3,6 +3,8 @@
     ignorecase = false # 大文字小文字を区別する
     quotepath = false # パスをクォートせず UTF-8 表示
     pager = delta # ページャーを delta に設定
+[format]
+    pretty = fuller # git log のデフォルト表示形式を fuller に設定
 [pull]
     rebase = true # pull 時に rebase する
 [fetch]
@@ -33,6 +35,8 @@
     format = ssh # 署名時に使用するフォーマット
 [gpg "ssh"]
     allowedSignersFile = ~/.ssh/allowed_signers # 署名の検証をするための設定
+[log]
+    showSignature = true # git log で署名を自動検証・表示
 {{- end }}
 {{- if .gitEnableCredential }}
 [credential] # https://git-scm.com/doc/credential-helpers
