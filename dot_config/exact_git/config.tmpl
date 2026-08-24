@@ -31,6 +31,8 @@
     gpgsign = true # すべてのコミットで署名する
 [gpg]
     format = ssh # 署名時に使用するフォーマット
+[gpg "ssh"]
+    allowedSignersFile = ~/.ssh/allowed_signers # 署名の検証をするための設定
 {{- end }}
 {{- if .gitEnableCredential }}
 [credential] # https://git-scm.com/doc/credential-helpers
