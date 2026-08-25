@@ -1,0 +1,14 @@
+# フォント
+[font]
+size = 11 # フォントサイズ
+
+[font.normal]
+family = "Noto Sans Mono CJK JP" # フォントを指定
+
+# シェル設定
+[terminal.shell]
+{{- if eq .chezmoi.os "windows" }}
+program = "{{ .chezmoi.homeDir | replace "\\" "/" }}/AppData/Roaming/alacritty/start_ucrt64.cmd" # Windows環境でmsys2を使用
+{{- else }}
+program = "bash" # Unix環境でbashを使用
+{{- end }}
