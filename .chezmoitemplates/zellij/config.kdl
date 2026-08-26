@@ -1,2 +1,5 @@
 // Nerd Fonts 依存の矢印セパレータ(Powerlineグリフ)を無効化する
 simplified_ui true
+
+// pane の周囲に枠線を表示する
+pane_frame_style "full"
