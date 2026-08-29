@@ -38,30 +38,7 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "hooks": {
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "sh -c 'notify Claude Stop'"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "sh -c 'notify Claude Notification'"
-          }
-        ]
-      }
-    ]
-  },
+  "preferredNotifChannel": "terminal_bell",
   "defaultShell": "bash",
   "statusLine": {
     "type": "command",
