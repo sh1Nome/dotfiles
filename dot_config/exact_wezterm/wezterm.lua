@@ -74,6 +74,29 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
 	os.remove(name)
 end)
 
+-- ベル: `\a` を受け取ったら OS に通知する
+wezterm.on("bell", function(window, pane)
+	local title = "Bell"
+	local message = "Wezterm"
+	local args
+	if wezterm.target_triple:find("windows") then
+		-- notify は sh スクリプトなので msys2 の bash 経由で実行する
+		local notify = wezterm.home_dir:gsub("\\", "/") .. "/.local/bin/notify"
+		args = {
+			"C:/msys64/usr/bin/bash.exe",
+			"-c",
+			'exec "$1" "$2" "$3"',
+			"bash",
+			notify,
+			title,
+			message,
+		}
+	else
+		args = { wezterm.home_dir .. "/.local/bin/notify", title, message }
+	end
+	wezterm.background_child_process(args)
+end)
+
 config.keys = {
 	{
 		key = "E",

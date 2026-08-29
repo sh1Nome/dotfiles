@@ -5,6 +5,15 @@ size = 11 # フォントサイズ
 [font.normal]
 family = "Noto Sans Mono CJK JP" # フォントを指定
 
+# ベル: `\a` を受け取ったら OS に通知する
+[bell]
+{{- if eq .chezmoi.os "windows" }}
+# notify は sh スクリプトなので msys2 の bash 経由で実行する
+command = { program = "C:/msys64/usr/bin/bash.exe", args = ["-c", "exec \"$1\" \"$2\" \"$3\"", "bash", "{{ .chezmoi.homeDir | replace "\\" "/" }}/.local/bin/notify", "Bell", "alacritty"] }
+{{- else }}
+command = { program = "{{ .chezmoi.homeDir }}/.local/bin/notify", args = ["Bell", "Alacritty"] }
+{{- end }}
+
 # シェル設定
 [terminal.shell]
 {{- if eq .chezmoi.os "windows" }}

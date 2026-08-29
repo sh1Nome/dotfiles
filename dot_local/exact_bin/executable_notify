@@ -3,12 +3,19 @@ title="$1"
 message="$2"
 
 if [ "$OS" = "Windows_NT" ]; then
-    powershell.exe -Command "
+    # NotifyIcon のバルーン通知。シェルに拾われる前にプロセスが消えると出ないので、少し待って Dispose する。
+    # title/message を sh で展開してスクリプトに埋めると PowerShell がコードごと解釈してしまうため、
+    # スクリプトには変数名だけを書き、値は $env 経由で PowerShell に渡す。
+    NOTIFY_TITLE="$title" NOTIFY_MESSAGE="$message" \
+    powershell.exe -NoProfile -NonInteractive -Command "
         Add-Type -AssemblyName System.Windows.Forms,System.Drawing;
+        \$msg = [string]\$env:NOTIFY_MESSAGE; if (-not \$msg) { \$msg = ' ' };
         \$n = [System.Windows.Forms.NotifyIcon]::new();
         \$n.Icon = [System.Drawing.SystemIcons]::Information;
         \$n.Visible = \$true;
-        \$n.ShowBalloonTip(5000, '${title}', '${message}', [System.Windows.Forms.ToolTipIcon]::Info)
+        \$n.ShowBalloonTip(5000, [string]\$env:NOTIFY_TITLE, \$msg, [System.Windows.Forms.ToolTipIcon]::Info);
+        Start-Sleep -Seconds 1;
+        \$n.Dispose()
     "
 else
     notify-send "$title" "$message"
