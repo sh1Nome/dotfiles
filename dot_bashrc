@@ -166,16 +166,3 @@ ghq-cd() {
 aqua-prune() {
     rm -rf "$(aqua root-dir)"
 }
-
-# sbx にグローバル設定が無いため、エージェントを明示した run に対応する --kit を注入する
-sbx() {
-    if [ "${1:-}" = run ]; then
-        case "${2:-}" in
-            claude|codex)
-                command sbx run --kit "$HOME/.config/sbx/kits/${2}-personal" "${@:2}"
-                return
-                ;;
-        esac
-    fi
-    command sbx "$@"
-}
