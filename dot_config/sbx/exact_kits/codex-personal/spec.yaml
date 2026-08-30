@@ -1,0 +1,46 @@
+schemaVersion: "2"
+kind: mixin
+name: codex-personal
+displayName: Personal Codex config
+description: Append personal Codex CLI settings onto the sandbox defaults.
+requires:
+  agent: codex
+setup:
+  startup:
+    # sbx が model_provider や mcp_servers を書き込むため、config.toml を静的配置では上書きできない。
+    - description: Append personal Codex settings into config.toml
+      # ~/.codex が root 所有で作られることがあり、agent 実行では書き込めない。
+      user: "0"
+      command:
+        - sh
+        - -c
+        - |
+          set -e
+          trap 'chown -R agent:agent /home/agent/.codex 2>/dev/null || true' EXIT
+
+          SRC=/home/agent/.config/codex-personal/config.toml
+          CONFIG=/home/agent/.codex/config.toml
+          mkdir -p /home/agent/.codex
+
+          i=0
+          # sbx の書き込み完了前に追記すると、素のスカラーが直前のテーブルに吸われて壊れる。
+          while [ "$i" -lt 60 ]; do
+            grep -qE '^\[model_providers\.sandboxd\]|^model_provider[[:space:]]*=' "$CONFIG" 2>/dev/null && break
+            sleep 1
+            i=$((i + 1))
+          done
+          if [ "$i" -ge 60 ]; then
+            echo "codex-personal: $CONFIG に sbx 既定値が現れませんでした。中断します。" >&2
+            exit 1
+          fi
+
+          # 追記済み、または base 自身が持つ場合。触ると [tui]/[features] の二重定義になる。
+          if grep -qE '^\[(tui|features)\][[:space:]]*$' "$CONFIG"; then
+            exit 0
+          fi
+
+          tmp="$CONFIG.tmp"
+          cp "$CONFIG" "$tmp"
+          cat "$SRC" >> "$tmp"
+          chmod 0644 "$tmp"
+          mv "$tmp" "$CONFIG"

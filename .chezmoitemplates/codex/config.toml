@@ -1,7 +1,3 @@
-approval_policy = "on-request"
-sandbox_mode = "workspace-write"
-approvals_reviewer = "user"
-
 [tui]
 status_line = ["current-dir", "git-branch", "model-with-reasoning", "fast-mode", "permissions", "approval-mode", "task-progress", "context-used", "total-input-tokens", "total-output-tokens", "five-hour-limit", "weekly-limit"]
 
