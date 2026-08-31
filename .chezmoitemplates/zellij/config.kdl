@@ -4,10 +4,17 @@ simplified_ui true
 // pane の周囲に枠線を表示する
 pane_frame_style "full"
 
+// マウス操作を無効化する(使わないため)
+mouse_mode false
+
 // キーバインド衝突を避ける Unlock-First (non-colliding) プリセットを適用したもの。
 // 反映方法: zellij起動中に Ctrl o (Session モード) → c (Configuration 画面) →
 // Tab で "Change Mode Behavior" → ↓ で "Unlock-First (non-colliding)" を選択 → Ctrl a で保存。
 // ここでは Ctrl a で生成された設定から、実際に使う項目だけを残している。
+// floating pane を使わないため、生成された設定にあった以下は除外している:
+//   pane { bind "e" { TogglePaneEmbedOrFloating; ... } }
+//   pane { bind "w" { ToggleFloatingPanes; ... } }
+//   shared_among "normal" "locked" { bind "Alt f" { ToggleFloatingPanes; } }
 default_mode "locked"
 keybinds clear-defaults=true {
     locked {
@@ -21,7 +28,6 @@ keybinds clear-defaults=true {
         bind ";" { FocusLastPane; }
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
         bind "d" { NewPane "down"; SwitchToMode "locked"; }
-        bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "locked"; }
         bind "f" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "Shift f" { ToggleFocusNoUiFullscreen; SwitchToMode "locked"; }
         bind "h" { MoveFocus "left"; }
@@ -33,7 +39,6 @@ keybinds clear-defaults=true {
         bind "p" { SwitchToMode "normal"; }
         bind "r" { NewPane "right"; SwitchToMode "locked"; }
         bind "s" { NewPane "stacked"; SwitchToMode "locked"; }
-        bind "w" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
         bind "z" { TogglePaneFrames; SwitchToMode "locked"; }
         bind "tab" { SwitchFocus; }
@@ -178,7 +183,6 @@ keybinds clear-defaults=true {
         bind "Alt =" { Resize "Increase"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
-        bind "Alt f" { ToggleFloatingPanes; }
         bind "Alt h" { MoveFocusOrTab "left"; }
         bind "Alt i" { MoveTab "left"; }
         bind "Alt j" { MoveFocus "down"; }
