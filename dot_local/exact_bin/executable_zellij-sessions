@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# zellij のセッションを fzf で選んで操作する（zellij の外から使う）
+# bash 依存: here-string(<<<) と ${var// /-} を使うため sh では動かない
+# set -e は使わない: fzf/zellij の非ゼロ終了を case と || で明示的に扱うため
+set -u
+
+prog="${0##*/}"
+
+if [ "${1:-}" = "--help" ]; then
+  cat <<EOF
+Usage: $prog
+
+Open the zellij session list in fzf and act on the selection. Run outside zellij.
+
+  enter    attach to the selected session (resurrect it if exited)
+  ctrl-x   kill the selected session, delete its dump, and refresh the list
+  ctrl-o   attach to (or create) a session named after the current directory
+
+Nested attach/create is not possible inside a zellij session, so it bails out and
+tells you to use the built-in session manager instead.
+EOF
+  exit 0
+fi
+
+if [ -n "${ZELLIJ:-}" ]; then
+    echo "$prog: run this outside a zellij session — launch the session manager instead" >&2
+    exit 1
+fi
+command -v zellij >/dev/null 2>&1 || { echo "$prog: zellij not found" >&2; exit 1; }
+command -v fzf >/dev/null 2>&1 || { echo "$prog: fzf not found" >&2; exit 1; }
+
+list_cmd='zellij ls --no-formatting --reverse'
+
+# Del キーはこの環境（Windows/Alacritty/MSYS2/ネイティブ fzf）だと fzf に届かず
+# 中断扱いになるため、kill+delete は ctrl-x に割り当てる。
+out=$(
+    $list_cmd 2>/dev/null |
+        fzf --no-sort --expect=ctrl-o \
+            --prompt="zellij session> " \
+            --header="enter attach · ctrl-x kill+delete · ctrl-o cwd session" \
+            --bind="ctrl-x:execute-silent(zellij delete-session --force {1} 2>/dev/null)+reload($list_cmd 2>/dev/null || true)"
+)
+rc=$?
+# fzf 終了コード: 0=選択 / 1=マッチ無し / 2=設定エラー / 130=中断
+case $rc in
+    0) ;;
+    1|130) exit 0 ;;
+    *) echo "$prog: fzf exited with status $rc" >&2; exit 1 ;;
+esac
+
+# --expect 有効時の出力: 1行目=キー名（enter は空）、2行目=選択行
+{ IFS= read -r key; IFS= read -r line; } <<<"$out"
+
+case "$key" in
+    ctrl-o)
+        name=$(basename "$PWD")
+        name=${name// /-}
+        zellij attach -c "$name"
+        exit
+        ;;
+    *)
+        name=${line%% *}
+        [ -n "$name" ] || exit 0
+        zellij attach "$name"
+        exit
+        ;;
+esac
