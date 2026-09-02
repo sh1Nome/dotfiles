@@ -38,7 +38,6 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "preferredNotifChannel": "terminal_bell",
   "defaultShell": "bash",
   "statusLine": {
     "type": "command",
@@ -54,10 +53,13 @@
   "autoMemoryEnabled": false,
   "disableAutoMode": "disable",
   "theme": "dark",
+  "preferredNotifChannel": "terminal_bell",
   "inputNeededNotifEnabled": false,
   "agentPushNotifEnabled": false,
   "disableDeepLinkRegistration": "disable",
   "externalEditorContext": true,
   "autoConnectIde": false,
-  "autoInstallIdeExtension": false
+  "autoInstallIdeExtension": false,
+  "promptSuggestionEnabled": false,
+  "awaySummaryEnabled": false
 }
