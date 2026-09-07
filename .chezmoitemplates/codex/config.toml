@@ -1,4 +1,5 @@
 [tui]
+auto_recap = false
 status_line = ["run-state", "current-dir", "git-branch", "model-with-reasoning", "fast-mode", "permissions", "approval-mode", "task-progress", "context-used", "total-input-tokens", "total-output-tokens", "five-hour-limit", "weekly-limit"]
 
 notifications = true
