@@ -45,6 +45,38 @@ if not vim.g.vscode then
 			use_icons = false,
 		}) -- ステータスライン
 		require("mini.diff").setup() -- 差分表示
+		local map = require("mini.map")
+		map.setup({
+			integrations = {
+				-- MiniDiffSign*は配色によって色が定義されないため、標準のDiff*を使う。
+				map.gen_integration.diff({
+					add = "DiffAdd",
+					change = "DiffChange",
+					delete = "DiffDelete",
+				}),
+			},
+			symbols = {
+				-- 幅1では差分integrationが無効になるため、差分用の1列を確保する。
+				-- `encode`の配列は、空白/文字ありのパターンに対応する記号の一覧。
+				-- `resolution`は1つの記号が表す縦/横のマス数。1x1では2パターンになる。
+				-- 1つ目が空白、2つ目が文字あり。両方を同じ記号にしてコード形状を隠す。
+				encode = { "│", "│", resolution = { row = 1, col = 1 } },
+				scroll_line = "█",
+				scroll_view = "",
+			},
+			window = {
+				side = "right",
+				width = 2,
+				winblend = 0,
+				show_integration_count = false,
+			},
+		})
+		map.open()
+		vim.api.nvim_create_autocmd("TabEnter", {
+			callback = function()
+				map.open()
+			end,
+		})
 		require("mini.files").setup({
 			mappings = require("keymaps").get_mini_files_mappings(),
 		}) -- ファイラー
