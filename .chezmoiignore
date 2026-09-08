@@ -29,7 +29,6 @@ Makefile
 {{- if ne .chezmoi.os "windows" }}
 AppData
 .chezmoiscripts/*.ps1
-.config/wezterm/start_ucrt64.cmd
 {{- end }}
 
 {{- if eq .chezmoi.os "windows" }}

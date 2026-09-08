@@ -16,7 +16,7 @@ Neovim のキーマップは leader キーのあとに1文字だけ使える制�
 * chezmoi
 * mise
 * Noto Sans Mono CJK
-* WezTerm または Alacritty（どちらか一方、いずれ片方に絞るかもしれません）
+* Alacritty
 * MSYS2（Windows の場合）
 * make（Windows では MSYS2 の ucrt64/mingw-w64-ucrt-x86_64-make を使用）
 

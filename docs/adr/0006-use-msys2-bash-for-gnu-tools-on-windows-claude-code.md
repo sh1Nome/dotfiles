@@ -33,3 +33,7 @@ Claude Code は WezTerm（`start_ucrt64.cmd`）経由での起動のみをサポ
 - Claude Code の Bash ツールが起動する bash はログインシェルではなく、`MSYSTEM` や `PATH` の設定は WezTerm 経由の親プロセスからの環境変数継承に依存する
 - WezTerm 以外の経路（別ターミナル、タスクスケジューラなど）から Claude Code を起動すると、この継承が働かず動作しない可能性がある
 - MSYS2 を bash.exe として使う構成は Claude Code の公式サポート対象外であり、将来の実装変更で動作しなくなるリスクがある
+
+## Update
+
+WezTerm から Alacritty へ移行した。その他の条件は変更していない。

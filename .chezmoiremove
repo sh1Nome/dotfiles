@@ -2,3 +2,4 @@
 .copilot
 .config/opencode
 .codex/rules/default.rules
+.config/wezterm

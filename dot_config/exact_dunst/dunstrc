@@ -26,15 +26,6 @@
     # 10 秒で閉じる
     timeout = 10
 
-# wezterm の設定
-[wezterm]
-    # アプリ名
-    appname = "wezterm"
-    # 緊急度
-    urgency = normal
-    # wezterm の通知が消えない問題への対策
-    override_dbus_timeout = 10
-
 # 緊急度ごとの設定
 [urgency_normal]
     # 枠の色
