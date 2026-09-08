@@ -48,6 +48,12 @@ if not vim.g.vscode then
 		local map = require("mini.map")
 		map.setup({
 			integrations = {
+				map.gen_integration.builtin_search(),
+				-- 情報量を抑え、問題に直結するレベルだけ表示する。
+				map.gen_integration.diagnostic({
+					error = "DiagnosticFloatingError",
+					warn = "DiagnosticFloatingWarn",
+				}),
 				-- MiniDiffSign*は配色によって色が定義されないため、標準のDiff*を使う。
 				map.gen_integration.diff({
 					add = "DiffAdd",
