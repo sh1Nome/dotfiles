@@ -1,0 +1,5 @@
+# tgrep が index をプロジェクトに作成するため除外
+.tgrep/
+
+# tgrep の --hidden 検索で Git メタデータを検索対象外にするため
+.git/

@@ -35,10 +35,66 @@ else
 		require("fzf-lua").files()
 	end, { desc = "Pick files" })
 
-	-- fzf-luaの横断したあいまい検索（live grep）を起動
+	-- fzf-lua で tgrep を使った検索を起動
+	-- mise shims をキルしても tgrep 本体がキルできないことがあるので、tgrep の場所を保存
+	local tgrep_cwd = vim.fn.getcwd()
+	local tgrep_command = ""
+	local resolve_ok, resolve_result = pcall(function()
+		return vim.system({ "mise", "which", "tgrep" }, { cwd = tgrep_cwd, text = true }):wait()
+	end)
+	if resolve_ok and resolve_result.code == 0 then
+		tgrep_command = vim.trim(resolve_result.stdout or "")
+	end
+
 	vim.keymap.set("n", "<leader>f", function()
-		require("fzf-lua").live_grep()
-	end, { desc = "Live grep" })
+		if tgrep_command == "" then
+			vim.notify("Failed to resolve tgrep executable with mise", vim.log.levels.ERROR)
+			return
+		end
+
+		local server
+		local start_ok, start_error = pcall(function()
+			-- index 作成から .git を除外
+			server = vim.system(
+				{ tgrep_command, "serve", ".", "--exclude", ".git" },
+				{ cwd = tgrep_cwd, detach = true, stderr = false, stdout = false }
+			)
+		end)
+		if not start_ok then
+			vim.notify(("Failed to start tgrep server: %s"):format(tostring(start_error)), vim.log.levels.ERROR)
+		end
+
+		require("fzf-lua").live_grep({
+			cmd = vim.fn.shellescape(tgrep_command) .. " --vimgrep --smart-case --color=always",
+			cwd = tgrep_cwd,
+			hidden = true,
+			actions = {
+				-- actions.grep_lgrep をそのまま呼び出すとバグるのでカスタム
+				["ctrl-r"] = {
+					function()
+						require("fzf-lua").grep({
+							resume = true,
+							multiprocess = 1,
+						})
+					end,
+				},
+				-- zellij と競合するので無効化
+				["ctrl-g"] = false,
+			},
+			file_icons = false,
+			no_esc = true,
+			rg_glob = false,
+			prompt = "tgrep> ",
+			winopts = {
+				on_close = function()
+					-- 同一プロジェクトの picker 同時起動は対象外のため、共有所有権を管理しない。
+					if server and not server:is_closing() then
+						server:kill("sigterm")
+					end
+				end,
+			},
+		})
+	end, { desc = "tgrep" })
 
 	-- fzf-luaのヘルプ検索を起動
 	vim.keymap.set("n", "<leader>h", function()
