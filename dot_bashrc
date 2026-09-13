@@ -161,8 +161,3 @@ ghq-cd() {
     repo=$(ghq list --full-path | fzf) || return
     cd "$repo" || return
 }
-
-# aqua はたまにしか使わないため、root-dir ごと消してクリーンな状態に戻す
-aqua-prune() {
-    rm -rf "$(aqua root-dir)"
-}

@@ -1,4 +1,4 @@
-.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-neovim uninstall-neovim install-claude uninstall-claude install-rust uninstall-rust
+.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-neovim uninstall-neovim install-claude uninstall-claude install-rust uninstall-rust aqua-prune
 
 UNAME_S := $(shell uname -s)
 
@@ -17,6 +17,7 @@ help:
 	@echo "uninstall-claude Uninstall Claude Code"
 	@echo "install-rust     Install Rust via rustup"
 	@echo "uninstall-rust   Uninstall Rust via rustup"
+	@echo "aqua-prune       Remove the aqua root directory"
 ifeq ($(UNAME_S),Linux)
 	@echo "install-keyd     Install keyd"
 	@echo "uninstall-keyd   Uninstall keyd"
@@ -90,6 +91,9 @@ uninstall-rust:
 	else \
 		echo "rustup not found, skipping"; \
 	fi
+
+aqua-prune:
+	root_dir="$$(aqua root-dir)" && [ -n "$$root_dir" ] && rm -rf "$$root_dir"
 
 
 ifeq ($(UNAME_S),Linux)
