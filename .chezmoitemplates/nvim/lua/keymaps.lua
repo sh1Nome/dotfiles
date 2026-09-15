@@ -16,10 +16,13 @@ if vim.g.vscode then
 		vscode.call("editor.action.referenceSearch.trigger")
 	end, { desc = "References" })
 else
+	local pick = require("mini.pick")
+	local pickers = require("pickers")
+
 	-- LSPキーマップ
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
 	vim.keymap.set("n", "gr", function()
-		require("fzf-lua").lsp_references()
+		require("mini.extra").pickers.lsp({ scope = "references" })
 	end, { desc = "References" })
 	vim.keymap.set("n", "K", function()
 		vim.lsp.buf.hover({ border = "single" })
@@ -30,80 +33,30 @@ else
 		require("floatmemo").toggle()
 	end, { desc = "Toggle floatmemo" })
 
-	-- fzf-luaのファイル検索を起動
+	-- gitリポジトリならgit、それ以外ならrgでファイルを検索
 	vim.keymap.set("n", "<leader>p", function()
-		require("fzf-lua").files()
+		local ok, result = pcall(function()
+			return vim.system({ "git", "rev-parse", "--git-dir" }, {
+				cwd = vim.fn.getcwd(),
+				text = true,
+			}):wait()
+		end)
+		local tool = ok and result.code == 0 and "git" or "rg"
+		require("mini.pick").builtin.files({ tool = tool })
 	end, { desc = "Pick files" })
 
-	-- fzf-lua で tgrep を使った検索を起動
-	-- mise shims をキルしても tgrep 本体がキルできないことがあるので、tgrep の場所を保存
-	local tgrep_cwd = vim.fn.getcwd()
-	local tgrep_command = ""
-	local resolve_ok, resolve_result = pcall(function()
-		return vim.system({ "mise", "which", "tgrep" }, { cwd = tgrep_cwd, text = true }):wait()
-	end)
-	if resolve_ok and resolve_result.code == 0 then
-		tgrep_command = vim.trim(resolve_result.stdout or "")
-	end
-
 	vim.keymap.set("n", "<leader>f", function()
-		if tgrep_command == "" then
-			vim.notify("Failed to resolve tgrep executable with mise", vim.log.levels.ERROR)
-			return
-		end
-
-		local server
-		local start_ok, start_error = pcall(function()
-			-- index 作成から .git を除外
-			server = vim.system(
-				{ tgrep_command, "serve", ".", "--exclude", ".git" },
-				{ cwd = tgrep_cwd, detach = true, stderr = false, stdout = false }
-			)
-		end)
-		if not start_ok then
-			vim.notify(("Failed to start tgrep server: %s"):format(tostring(start_error)), vim.log.levels.ERROR)
-		end
-
-		require("fzf-lua").live_grep({
-			cmd = vim.fn.shellescape(tgrep_command) .. " --vimgrep --smart-case --color=always",
-			cwd = tgrep_cwd,
-			hidden = true,
-			actions = {
-				-- actions.grep_lgrep をそのまま呼び出すとバグるのでカスタム
-				["ctrl-r"] = {
-					function()
-						require("fzf-lua").grep({
-							resume = true,
-							multiprocess = 1,
-						})
-					end,
-				},
-				-- zellij と競合するので無効化
-				["ctrl-g"] = false,
-			},
-			file_icons = false,
-			no_esc = true,
-			rg_glob = false,
-			prompt = "tgrep> ",
-			winopts = {
-				on_close = function()
-					-- 同一プロジェクトの picker 同時起動は対象外のため、共有所有権を管理しない。
-					if server and not server:is_closing() then
-						server:kill("sigterm")
-					end
-				end,
-			},
-		})
+		pickers.tgrep()
 	end, { desc = "tgrep" })
 
-	-- fzf-luaのヘルプ検索を起動
+	-- mini.pickのヘルプ検索を起動
 	vim.keymap.set("n", "<leader>h", function()
-		require("fzf-lua").helptags()
+		require("mini.pick").builtin.help()
 	end, { desc = "Help" })
 
-	-- fzf-luaの最後のpickerを再開
+	-- 古いtgrep server/sourceを再利用しないため、専用の再作成処理を使う。
 	vim.keymap.set("n", "<leader>r", function()
-		require("fzf-lua").resume()
+		pickers.resume()
 	end, { desc = "Resume picker" })
 
 	-- zk-nvim
@@ -198,7 +151,17 @@ local function get_mini_files_mappings()
 	}
 end
 
+-- mini.pick用のキーマップ設定を返す関数
+local function get_mini_pick_mappings()
+	return {
+		choose_marked = "<C-q>",
+		paste = "",
+		refine = "<C-r>",
+	}
+end
+
 return {
 	get_mini_align_mappings = get_mini_align_mappings,
 	get_mini_files_mappings = get_mini_files_mappings,
+	get_mini_pick_mappings = get_mini_pick_mappings,
 }
