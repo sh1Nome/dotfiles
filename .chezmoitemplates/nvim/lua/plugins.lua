@@ -96,6 +96,19 @@ if not vim.g.vscode then
 				end,
 			},
 		}) -- ピッカー
+		-- Windows・Alacritty・Zellij環境で日本語IME入力を観測したところ、
+		-- vim.paste()にstreaming pasteのphase 1と3が届いた。
+		-- mini.pickはphase -1以外を警告して入力に追加しないため、
+		-- picker中だけphase -1として渡す。
+		-- 詳細: https://github.com/nvim-mini/mini.nvim/commit/15aa6de889e141ad87293ae080e37f2e22204bba
+		-- picker外のpasteや通常のローマ字入力には元の処理を使う。
+		local original_paste = vim.paste
+		vim.paste = function(lines, phase)
+			if require("mini.pick").is_picker_active() and phase ~= -1 then
+				return original_paste(lines, -1)
+			end
+			return original_paste(lines, phase)
+		end
 		local animate = require("mini.animate") -- アニメーション
 		animate.setup({
 			cursor = {
