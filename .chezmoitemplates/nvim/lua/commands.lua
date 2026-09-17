@@ -40,6 +40,26 @@ vim.api.nvim_create_user_command("PandocToClipboard", pandoc_to_clipboard, {
 	range = true,
 })
 
+local yank_file_path = require("yank-file-path")
+
+local function get_yank_file_path_options(opts)
+	if opts.range == 0 then
+		return {}
+	end
+	return {
+		start_line = opts.line1,
+		end_line = opts.line2,
+	}
+end
+
+vim.api.nvim_create_user_command("YankFilePath", function(opts)
+	yank_file_path.yank_file_path(get_yank_file_path_options(opts))
+end, { range = true, desc = "Copy relative file path" })
+
+vim.api.nvim_create_user_command("YankFilePathCodeBlock", function(opts)
+	yank_file_path.yank_file_path_code_block(get_yank_file_path_options(opts))
+end, { range = true, desc = "Copy relative file path and code block" })
+
 --- カレントバッファを指定形式に変換してブラウザで開く
 local md_preview_formats = { "html5", "revealjs" }
 
