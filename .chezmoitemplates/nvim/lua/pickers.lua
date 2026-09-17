@@ -4,6 +4,7 @@ local pick = require("mini.pick")
 local tgrep = {}
 local source_name = "tgrep"
 local last_picker_was_tgrep = false
+local last_tgrep_resume_state = nil
 local events_initialized = false
 local state_id = 0
 
@@ -59,6 +60,42 @@ local function parse_tgrep_items(stdout)
 	return items
 end
 
+local function save_tgrep_resume_state(state)
+	if not pick.is_picker_active() then
+		return
+	end
+
+	local opts = pick.get_picker_opts()
+	if not is_tgrep_source(opts) then
+		return
+	end
+
+	local refined = state.refined or opts.source.match ~= state.match
+	last_tgrep_resume_state = {
+		cwd = state.cwd,
+		query = pick.get_picker_query() or {},
+		refined = refined,
+		items = refined and pick.get_picker_items() or nil,
+	}
+end
+
+local function schedule_tgrep_query(query)
+	if #query == 0 then
+		return
+	end
+
+	vim.api.nvim_create_autocmd("User", {
+		pattern = "MiniPickStart",
+		once = true,
+		callback = function()
+			if not pick.is_picker_active() or not is_tgrep_source(pick.get_picker_opts()) then
+				return
+			end
+			pick.set_picker_query(query)
+		end,
+	})
+end
+
 local function stop_tgrep_search_if_refined(state)
 	if state.stopping or state.refined or not pick.is_picker_active() then
 		return
@@ -79,6 +116,7 @@ local function cleanup_tgrep(state)
 	if state.stopping then
 		return
 	end
+	save_tgrep_resume_state(state)
 	state.stopping = true
 	kill_tgrep_process(state.search_process)
 	kill_tgrep_process(state.server)
@@ -189,8 +227,9 @@ local function start_tgrep_server(state)
 	return server_or_error
 end
 
-local function start_tgrep_picker()
-	local cwd = vim.fn.getcwd()
+local function start_tgrep_picker(resume_state)
+	local cwd = resume_state and resume_state.cwd or vim.fn.getcwd()
+	local is_refined = resume_state and resume_state.refined or false
 	local executable, resolve_error = resolve_tgrep_executable(cwd)
 	if not executable then
 		vim.notify(
@@ -205,14 +244,11 @@ local function start_tgrep_picker()
 		executable = executable,
 		search_process = nil,
 		server = nil,
-		refined = false,
+		refined = is_refined,
 		stopping = false,
 	}
 	local match
 	match = function(_, _, query)
-		if state.refined then
-			return
-		end
 		search_tgrep(state, query)
 	end
 	state.match = match
@@ -225,14 +261,17 @@ local function start_tgrep_picker()
 	state.server = server
 	install_tgrep_lifecycle(state)
 	last_picker_was_tgrep = true
+	if resume_state then
+		schedule_tgrep_query(resume_state.query)
+	end
 
 	local ok, result = pcall(function()
 		return pick.start({
 			source = {
 				name = source_name,
 				cwd = cwd,
-				items = {},
-				match = match,
+				items = resume_state and resume_state.items or {},
+				match = is_refined and pick.default_match or match,
 				show = function(buf_id, items, query)
 					pick.default_show(buf_id, items, query, { show_icons = false })
 				end,
@@ -294,7 +333,11 @@ end
 
 function tgrep.resume()
 	if last_picker_was_tgrep then
-		return tgrep.pick()
+		if not last_tgrep_resume_state then
+			vim.notify("No tgrep picker to resume", vim.log.levels.WARN)
+			return
+		end
+		return start_tgrep_picker(last_tgrep_resume_state)
 	end
 	return pick.builtin.resume()
 end
