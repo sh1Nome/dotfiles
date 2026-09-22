@@ -40,26 +40,6 @@ vim.api.nvim_create_user_command("PandocToClipboard", pandoc_to_clipboard, {
 	range = true,
 })
 
-local yank_file_path = require("yank-file-path")
-
-local function get_yank_file_path_options(opts)
-	if opts.range == 0 then
-		return {}
-	end
-	return {
-		start_line = opts.line1,
-		end_line = opts.line2,
-	}
-end
-
-vim.api.nvim_create_user_command("YankFilePath", function(opts)
-	yank_file_path.yank_file_path(get_yank_file_path_options(opts))
-end, { range = true, desc = "Copy relative file path" })
-
-vim.api.nvim_create_user_command("YankFilePathCodeBlock", function(opts)
-	yank_file_path.yank_file_path_code_block(get_yank_file_path_options(opts))
-end, { range = true, desc = "Copy relative file path and code block" })
-
 --- カレントバッファを指定形式に変換してブラウザで開く
 local md_preview_formats = { "html5", "revealjs" }
 
@@ -169,6 +149,7 @@ end, { desc = "Delete all inactive plugins managed by vim.pack" })
 -- plugins.luaのプラグイン追加とlang.luaのlsp_actions構築が先に完了する
 require("plugins").later(function()
 	local lsp_actions = require("lang").lsp_actions
+	local yank_file_path = require("yank-file-path")
 
 	-- Lコマンド定義
 	vim.api.nvim_create_user_command("L", function(opts)
@@ -200,6 +181,24 @@ require("plugins").later(function()
 			end, actions)
 		end,
 	})
+
+	local function get_yank_file_path_options(opts)
+		if opts.range == 0 then
+			return {}
+		end
+		return {
+			start_line = opts.line1,
+			end_line = opts.line2,
+		}
+	end
+
+	vim.api.nvim_create_user_command("YankFilePath", function(opts)
+		yank_file_path.yank_file_path(get_yank_file_path_options(opts))
+	end, { range = true, desc = "Copy relative file path" })
+
+	vim.api.nvim_create_user_command("YankFilePathCodeBlock", function(opts)
+		yank_file_path.yank_file_path_code_block(get_yank_file_path_options(opts))
+	end, { range = true, desc = "Copy relative file path and code block" })
 
 	vim.api.nvim_create_user_command("YankGitRemoteUrl", function(opts)
 		require("yank-git-remote-url").yank(opts.range, opts.line1, opts.line2)

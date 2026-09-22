@@ -274,9 +274,10 @@ later(function()
 		mappings = require("keymaps").get_mini_align_mappings(),
 	}) -- 整列
 
-	-- プラグイン一括追加: md-table-align, yank-git-remote-url.nvim
+	-- プラグイン一括追加: md-table-align, yank-file-path.nvim, yank-git-remote-url.nvim
 	add({
 		"https://github.com/sh1Nome/md-table-align.nvim",
+		"https://github.com/sh1Nome/yank-file-path.nvim",
 		"https://github.com/sh1Nome/yank-git-remote-url.nvim",
 	})
 
