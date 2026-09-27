@@ -10,7 +10,6 @@ Makefile
 .config/fcitx5
 .config/nvim
 .config/dunst
-.config/glab-cli
 .config/xfce4
 .config/autostart
 .config/mimeapps.list
