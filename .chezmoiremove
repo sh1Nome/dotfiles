@@ -3,3 +3,5 @@
 .config/opencode
 .codex/rules/default.rules
 .config/wezterm
+.config/glab-cli/aliases.yml
+AppData/Local/glab-cli/aliases.yml
