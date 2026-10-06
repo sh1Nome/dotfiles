@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+set -eu
+
+if [ "${1:-}" = "--help" ]; then
+  cat <<'EOF'
+Usage: git diff-select
+
+Select one file from unstaged tracked changes and non-ignored untracked files with fzf.
+Preview its diff while browsing, then print the selected path.
+EOF
+  exit 0
+fi
+
+if [ "$#" -gt 0 ]; then
+  printf 'Usage: git diff-select\n' >&2
+  exit 1
+fi
+
+command -v fzf >/dev/null 2>&1 || {
+  printf 'git diff-select: fzf not found\n' >&2
+  exit 1
+}
+
+repo_root=$(git rev-parse --show-toplevel)
+cd -- "$repo_root"
+
+tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/git-diff-select.XXXXXX")
+trap 'rm -rf "$tmpdir"' EXIT
+candidates="$tmpdir/candidates"
+selection="$tmpdir/selection"
+
+# 改行区切りではファイル名内の改行を扱えないため、NUL 文字で区切る。
+if git diff --name-only -z > "$candidates"; then
+  :
+else
+  status=$?
+  exit "$status"
+fi
+if git ls-files --others --exclude-standard -z >> "$candidates"; then
+  :
+else
+  status=$?
+  exit "$status"
+fi
+
+# スクリプト自身を呼び直すと Windows パスを再解釈するため、Git を直接呼ぶ。
+preview_command='
+file={}
+pathspec=":(literal)$file"
+if git ls-files --error-unmatch -- "$pathspec" >/dev/null 2>&1; then
+  git diff --color=always -- "$pathspec" | delta
+else
+  git diff --no-index --color=always -- /dev/null "$file" | delta
+fi
+'
+if fzf \
+  --read0 --print0 --no-multi \
+  --with-shell 'bash -c' \
+  --preview "$preview_command" \
+  --preview-window=right:70% \
+  --bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
+  < "$candidates" > "$selection"; then
+  :
+else
+  status=$?
+  case "$status" in
+    # 一致なし (1) とキャンセル (130) は選択なしとして扱い、エラーにしない。
+    1|130) exit 0 ;;
+    *) exit "$status" ;;
+  esac
+fi
+
+if ! IFS= read -r -d '' file < "$selection"; then
+  exit 0
+fi
+printf '%s\n' "$file"

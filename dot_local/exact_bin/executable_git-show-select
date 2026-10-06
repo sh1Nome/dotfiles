@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -eu
+
+if [ "${1:-}" = "--help" ]; then
+  cat <<'EOF'
+Usage: git show-select [<commit>]
+
+Select one file changed by a commit with fzf.
+Preview its diff while browsing, then print the selected path.
+The commit defaults to HEAD.
+EOF
+  exit 0
+fi
+
+if [ "$#" -gt 1 ]; then
+  printf 'Usage: git show-select [<commit>]\n' >&2
+  exit 1
+fi
+
+command -v fzf >/dev/null 2>&1 || {
+  printf 'git show-select: fzf not found\n' >&2
+  exit 1
+}
+
+commit=$(git rev-parse --verify --end-of-options "${1:-HEAD}^{commit}")
+tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/git-show-select.XXXXXX")
+trap 'rm -rf "$tmpdir"' EXIT
+candidates="$tmpdir/candidates"
+selection="$tmpdir/selection"
+
+# 改行区切りではファイル名内の改行を扱えないため、NUL 文字で区切る。
+if git show --no-show-signature --no-relative --format= --name-only -z "$commit" > "$candidates"; then
+  :
+else
+  status=$?
+  exit "$status"
+fi
+
+printf -v preview_command 'git show --no-relative --color=always %q -- ":(top,literal)"{} | delta' "$commit"
+if fzf \
+  --read0 --print0 --no-multi \
+  --with-shell 'bash -c' \
+  --preview "$preview_command" \
+  --preview-window=right:70% \
+  --bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
+  < "$candidates" > "$selection"; then
+  :
+else
+  status=$?
+  case "$status" in
+    # 一致なし (1) とキャンセル (130) は選択なしとして扱い、エラーにしない。
+    1|130) exit 0 ;;
+    *) exit "$status" ;;
+  esac
+fi
+
+if ! IFS= read -r -d '' file < "$selection"; then
+  exit 0
+fi
+printf '%s\n' "$file"
