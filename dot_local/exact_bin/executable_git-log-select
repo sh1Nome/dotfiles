@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -eu
+
+if [ "${1:-}" = "--help" ]; then
+  cat <<'EOF'
+Usage: git log-select [<git-log-args>...]
+
+Select one commit with fzf and copy its full hash to the clipboard via OSC 52.
+Preview its commit message and changed-file statistics with git show --stat.
+The log defaults to HEAD. The terminal must support OSC 52.
+
+Examples:
+  git log-select
+  git log-select --all
+  git log-select main..HEAD -- src/
+
+Use log arguments to filter commits; leave output formatting to this command.
+EOF
+  exit 0
+fi
+
+command -v fzf >/dev/null 2>&1 || {
+  printf 'git log-select: fzf not found\n' >&2
+  exit 1
+}
+
+tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/git-log-select.XXXXXX")
+trap 'rm -rf "$tmpdir"' EXIT
+candidates="$tmpdir/candidates"
+selection="$tmpdir/selection"
+
+if git --no-pager log \
+  --no-show-signature --color=never --no-graph -z \
+  --format='%H%x09%h %s (%cr) <%an> %d' \
+  "$@" > "$candidates"; then
+  :
+else
+  status=$?
+  exit "$status"
+fi
+
+if fzf \
+  --read0 --print0 --no-multi --no-sort \
+  --delimiter='\t' --with-nth=2.. \
+  --with-shell 'bash -c' \
+  --preview 'git --no-pager show --no-relative --color=always --format=fuller --stat {1} --' \
+  --preview-window=right:70% \
+  --bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
+  < "$candidates" > "$selection"; then
+  :
+else
+  status=$?
+  case "$status" in
+    # 一致なし (1) とキャンセル (130) ではクリップボードを上書きしない。
+    1|130) exit 0 ;;
+    *) exit "$status" ;;
+  esac
+fi
+
+if ! IFS= read -r -d '' selected < "$selection"; then
+  exit 0
+fi
+commit=$(git rev-parse --verify --end-of-options "${selected%%$'\t'*}^{commit}")
+encoded=$(printf '%s' "$commit" | base64 | tr -d '\r\n')
+printf '\e]52;c;%s\e\\' "$encoded"
