@@ -1,0 +1,10 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $desired := includeTemplate "codex/local-config.toml" . | fromToml -}}
+{{- $current := .chezmoi.stdin | fromToml -}}
+{{- $merged := mustMergeOverwrite (deepCopy $current) $desired -}}
+{{- /* 値が一致する場合に再生成すると、アプリが変更した書式やコメントまで差分になる。 */ -}}
+{{- if deepEqual $current $merged -}}
+{{- .chezmoi.stdin -}}
+{{- else -}}
+{{- $merged | toToml -}}
+{{- end -}}

@@ -2,4 +2,4 @@ approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 approvals_reviewer = "user"
 
-{{ template "codex/config.toml" . -}}
+{{ includeTemplate "codex/config.toml" . -}}
