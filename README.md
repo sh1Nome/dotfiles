@@ -30,6 +30,17 @@ Neovim のキーマップは leader キーのあとに1文字だけ使える制�
     * 利用可能なターゲットの一覧は `make help` で確認する
     * Windows では `make` の代わりに `mingw32-make` を使う
 
+## sbx の kit
+
+複数の kit を使うには、`--kit` を繰り返し指定します。
+
+```sh
+sbx run codex \
+  --kit ~/.config/sbx/kits/global-gitignore \
+  --kit ~/.config/sbx/kits/codex-personal \
+  --kit ~/.config/sbx/kits/ffmpeg
+```
+
 ## xfce4 設定の反映
 
 `chezmoi apply` だけでは xfce4 の設定は反映されません。

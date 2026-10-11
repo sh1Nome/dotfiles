@@ -1,0 +1,38 @@
+schemaVersion: "2"
+kind: mixin
+name: global-gitignore
+displayName: Global Git ignore
+description: Append personal ignore patterns onto the sandbox Git global ignore.
+setup:
+  startup:
+    - description: Append tgrep to the Git global ignore
+      # files/home に静的配置すると sbx の既定値を上書きし得るため、既存ファイルへ追記する。
+      user: "0"
+      command:
+        - sh
+        - -c
+        - |
+          set -e
+
+          GLOBAL=/home/agent/.gitignore_global
+          i=0
+          # sbx の既定値が書き込まれる前の追記は、後続の初期化で消えるため待つ。
+          while [ "$i" -lt 60 ]
+          do
+            if grep -Fxq '.sbx' "$GLOBAL" 2>/dev/null
+            then
+              break
+            fi
+            sleep 1
+            i=$((i + 1))
+          done
+          if [ "$i" -ge 60 ]
+          then
+            echo "global-gitignore: $GLOBAL に sbx 既定値が現れませんでした。中断します。" >&2
+            exit 1
+          fi
+
+          if ! grep -Fxq '.tgrep/' "$GLOBAL"
+          then
+            printf '%s\n' '.tgrep/' >> "$GLOBAL"
+          fi
