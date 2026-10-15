@@ -6,5 +6,11 @@ notifications = true
 notification_method = "bel"
 notification_condition = "always"
 
+[tui.keymap.pager]
+page_up = []
+page_down = []
+half_page_up = ["page-up"]
+half_page_down = ["page-down"]
+
 [features]
 codex_git_commit = false
