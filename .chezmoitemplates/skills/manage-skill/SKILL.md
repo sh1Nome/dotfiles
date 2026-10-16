@@ -21,7 +21,7 @@ git remote が `sh1nome/dotfiles` かどうかで構成が異なる。
 
 ### sh1nome/dotfiles（chezmoi 管理）
 
-1スキルにつき以下の3ファイルを作成する：
+自作スキルは1スキルにつき以下の3ファイルを作成する：
 
 | パス | 役割 |
 |------|------|
@@ -34,6 +34,8 @@ tmpl ファイルは以下の1行のみ：
 ```
 {{ "{{" }}- template "skills/<name>/SKILL.md" . -{{ "}}" }}
 ```
+
+外部スキルは `.chezmoiexternal.toml.tmpl` で管理する。
 
 ### その他のリポジトリ
 
