@@ -17,7 +17,7 @@ HISTFILESIZE=2000
 # 各コマンド実行後にウィンドウサイズを確認し、必要なら LINES と COLUMNS を更新
 shopt -s checkwinsize
 
-# プロンプト表示用のGit情報を1回のstatus実行で更新する
+# プロンプトに表示するGit情報を、statusの1回の実行で更新する
 GIT_PROMPT_PREFIX=
 GIT_PROMPT_BRANCH=
 GIT_PROMPT_STATUS=
@@ -65,15 +65,15 @@ update_git_prompt() {
 
 # コマンド実行時間を測定
 COMMAND_START_TIME=
-# 直前に確定したコマンドの経過時間（ミリ秒）。PS1 からはこれを整形して表示する
+# 直前のコマンドの経過時間（ミリ秒）。確定した値を PS1 で整形して表示する
 COMMAND_ELAPSED_MS=
 # 実行時間がこの秒数以上のコマンドが終わったら通知する
 NOTIFY_THRESHOLD_SEC=10
 command_timer_start() {
-  # DEBUG trapは1コマンド中に複数回発火しうるため、未設定のときだけ開始時刻を記録する
+  # DEBUG trapは1つのコマンドで複数回実行されることがあるため、開始時刻が未設定のときだけ記録する
   COMMAND_START_TIME=${COMMAND_START_TIME:-$(date '+%s%3N')}
 }
-# PROMPT_COMMANDから呼び出し、経過時間の確定と通知判定を親シェルで一度だけ行う
+# PROMPT_COMMANDから呼び出し、親シェルで経過時間を確定して通知の要否を一度だけ判定する
 command_timer_stop() {
   # シェル起動直後の最初のプロンプトなど、開始時刻が無ければ何もしない
   if [ -z "$COMMAND_START_TIME" ]; then
@@ -82,8 +82,8 @@ command_timer_stop() {
 
   COMMAND_ELAPSED_MS=$(($(date '+%s%3N') - COMMAND_START_TIME))
 
-  # 閾値以上なら通知する。プロンプト表示をブロックしないようバックグラウンドで実行し、
-  # ジョブ制御メッセージが出ないようサブシェルで包む
+  # 経過時間が閾値以上なら通知する。プロンプトの表示を妨げないようバックグラウンドで実行し、
+  # ジョブ制御メッセージが出ないようサブシェル内で実行する
   if (( COMMAND_ELAPSED_MS >= NOTIFY_THRESHOLD_SEC * 1000 )); then
     ( notify bash Done & )
   fi

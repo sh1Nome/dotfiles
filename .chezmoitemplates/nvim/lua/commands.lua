@@ -145,8 +145,8 @@ vim.api.nvim_create_user_command("PackClean", function()
 end, { desc = "Delete all inactive plugins managed by vim.pack" })
 
 -- プラグインのロードを待つコマンド群
--- laterのキューは登録順に実行されるため、init.luaのrequire順により
--- plugins.luaのプラグイン追加とlang.luaのlsp_actions構築が先に完了する
+-- laterではキューに登録した順に処理を実行するため、init.luaのrequire順に従い、
+-- plugins.luaのプラグイン追加とlang.luaのlsp_actionsの構築が先に完了する
 require("plugins").later(function()
 	local lsp_actions = require("lang").lsp_actions
 	local yank_file_path = require("yank-file-path")

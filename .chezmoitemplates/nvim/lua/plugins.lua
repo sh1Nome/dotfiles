@@ -24,7 +24,7 @@ if not vim.g.vscode then
 	-- 即時ロード
 	now(function()
 		require("mini.notify").setup({
-			-- `:lua MiniNotify.show_history()`で通知履歴を見れる
+			-- `:lua MiniNotify.show_history()`で通知履歴を見られる
 			-- 右下に表示
 			window = {
 				config = function()
@@ -63,9 +63,9 @@ if not vim.g.vscode then
 			},
 			symbols = {
 				-- 幅1では差分integrationが無効になるため、差分用の1列を確保する。
-				-- `encode`の配列は、空白/文字ありのパターンに対応する記号の一覧。
-				-- `resolution`は1つの記号が表す縦/横のマス数。1x1では2パターンになる。
-				-- 1つ目が空白、2つ目が文字あり。両方を同じ記号にしてコード形状を隠す。
+				-- `encode`の配列は、空白か文字があるかのパターンに対応する記号の一覧。
+				-- `resolution`は1つの記号で表す縦と横のマス数。1x1では2パターンになる。
+				-- 配列の1つ目が空白、2つ目が文字ありに対応する。コードの形状を隠すため、両方に同じ記号を使う。
 				encode = { "│", "│", resolution = { row = 1, col = 1 } },
 				scroll_line = "█",
 				scroll_view = "",
@@ -114,7 +114,7 @@ if not vim.g.vscode then
 			cursor = {
 				-- 50ミリ秒の線形アニメーション
 				timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
-				-- すべてのカーソル移動に対してアニメーション
+				-- すべてのカーソル移動でアニメーションを使う
 				path = animate.gen_path.line({
 					predicate = function()
 						return true
@@ -180,8 +180,8 @@ if not vim.g.vscode then
 			},
 		}) -- キーマップを表示
 
-		-- mini.clueはデフォルトでlistedバッファと一部の特殊な非listedバッファにのみトリガーを張る。
-		-- schedule_wrapでトリガーを最後に張り<nowait>を有効に保つ（:h map-nowait）。
+		-- mini.clueはデフォルトでlistedバッファと一部の特殊な非listedバッファにだけトリガーを設定する。
+		-- <nowait>を有効に保つため、schedule_wrapでトリガーを最後に設定する（:h map-nowait）。
 		vim.api.nvim_create_autocmd("BufWinEnter", {
 			callback = vim.schedule_wrap(function(ev)
 				if vim.api.nvim_buf_is_valid(ev.buf) and vim.fn.buflisted(ev.buf) ~= 1 then

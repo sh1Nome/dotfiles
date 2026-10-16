@@ -1,5 +1,5 @@
-# 実行中に外部コマンド(aqua等)経由で子プロセスがBASH_ENVを継承し、
-# 本ファイルを再帰的に読み込むことを防ぐため、実行中だけ値を退避して外す
+# 外部コマンド(aqua等)の子プロセスがBASH_ENVを継承すると、本ファイルを再帰的に読み込むため、
+# 本ファイルの実行中だけBASH_ENVの値を退避して解除する
 _bash_env_path=$BASH_ENV
 unset BASH_ENV
 
@@ -25,7 +25,7 @@ if command -v aqua >/dev/null 2>&1; then
   export PATH="$(aqua root-dir)/bin:$PATH"
 fi
 
-# my-zk を ghq 管理下から特定し、zk のノートブックディレクトリにする（未 clone なら空のまま）
+# ghq で管理している my-zk を探し、zk のノートブックディレクトリに設定する（未 clone なら空のまま）
 if command -v ghq >/dev/null 2>&1; then
   _zk_repo=$(ghq list --exact --full-path my-zk | head -n1)
   [ -n "$_zk_repo" ] && export ZK_NOTEBOOK_DIR=$_zk_repo

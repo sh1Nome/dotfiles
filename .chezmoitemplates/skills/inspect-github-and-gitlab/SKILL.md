@@ -1,6 +1,6 @@
 ---
 name: inspect-github-and-gitlab
-description: Issue・PR/MR・CI を検索・確認する時に使用します。GitHub と GitLab のどちらを使っているか git remote から判別してから、対応する gh/glab コマンドを実行します。
+description: Issue・PR/MR・CI を検索・確認するときに使用します。git remote で GitHub と GitLab のどちらを使っているかを確認し、対応する gh/glab コマンドを実行します。
 ---
 
 # GitHub / GitLab Inspect
@@ -13,4 +13,4 @@ description: Issue・PR/MR・CI を検索・確認する時に使用します。
 ## Gotchas
 
 * 認証は設定済みのため `gh auth status` / `glab auth status` は実行しない
-* 認証エラーが発生しても `gh auth login` / `glab auth login` 等で自分から再認証を試みず、依頼者に報告する
+* 認証エラーが発生したら依頼者に報告する。`gh auth login` / `glab auth login` 等で自ら再認証を試みない

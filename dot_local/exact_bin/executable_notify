@@ -3,7 +3,7 @@ title="$1"
 message="$2"
 
 if [ "$OS" = "Windows_NT" ]; then
-    # NotifyIcon のバルーン通知。シェルに拾われる前にプロセスが消えると出ないので、少し待って Dispose する。
+    # シェルが NotifyIcon のバルーン通知を受け取る前にプロセスが終了すると、通知が表示されないため、少し待ってから Dispose する。
     # title/message を sh で展開してスクリプトに埋めると PowerShell がコードごと解釈してしまうため、
     # スクリプトには変数名だけを書き、値は $env 経由で PowerShell に渡す。
     NOTIFY_TITLE="$title" NOTIFY_MESSAGE="$message" \

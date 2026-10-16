@@ -8,9 +8,8 @@ Accepted
 
 ADR 0006 に従い `CLAUDE_CODE_GIT_BASH_PATH` に MSYS2 の bash.exe を直接指定している。  
 確認したところ、Windows の Claude Code で Bash ツールが起動する bash は非ログイン・非対話シェルだった。  
-`.bashrc` は対話シェルでのみ読み込まれ、Bash ツールが起動する非ログイン・非対話シェルでは読み込まれない。  
-`.bashrc` にある mise の shims、aqua、`~/.local/bin` の PATH 追加もこれに含まれ、  
-Bash ツールには反映されず、`gh` など mise 管理のコマンドが見つからなくなる。
+対話シェルは `.bashrc` を読み込むが、Bash ツールが起動する非ログイン・非対話シェルは読み込まない。  
+そのため、`.bashrc` で PATH に追加している mise の shims、aqua、`~/.local/bin` は Bash ツールに反映されず、`gh` など mise 管理のコマンドが見つからなくなる。
 
 対応策として次を試した。
 
@@ -24,7 +23,7 @@ Bash ツールには反映されず、`gh` など mise 管理のコマンドが�
 `BASH_ENV` の指定場所には2通りある。
 
 - `settings.json` の `env.BASH_ENV` に明示する
-- `.bashrc` で `export` し、WezTerm の対話シェルからの環境変数の継承に委ねる
+- `.bashrc` で `export` し、WezTerm の対話シェルから環境変数を継承させる
     - この方法は WezTerm 経由以外の起動では機能しない
 
 Claude Code の起動経路は WezTerm 経由のみである。
@@ -37,11 +36,11 @@ PATH の構築を含む環境変数の定義を `.bashrc` から `~/.bash_env` �
 
 ## Consequences
 
-- `.bash_env` に定義が一本化され、対話・非対話どちらのシェルも同じロジックを共有する
+- 環境変数の定義を `.bash_env` に一本化でき、対話・非対話どちらのシェルも同じロジックを共有する
 - `settings.json` に理由の読み取りにくい設定を増やさずに済む
-- Claude Code を WezTerm 以外の経路から起動すると継承チェーンが働かず、mise 等の PATH が Bash ツールに届かない
-- 環境変数は WezTerm の対話シェル → claude.exe → Bash ツールの bash という3段階の継承を経て届くため、挙動の把握にはこの経路全体の理解が必要になる
-- `.bash_env` 内で bash を起動する子プロセス（aqua root-dir 経由の ldd など）は `BASH_ENV` を継承し再帰的に source してしまうため、source中だけ退避・unsetして復元している
+- Claude Code を WezTerm 以外の経路から起動すると環境変数を継承できず、mise 等の PATH 設定が Bash ツールに届かない
+- 環境変数は WezTerm の対話シェル → claude.exe → Bash ツールの bash という3段階で継承するため、挙動を把握するには経路全体を理解する必要がある
+- `.bash_env` 内で bash を起動する子プロセス（aqua root-dir 経由の ldd など）は、`BASH_ENV` を継承して `.bash_env` を再帰的に source してしまう。そのため、source 中は `BASH_ENV` の値を退避して unset し、終了時に復元している
 
 ## Update
 

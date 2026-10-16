@@ -4,14 +4,14 @@ simplified_ui true
 // pane の周囲に枠線を表示する
 pane_frame_style "full"
 
-// マウス操作を無効化する(使わないため)
+// マウスを使わないため、マウス操作を無効化する
 mouse_mode false
 
 // キーバインド衝突を避ける Unlock-First (non-colliding) プリセットを適用したもの。
 // 反映方法: zellij起動中に Ctrl o (Session モード) → c (Configuration 画面) →
 // Tab で "Change Mode Behavior" → ↓ で "Unlock-First (non-colliding)" を選択 → Ctrl a で保存。
 // ここでは Ctrl a で生成された設定から、実際に使う項目だけを残している。
-// floating pane を使わないため、生成された設定にあった以下は除外している:
+// floating pane を使わないため、生成された設定から以下の項目を除外している。
 //   pane { bind "e" { TogglePaneEmbedOrFloating; ... } }
 //   pane { bind "w" { ToggleFloatingPanes; ... } }
 //   shared_among "normal" "locked" { bind "Alt f" { ToggleFloatingPanes; } }

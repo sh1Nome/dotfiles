@@ -16,7 +16,7 @@ setup:
 
           GLOBAL=/home/agent/.gitignore_global
           i=0
-          # sbx の既定値が書き込まれる前の追記は、後続の初期化で消えるため待つ。
+          # sbx が既定値を書き込む前に追記すると、その後の初期化で消えるため待つ。
           while [ "$i" -lt 60 ]
           do
             if grep -Fxq '.sbx' "$GLOBAL" 2>/dev/null

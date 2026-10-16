@@ -1,4 +1,4 @@
-// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+// 既定値を上書きするには、このファイルにキーバインドを追加する
 [
   {
     // ターミナルがアクティブなときにCtrl+@でターミナルの表示/非表示を切り替え
@@ -51,7 +51,7 @@
   }
 ]
 
-// VSCode Neovimでデフォルトで使えるもの
+// VSCode Neovimで標準で使えるキーバインド
 // gd: editor.action.revealDefinition
 // K: editor.action.showHover
 // C-n, C-p: Navigate lists, parameter hints, suggestions, quick-open, cmdline history, peek reference list

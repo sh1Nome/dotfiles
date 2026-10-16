@@ -7,9 +7,9 @@ requires:
   agent: codex
 setup:
   startup:
-    # sbx が model_provider や mcp_servers を書き込むため、config.toml を静的配置では上書きできない。
+    # sbx が model_provider や mcp_servers を書き込むため、静的配置で config.toml を上書きできない。
     - description: Append personal Codex settings into config.toml
-      # ~/.codex が root 所有で作られることがあり、agent 実行では書き込めない。
+      # ~/.codex を root 所有で作る場合があり、agent では書き込めないため root で実行する。
       user: "0"
       command:
         - sh
@@ -23,7 +23,7 @@ setup:
           mkdir -p /home/agent/.codex
 
           i=0
-          # sbx の書き込み完了前に追記すると、素のスカラーが直前のテーブルに吸われて壊れる。
+          # sbx の書き込みが完了する前に追記すると、トップレベルのスカラー値が直前のテーブルに属する値として解釈され、設定が正しく動作しない。
           while [ "$i" -lt 60 ]; do
             grep -qE '^\[model_providers\.sandboxd\]|^model_provider[[:space:]]*=' "$CONFIG" 2>/dev/null && break
             sleep 1
@@ -34,7 +34,7 @@ setup:
             exit 1
           fi
 
-          # 追記済み、または base 自身が持つ場合。触ると [tui]/[features] の二重定義になる。
+          # 追記済みの場合や既存の設定に含まれる場合は、[tui]/[features] の二重定義を避けるため追記しない。
           if grep -qE '^\[(tui|features)\][[:space:]]*$' "$CONFIG"; then
             exit 0
           fi

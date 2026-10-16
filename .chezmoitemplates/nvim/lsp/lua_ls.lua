@@ -1,12 +1,12 @@
 -- lua_lsの追加設定。`vim.lsp.enable("lua_ls")`で読み込み、nvim-lspconfigの既定設定にマージする
--- Neovimランタイムの型情報を読ませ、`vim`グローバルの警告解消とhoverを有効化する
+-- Neovimランタイムの型情報を読み込ませ、`vim`グローバルの警告を解消し、hoverを有効にする
 return {
 	settings = {
 		Lua = {
 			runtime = {
 				-- NeovimのLuaはLuaJIT(Lua 5.1相当)のため標準ライブラリの解釈を合わせる
 				version = "LuaJIT",
-				-- `require("keymaps")`のようなNeovim流のモジュール解決を教える(:h lua-module-load)
+				-- `require("keymaps")`のようなNeovimのモジュール解決に対応する(:h lua-module-load)
 				path = { "lua/?.lua", "lua/?/init.lua" },
 			},
 			workspace = {

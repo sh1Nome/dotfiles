@@ -15,7 +15,7 @@
   "editor.wordWrap": "off", // 折返しを無効化
   "editor.rulers": [80], // 80文字目に縦線を表示
   "[markdown]": {
-    "editor.wordWrap": "off" // これを書かないと設定がオーバーライドされてしまう
+    "editor.wordWrap": "off" // 明示しないと折り返しの設定が上書きされるため
   },
 
   // 差分エディタ設定
@@ -47,7 +47,7 @@
   // 推奨の拡張機能を通知しない
   "extensions.ignoreRecommendations": true
 
-  // --- 一時的な対処: VSCodeVimが動作しない問題の回避策 ---
+  // VSCodeVimが動作しない問題を一時的に回避するための設定
   // 詳細: https://github.com/VSCodeVim/Vim/issues/9672
   // この設定は将来的に不要になる可能性があります
   // "editor.editContext": false,

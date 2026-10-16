@@ -7,9 +7,9 @@ requires:
   agent: claude
 setup:
   startup:
-    # sbx が settings.json に bypassPermissionsModeAccepted 等を書くので直接は置けない。
+    # sbx が settings.json に bypassPermissionsModeAccepted 等を書き込むため、個人設定のファイルを直接配置できない。
     - description: Merge personal Claude settings into settings.json
-      # ~/.claude が root 所有で作られている場合に備えて root 実行、trap で戻す。
+      # ~/.claude が root 所有の場合に備えて root で実行し、trap で所有者を agent に戻す。
       user: "0"
       command:
         - sh
@@ -30,7 +30,7 @@ setup:
             sleep 1
             i=$((i + 1))
           done
-          # base 不在で進むと sbx 既定値を欠いた settings.json ができるので中断する。
+          # 既存の設定ファイルがないまま進むと sbx の既定値を欠く settings.json ができるため、中断する。
           if [ "$i" -ge 60 ]; then
             echo "claude-personal: $SETTINGS が生成されませんでした。中断します。" >&2
             exit 1
@@ -38,8 +38,8 @@ setup:
 
           install -m 0644 "$SRC/statusline.sh" "$STATUSLINE"
 
-          # permissions.json を最後に重ねるのは、sandbox で不要・危険な個人設定の
-          # allow / defaultMode を空値で潰すため (jq の * はキーを消せない)。
+          # jq の * はキーを削除できないため、permissions.json を最後にマージし、
+          # サンドボックスでは不要・危険な個人設定の allow / defaultMode を空値で上書きする。
           jq -n \
             --slurpfile me   "$SRC/settings.json" \
             --slurpfile base "$SETTINGS" \

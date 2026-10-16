@@ -8,8 +8,7 @@ Accepted
 
 Neovim と Claude Code は mise `[tools]` のコマンドを呼び出す。  
 Windows の mise は shims 方式で動作する。  
-Neovim と Claude Code 自体を mise で管理すると、  
-mise のインストールディレクトリが shims より前の `PATH` に入る。  
+Neovim と Claude Code 自体を mise で管理すると、mise のインストールディレクトリが `PATH` 内で shims より前に入る。  
 その結果、呼び出すコマンドの `.cmd` や `.bat` を解決できない場合がある。
 
 ## Decision

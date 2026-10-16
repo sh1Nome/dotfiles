@@ -45,8 +45,8 @@ rc=$?
 # --expect 有効時の出力: 1行目=キー名（enter は空）、2行目=選択行
 { IFS= read -r key; IFS= read -r line; } <<<"$out"
 
-# rc より先に key を見る: セッション 0 件だと fzf は expect キーでも rc=1 を返し、
-# 下の case（1 は無言終了）で握りつぶされてしまうため。
+# セッションが 0 件だと fzf は expect キーでも rc=1 を返すため、rc より先に key を確認する。
+# rc を先に判定すると、下の case が 1 をそのまま終了する分岐として扱い、キーの処理まで進まない。
 if [ "$key" = "ctrl-o" ]; then
     name=$(basename "$PWD")
     name=${name// /-}

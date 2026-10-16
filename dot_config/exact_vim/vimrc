@@ -3,11 +3,11 @@
 " -------------------------------
 " 文字エンコード
 set fenc=utf-8
-" バックアップファイルを作成禁止
+" バックアップファイルを作成しない
 set nobackup
-" スワップファイルを作成禁止
+" スワップファイルを作成しない
 set noswapfile
-" バックスペース有効化
+" バックスペースを有効化
 set backspace=indent,eol,start
 " システムクリップボードを利用
 set clipboard=unnamed,unnamedplus
