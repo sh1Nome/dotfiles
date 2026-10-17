@@ -2,45 +2,82 @@ schemaVersion: "2"
 kind: mixin
 name: codex-personal
 displayName: Personal Codex config
-description: Append personal Codex CLI settings onto the sandbox defaults.
+description: Merge personal Codex CLI settings onto the sandbox defaults.
 requires:
   agent: codex
 setup:
+  install:
+    - description: Install Python and tomlkit
+      user: "0"
+      command: |
+        set -e
+
+        if /usr/bin/python3 -c 'import tomlkit' >/dev/null 2>&1
+        then
+          exit 0
+        fi
+
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get update
+        apt-get install -y --no-install-recommends python3 python3-tomlkit
   startup:
     # sbx が model_provider や mcp_servers を書き込むため、静的配置で config.toml を上書きできない。
-    - description: Append personal Codex settings into config.toml
+    - description: Merge personal Codex settings into config.toml
       # ~/.codex を root 所有で作る場合があり、agent では書き込めないため root で実行する。
       user: "0"
       command:
-        - sh
+        - /usr/bin/python3
         - -c
         - |
-          set -e
-          trap 'chown -R agent:agent /home/agent/.codex 2>/dev/null || true' EXIT
+          from collections.abc import Mapping
+          from itertools import chain
+          from pathlib import Path
+          import os
+          import pwd
+          import time
 
-          SRC=/home/agent/.config/codex-personal/config.toml
-          CONFIG=/home/agent/.codex/config.toml
-          mkdir -p /home/agent/.codex
+          import tomlkit
+          from tomlkit.exceptions import ParseError
 
-          i=0
-          # sbx の書き込みが完了する前に追記すると、トップレベルのスカラー値が直前のテーブルに属する値として解釈され、設定が正しく動作しない。
-          while [ "$i" -lt 60 ]; do
-            grep -qE '^\[model_providers\.sandboxd\]|^model_provider[[:space:]]*=' "$CONFIG" 2>/dev/null && break
-            sleep 1
-            i=$((i + 1))
-          done
-          if [ "$i" -ge 60 ]; then
-            echo "codex-personal: $CONFIG に sbx 既定値が現れませんでした。中断します。" >&2
-            exit 1
-          fi
+          def wait_for_defaults(config):
+              # sbx が既定値を書き込む前にマージすると、その後の初期化で消えるため待つ。
+              for _ in range(60):
+                  try:
+                      defaults = tomlkit.parse(config.read_text(encoding="utf-8"))
+                  except (FileNotFoundError, UnicodeDecodeError, ParseError):
+                      # 書き込み途中の TOML を既定値として扱わない。
+                      pass
+                  else:
+                      if defaults.get("model_provider") == "sandboxd":
+                          return defaults
+                  time.sleep(1)
+              raise SystemExit(f"codex-personal: {config} に sbx 既定値が現れませんでした。中断します。")
 
-          # 追記済みの場合や既存の設定に含まれる場合は、[tui]/[features] の二重定義を避けるため追記しない。
-          if grep -qE '^\[(tui|features)\][[:space:]]*$' "$CONFIG"; then
-            exit 0
-          fi
+          def merge_missing(settings, additions):
+              for key, value in additions.items():
+                  if key not in settings:
+                      settings[key] = value
+                  elif isinstance(settings[key], Mapping) and isinstance(value, Mapping):
+                      merge_missing(settings[key], value)
 
-          tmp="$CONFIG.tmp"
-          cp "$CONFIG" "$tmp"
-          cat "$SRC" >> "$tmp"
-          chmod 0644 "$tmp"
-          mv "$tmp" "$CONFIG"
+          src = Path("/home/agent/.config/codex-personal/config.toml")
+          config_dir = Path("/home/agent/.codex")
+          config = config_dir / "config.toml"
+          agent = pwd.getpwnam("agent")
+          try:
+              config_dir.mkdir(parents=True, exist_ok=True)
+              defaults = wait_for_defaults(config)
+              personal = tomlkit.parse(src.read_text(encoding="utf-8"))
+              # 個人設定で model_provider や mcp_servers を上書きしないよう、sbx の設定を優先する。
+              merge_missing(defaults, personal)
+              tmp = config.with_name(config.name + ".tmp")
+              tmp.write_text(tomlkit.dumps(defaults), encoding="utf-8")
+              tmp.chmod(0o644)
+              tmp.replace(config)
+          finally:
+              for path in chain([config_dir], config_dir.rglob("*")):
+                  try:
+                      os.chown(path, agent.pw_uid, agent.pw_gid, follow_symlinks=False)
+                  except OSError:
+                      # 所有者の復元に失敗しても、待機・マージで起きたエラーを隠さない。
+                      pass
