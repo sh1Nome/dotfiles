@@ -2,7 +2,7 @@ schemaVersion: "2"
 kind: mixin
 name: ffmpeg
 displayName: FFmpeg
-description: Install ffmpeg and ffprobe using apt on Ubuntu or Debian sandboxes.
+description: Install ffmpeg, ffprobe, and Japanese fonts using apt on Ubuntu or Debian sandboxes.
 setup:
   install:
     - description: Install ffmpeg and ffprobe
@@ -19,3 +19,16 @@ setup:
         export DEBIAN_FRONTEND=noninteractive
         apt-get update
         apt-get install -y --no-install-recommends ffmpeg
+    - description: Install Noto CJK fonts
+      user: "0"
+      command: |
+        set -e
+
+        if [ "$(dpkg-query --show --showformat='${Status}' fonts-noto-cjk 2>/dev/null)" = "install ok installed" ]
+        then
+          exit 0
+        fi
+
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get update
+        apt-get install -y --no-install-recommends fonts-noto-cjk
