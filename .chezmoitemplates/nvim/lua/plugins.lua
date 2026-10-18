@@ -44,6 +44,7 @@ if not vim.g.vscode then
 		require("mini.statusline").setup({
 			use_icons = false,
 		}) -- ステータスライン
+		require("mini.statuscolumn").setup()
 		require("mini.diff").setup() -- 差分表示
 		local map = require("mini.map")
 		map.setup({
