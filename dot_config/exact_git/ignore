@@ -3,3 +3,6 @@
 
 # tgrep の --hidden 検索で Git メタデータを検索対象外にするため
 .git/
+
+# worktree の内容をメインの作業ツリーで追跡しないため
+.worktree/

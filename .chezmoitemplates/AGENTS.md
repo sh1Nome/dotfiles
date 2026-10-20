@@ -22,3 +22,8 @@
 * テストコードには What を書くこと
 * コミットログには Why を書くこと
 * コードコメントには Why not を書くこと
+
+## git worktree
+
+* worktree はメインの作業ツリーのルートにある `.worktree/<ブランチ名>` に作成すること。worktree 内から作成する場合も、同じ場所を使うこと
+* ブランチ名の `/` はそのまま使い、`feature/hoge` なら `.worktree/feature/hoge` とすること

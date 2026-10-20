@@ -9,6 +9,9 @@
     rebase = true # pull 時に rebase する
 [fetch]
     prune = true # 取得時に不要ブランチを自動削除
+[worktree]
+    # 環境ごとに異なる絶対パスを保存すると、worktree を共有できない。
+    useRelativePaths = true
 [color]
     ui = auto # 色表示を自動判定
 [interactive]

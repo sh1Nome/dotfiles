@@ -1,0 +1,47 @@
+schemaVersion: "2"
+kind: mixin
+name: git-personal
+displayName: Personal Git config
+description: Add personal Git settings and ignore patterns alongside sandbox defaults.
+setup:
+  startup:
+    - description: Add personal Git settings and ignore patterns
+      # .gitignore_global を静的配置すると sbx の既定値を消すため、既存ファイルへ追記する。
+      user: "0"
+      command:
+        - sh
+        - -c
+        - |
+          set -e
+
+          CONFIG=/home/agent/.gitconfig
+          GLOBAL=/home/agent/.gitignore_global
+          i=0
+          # 初期化前に追記すると消えるため、Git 設定と除外ファイルの両方に sbx の既定値が入るまで待つ。
+          while [ "$i" -lt 60 ]
+          do
+            if grep -Fxq '.sbx' "$GLOBAL" 2>/dev/null &&
+              git config --file "$CONFIG" --get core.excludesFile >/dev/null 2>&1
+            then
+              break
+            fi
+            sleep 1
+            i=$((i + 1))
+          done
+          if [ "$i" -ge 60 ]
+          then
+            echo "git-personal: sbx の Git 設定が生成されませんでした。中断します。" >&2
+            exit 1
+          fi
+
+          # .gitconfig を静的配置すると sbx の既定値を失うため、必要なキーだけ更新する。
+          git config --file "$CONFIG" --replace-all worktree.useRelativePaths true
+          chown agent:agent "$CONFIG"
+
+          for pattern in '.tgrep/' '.worktree/'
+          do
+            if ! grep -Fxq -- "$pattern" "$GLOBAL"
+            then
+              printf '%s\n' "$pattern" >> "$GLOBAL"
+            fi
+          done
