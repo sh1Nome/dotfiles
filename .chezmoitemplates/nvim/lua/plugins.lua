@@ -194,6 +194,7 @@ if not vim.g.vscode then
 		-- プラグイン一括追加: 自作, LSP, フォーマッタ, ピッカー
 		add({
 			"https://github.com/sh1Nome/mini-pick-preview.nvim",
+			"https://github.com/sh1Nome/mini-pick-tgrep.nvim",
 			"https://github.com/sh1Nome/floatmemo.nvim",
 			"https://github.com/sh1Nome/floatcli.nvim",
 			"https://github.com/neovim/nvim-lspconfig",
@@ -204,6 +205,10 @@ if not vim.g.vscode then
 
 		-- mini-pick-preview
 		require("mini-pick-preview").setup()
+
+		require("mini-pick-tgrep").setup({
+			executable = vim.trim(vim.system({ "mise", "which", "tgrep" }, { text = true }):wait().stdout),
+		})
 
 		-- floatmemo
 		require("floatmemo").setup({

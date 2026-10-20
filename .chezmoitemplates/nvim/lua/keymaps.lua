@@ -16,9 +16,6 @@ if vim.g.vscode then
 		vscode.call("editor.action.referenceSearch.trigger")
 	end, { desc = "References" })
 else
-	local pick = require("mini.pick")
-	local pickers = require("pickers")
-
 	-- LSPキーマップ
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
 	vim.keymap.set("n", "gr", function()
@@ -46,7 +43,7 @@ else
 	end, { desc = "Pick files" })
 
 	vim.keymap.set("n", "<leader>f", function()
-		pickers.tgrep()
+		require("mini-pick-tgrep").pick()
 	end, { desc = "tgrep" })
 
 	-- mini.pickのヘルプ検索を起動
@@ -54,9 +51,9 @@ else
 		require("mini.pick").builtin.help()
 	end, { desc = "Help" })
 
-	-- 古いtgrep server/sourceを再利用しないため、専用の再作成処理を使う。
+	-- 停止した tgrep サーバーを再起動するため、プラグインの再開処理を使う。
 	vim.keymap.set("n", "<leader>r", function()
-		pickers.resume()
+		require("mini-pick-tgrep").resume()
 	end, { desc = "Resume picker" })
 
 	-- zk-nvim
