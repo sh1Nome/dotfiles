@@ -36,7 +36,7 @@ Neovim のキーマップでは leader キーに続けて使うキーを1文字�
 
 ```sh
 sbx run codex \
-  --kit ~/.config/sbx/kits/global-gitignore \
+  --kit ~/.config/sbx/kits/git-personal \
   --kit ~/.config/sbx/kits/codex-personal \
   --kit ~/.config/sbx/kits/ffmpeg
 ```
