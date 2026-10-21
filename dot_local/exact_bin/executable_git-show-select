@@ -38,10 +38,10 @@ fi
 
 printf -v preview_command 'git show --no-relative --color=always %q -- ":(top,literal)"{} | delta' "$commit"
 if fzf \
-  --read0 --print0 --no-multi \
+  --read0 --print0 --no-multi --keep-right \
   --with-shell 'bash -c' \
   --preview "$preview_command" \
-  --preview-window=right:70% \
+  --preview-window=right:70%:wrap \
   --bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
   < "$candidates" > "$selection"; then
   :

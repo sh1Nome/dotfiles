@@ -44,7 +44,7 @@ if fzf \
   --header 'Enter: copy hash | Esc/Ctrl-C: exit' \
   --with-shell 'bash -c' \
   --preview 'git --no-pager show --no-relative --color=always --format=fuller --stat {1} --' \
-  --preview-window=right:70% \
+  --preview-window=right:70%:wrap \
   --bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
   --bind 'enter:transform-header(
     set -euo pipefail
