@@ -38,7 +38,8 @@ else
   exit "$status"
 fi
 
-if fzf \
+# PATH は引き継げるため、プレビューごとに BASH_ENV で外部コマンドを起動しない。
+if BASH_ENV= fzf \
   --read0 --no-multi --no-sort \
   --delimiter='\t' --with-nth=2.. \
   --header 'Enter: copy hash | Esc/Ctrl-C: exit' \
