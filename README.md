@@ -50,4 +50,4 @@ pkill xfconfd
 ```
 
 その後ログインし直すと xfconfd が再起動し、設定を読み込みます。
-test
+test（work で修正）
