@@ -161,3 +161,10 @@ ghq-cd() {
     repo=$(ghq list --full-path | fzf) || return
     cd "$repo" || return
 }
+
+sbx-skills-refresh() {
+    local skills
+    skills=$(sbx skills ls -q) || return
+    printf '%s\n' "$skills" | xargs -r sbx skills rm -f || return
+    sbx skills import -f
+}
