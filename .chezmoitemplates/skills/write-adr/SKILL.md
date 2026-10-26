@@ -8,7 +8,7 @@ description: 会話内容から Nygard 形式の Architecture Decision Record (A
 ## ワークフロー
 
 1. 現在の会話履歴から、タイトル・Status・Context・Decision・Consequences の材料を抽出する
-2. 不足している項目は sync-stepwise スキルを使って補う。推測で補わない
+2. 不足している項目は依頼者に確認する。推測で補わない
 3. 出力先を決める。既定は `docs/adr`、存在しなければ依頼者に確認する
 4. 出力先の既存 ADR を調べ、最大番号に1を足した番号を4桁のゼロ埋めで付ける
 5. タイトルを英語のケバブケースに変換してスラッグとし、ファイル名を `NNNN-<slug>.md` とする

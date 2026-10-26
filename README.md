@@ -30,6 +30,24 @@ Neovim のキーマップでは leader キーに続けて使うキーを1文字�
     * 利用可能なターゲットの一覧は `make help` で確認する
     * Windows では `make` の代わりに `mingw32-make` を使う
 
+## スキルの管理
+
+自作スキルは1スキルにつき以下の3ファイルで管理します。
+
+| パス | 役割 |
+|------|------|
+| `.chezmoitemplates/skills/<name>/SKILL.md` | スキル本体（フロントマター付き） |
+| `dot_claude/exact_skills/<name>/SKILL.md.tmpl` | `~/.claude/skills/` 向けテンプレート参照 |
+| `dot_agents/exact_skills/<name>/SKILL.md.tmpl` | `~/.agents/skills/` 向けテンプレート参照 |
+
+参照用の `.tmpl` ファイルには以下の1行だけを書きます。
+
+```text
+{{- template "skills/<name>/SKILL.md" . -}}
+```
+
+外部スキルは `.chezmoiexternal.toml.tmpl` で管理します。
+
 ## sbx の kit
 
 複数の kit を使うには、`--kit` を繰り返し指定します。
