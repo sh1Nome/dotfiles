@@ -25,8 +25,11 @@ require("plugins").later(function()
 			["format"] = function()
 				vscode.call("editor.action.formatDocument")
 			end,
-			["symbol"] = function()
+			["document-symbol"] = function()
 				vscode.call("workbench.action.gotoSymbol")
+			end,
+			["workspace-symbol"] = function()
+				vscode.call("workbench.action.showAllSymbols")
 			end,
 		}
 	else
@@ -76,8 +79,11 @@ require("plugins").later(function()
 				require("mini.extra").pickers.diagnostic({ scope = "current" })
 			end,
 			["format"] = conform.format,
-			["symbol"] = function()
+			["document-symbol"] = function()
 				require("mini.extra").pickers.lsp({ scope = "document_symbol" })
+			end,
+			["workspace-symbol"] = function()
+				require("mini.extra").pickers.lsp({ scope = "workspace_symbol" })
 			end,
 		}
 	end
