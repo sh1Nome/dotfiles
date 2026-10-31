@@ -6,3 +6,6 @@
 
 # worktree の内容をメインの作業ツリーで追跡しないため
 .worktree/
+
+# yomiyasu スキルがプロジェクトルートに作成するため
+.yomiyasu/
