@@ -45,7 +45,6 @@ vim.opt.showmode = true -- モード表示を有効化
 vim.opt.scrolloff = 3 -- 常に3行のスクロールオフセットを確保
 vim.opt.cursorline = true -- カーソル行をハイライト
 vim.opt.expandtab = true -- タブをスペースに変換
-vim.opt.wrap = false -- 行末で折り返さない
 vim.opt.colorcolumn = "80" -- 80文字目に縦線を表示
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) -- フロートウィンドウの背景を透明化
 vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" }) -- フロートボーダーの背景を透明化
