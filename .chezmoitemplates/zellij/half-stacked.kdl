@@ -1,0 +1,32 @@
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="tab-bar"
+        }
+        // children には作業用 pane が入る。
+        children
+        pane size=1 borderless=true {
+            plugin location="status-bar"
+        }
+    }
+
+    tab
+
+    // タブバーとステータスバーも pane として数える。
+    // 作業用 pane が 2 個なら計 4 個、3 個以上なら計 5 個以上になる。
+    swap_tiled_layout name="half-stacked" {
+        tab max_panes=4 {
+            pane split_direction="vertical" {
+                pane
+                pane
+            }
+        }
+        tab min_panes=5 {
+            pane split_direction="vertical" {
+                pane
+                // ここの children には左側の 1 個を除く作業用 pane が入る。
+                pane stacked=true { children; }
+            }
+        }
+    }
+}

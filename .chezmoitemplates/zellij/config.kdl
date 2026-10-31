@@ -7,6 +7,8 @@ pane_frame_style "full"
 // マウスを使わないため、マウス操作を無効化する
 mouse_mode false
 
+default_layout "half-stacked"
+
 // キーバインド衝突を避ける Unlock-First (non-colliding) プリセットを適用したもの。
 // 反映方法: zellij起動中に Ctrl o (Session モード) → c (Configuration 画面) →
 // Tab で "Change Mode Behavior" → ↓ で "Unlock-First (non-colliding)" を選択 → Ctrl a で保存。
