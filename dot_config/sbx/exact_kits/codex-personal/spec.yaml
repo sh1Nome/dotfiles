@@ -2,24 +2,39 @@ schemaVersion: "2"
 kind: mixin
 name: codex-personal
 displayName: Personal Codex config
-description: Merge personal Codex CLI settings onto the sandbox defaults.
+description: Merge personal Codex CLI settings and install official tgrep integration.
 requires:
   agent: codex
 setup:
   install:
-    - description: Install Python and tomlkit
+    - description: Install Python, tomlkit, curl, and CA certificates
       user: "0"
       command: |
         set -e
 
-        if /usr/bin/python3 -c 'import tomlkit' >/dev/null 2>&1
+        if /usr/bin/python3 -c 'import tomlkit' >/dev/null 2>&1 &&
+          command -v curl >/dev/null 2>&1 &&
+          [ -s /etc/ssl/certs/ca-certificates.crt ]
         then
           exit 0
         fi
 
         export DEBIAN_FRONTEND=noninteractive
         apt-get update
-        apt-get install -y --no-install-recommends python3 python3-tomlkit
+        apt-get install -y --no-install-recommends python3 python3-tomlkit curl ca-certificates
+    - description: Install tgrep from the latest release with its official script
+      user: "0"
+      command: |
+        set -eu
+
+        tgrep_tmp="$(mktemp -d)"
+        trap 'rm -rf "$tgrep_tmp"' EXIT
+        curl -fsSL https://api.github.com/repos/microsoft/tgrep/releases/latest -o "$tgrep_tmp/release.json"
+        tgrep_tag="$(jq -er '.tag_name' "$tgrep_tmp/release.json")"
+        curl -fsSL "https://github.com/microsoft/tgrep/archive/refs/tags/$tgrep_tag.tar.gz" -o "$tgrep_tmp/source.tar.gz"
+        install -d /usr/local/share/tgrep
+        tar -xzf "$tgrep_tmp/source.tar.gz" --strip-components=1 -C /usr/local/share/tgrep
+        TGREP_VERSION="$tgrep_tag" TGREP_INSTALL_DIR=/usr/local/bin bash /usr/local/share/tgrep/scripts/install.sh
   startup:
     # sbx が model_provider や mcp_servers を書き込むため、静的配置で config.toml を上書きできない。
     - description: Merge personal Codex settings into config.toml
@@ -81,3 +96,15 @@ setup:
                   except OSError:
                       # 所有者の復元に失敗しても、待機・マージで起きたエラーを隠さない。
                       pass
+    - description: Configure tgrep after merging personal Codex settings
+      user: "agent"
+      command:
+        - /bin/bash
+        - /usr/local/share/tgrep/install-agent.sh
+        - install
+        - --agent
+        - codex
+        - --scope
+        - user
+        - --binary
+        - /usr/local/bin/tgrep
