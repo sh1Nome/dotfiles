@@ -56,7 +56,8 @@ Neovim のキーマップでは leader キーに続けて使うキーを1文字�
 sbx run codex \
   --kit ~/.config/sbx/kits/git-personal \
   --kit ~/.config/sbx/kits/codex-personal \
-  --kit ~/.config/sbx/kits/ffmpeg
+  --kit ~/.config/sbx/kits/ffmpeg \
+  --kit ~/.config/sbx/kits/hunk
 ```
 
 ## xfce4 設定の反映
