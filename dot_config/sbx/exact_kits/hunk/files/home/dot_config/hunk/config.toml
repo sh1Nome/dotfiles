@@ -1,0 +1,4 @@
+mode = "unified"
+wrap_lines = true
+agent_notes = true
+watch = true
