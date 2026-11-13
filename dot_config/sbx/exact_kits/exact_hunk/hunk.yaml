@@ -1,0 +1,30 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: Hunk review
+capabilities:
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        - description: Place Hunk configuration in the agent home
+          user: "0"
+          command: |
+            install -d -o agent -g agent /home/agent/.config/hunk /home/agent/.config/hunk/extensions
+            install -o agent -g agent -m 0644 /usr/local/share/hunk/default-config.toml /home/agent/.config/hunk/config.toml
+            install -o agent -g agent -m 0644 /usr/local/share/hunk/extensions/threads.js /home/agent/.config/hunk/extensions/threads.js
+      startup:
+        - description: Make the bundled review skill available to Codex and Claude Code
+          user: "0"
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+
+              for config_dir in /home/agent/.agents /home/agent/.claude
+              do
+                skills_dir="$config_dir/skills"
+                mkdir -p "$skills_dir"
+                ln -sfnT /usr/local/share/hunk/skills/hunk-review "$skills_dir/hunk-review"
+                chown -h agent:agent "$config_dir" "$skills_dir" "$skills_dir/hunk-review"
+              done

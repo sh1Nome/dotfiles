@@ -1,0 +1,54 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: Personal Claude config
+requires: ["claude"]
+capabilities:
+  - type: com.docker.sandbox/agent-context@2
+    config:
+      content: |
+{{ includeTemplate "AGENTS.md" . | indent 8 }}
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        # sbx が settings.json に bypassPermissionsModeAccepted 等を書き込むため、個人設定のファイルを直接配置できない。
+        - description: Merge personal Claude settings into settings.json
+          # ~/.claude が root 所有の場合に備えて root で実行し、trap で所有者を agent に戻す。
+          user: "0"
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              trap 'chown -R agent:agent /home/agent/.claude 2>/dev/null || true' EXIT
+
+              SRC=/usr/local/share/claude-personal
+              SETTINGS=/home/agent/.claude/settings.json
+              STATUSLINE=/home/agent/.claude/statusline.sh
+              mkdir -p /home/agent/.claude
+
+              i=0
+              # sbx が既定値を書き込む前にマージすると上書きされて消えるので待つ。
+              while [ "$i" -lt 60 ]; do
+                jq -e 'type == "object" and length > 0' "$SETTINGS" >/dev/null 2>&1 && break
+                sleep 1
+                i=$((i + 1))
+              done
+              # 既存の設定ファイルがないまま進むと sbx の既定値を欠く settings.json ができるため、中断する。
+              if [ "$i" -ge 60 ]; then
+                echo "claude-personal: $SETTINGS が生成されませんでした。中断します。" >&2
+                exit 1
+              fi
+
+              install -m 0644 "$SRC/statusline.sh" "$STATUSLINE"
+
+              # jq の * はキーを削除できないため、permissions.json を最後にマージし、
+              # サンドボックスでは不要・危険な個人設定の allow / defaultMode を空値で上書きする。
+              jq -n \
+                --slurpfile me   "$SRC/settings.json" \
+                --slurpfile base "$SETTINGS" \
+                --slurpfile perm "$SRC/permissions.json" \
+                '$me[0] * $base[0] * $perm[0]' \
+                > "$SETTINGS.tmp"
+              chmod 0644 "$SETTINGS.tmp"
+              mv "$SETTINGS.tmp" "$SETTINGS"

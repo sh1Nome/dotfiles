@@ -57,8 +57,29 @@ sbx run codex \
   --kit ~/.config/sbx/kits/git-personal \
   --kit ~/.config/sbx/kits/codex-personal \
   --kit ~/.config/sbx/kits/ffmpeg \
-  --kit ~/.config/sbx/kits/hunk
+  --kit ~/.config/sbx/kits/hunk \
+  --kit sbx/codex-sessions .
 ```
+
+### 公開 Kit
+
+- `sbx/playwright` は Playwright と Chromium を追加します。
+- `sbx/codex-sessions` は Codex のセッションを Sandbox 名ごとにホストへ保存します。
+- `sbx/gitlab` は `glab` と GitLab API 用の認証を追加します。
+
+### オンプレミス GitLab
+
+GitLab 側で `read_api` スコープのトークンを作り、ホストのシークレットに登録します。
+
+```sh
+sbx secret set gitlab-work
+sbx run codex \
+  --kit sbx/gitlab \
+  --kit-arg gitlab.host=gitlab.example.com \
+  --kit-arg gitlab.service=gitlab-work .
+```
+
+`gitlab.example.com` を実際のホスト名に置き換え、`sbx policy allow network` で接続先への通信を許可します。指定方法は `sbx policy allow network --help` で確認してください。
 
 ## xfce4 設定の反映
 

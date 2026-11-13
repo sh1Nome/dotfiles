@@ -2,7 +2,9 @@
 
 ## Status
 
-Accepted
+Superseded
+
+v3 の組み込み kit がユーザーグローバルの指示ファイルを管理するため、現在は各 personal kit の `agent-context@2` で共有テンプレートを渡す。以下は当時の決定を記録したもの。
 
 ## Context
 
