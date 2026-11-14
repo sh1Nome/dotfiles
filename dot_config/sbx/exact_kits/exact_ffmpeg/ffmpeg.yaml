@@ -1,0 +1,5 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: FFmpeg
+description: FFmpeg, ffprobe, and Japanese fonts for Debian-based sandboxes.
