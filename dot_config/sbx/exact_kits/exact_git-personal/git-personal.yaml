@@ -7,7 +7,7 @@ capabilities:
     config:
       startup:
         - description: Add personal Git settings and ignore patterns
-          # .gitignore_global を静的配置すると sbx の既定値を消すため、既存ファイルへ追記する。
+          # 除外ファイルを静的配置すると sbx の既定値を消すため、既存ファイルへ追記する。
           user: "0"
           command:
             - sh
@@ -16,13 +16,12 @@ capabilities:
               set -e
 
               CONFIG=/home/agent/.gitconfig
-              GLOBAL=/home/agent/.gitignore_global
               i=0
               # 初期化前に追記すると消えるため、Git 設定と除外ファイルの両方に sbx の既定値が入るまで待つ。
               while [ "$i" -lt 60 ]
               do
-                if grep -Fxq '.sbx' "$GLOBAL" 2>/dev/null &&
-                  git config --file "$CONFIG" --get core.excludesFile >/dev/null 2>&1
+                GLOBAL=$(HOME=/home/agent git config --file "$CONFIG" --path --get core.excludesFile 2>/dev/null) || GLOBAL=
+                if [ -n "$GLOBAL" ] && grep -Fxq '.sbx' "$GLOBAL" 2>/dev/null
                 then
                   break
                 fi
@@ -43,6 +42,9 @@ capabilities:
               do
                 if ! grep -Fxq -- "$pattern" "$GLOBAL"
                 then
+                  if [ -n "$(tail -c 1 "$GLOBAL")" ]; then
+                    printf '\n' >> "$GLOBAL"
+                  fi
                   printf '%s\n' "$pattern" >> "$GLOBAL"
                 fi
               done
