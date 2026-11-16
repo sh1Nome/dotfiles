@@ -73,10 +73,7 @@ GitLab 側で `read_api` スコープのトークンを作り、ホストのシ�
 
 ```sh
 sbx secret set gitlab-work
-sbx run codex \
-  --kit sbx/gitlab \
-  --kit-arg gitlab.host=gitlab.example.com \
-  --kit-arg gitlab.service=gitlab-work .
+sbx run codex --kit sbx/gitlab --kit-arg gitlab.host=gitlab.example.com --kit-arg gitlab.service=gitlab-work
 ```
 
 `gitlab.example.com` を実際のホスト名に置き換え、`sbx policy allow network` で接続先への通信を許可します。指定方法は `sbx policy allow network --help` で確認してください。
