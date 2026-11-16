@@ -4,7 +4,7 @@
 
 Superseded
 
-v3 の組み込み kit がユーザーグローバルの指示ファイルを管理するため、現在は各 personal kit の `agent-context@2` で共有テンプレートを渡す。以下は当時の決定を記録したもの。
+v3 の組み込み kit がユーザーグローバルの指示ファイルを管理するため、現在は各 personal kit の `agent-context@1` で共有テンプレートを渡す。[仕様](https://github.com/docker/sandbox-kit-spec/blob/06ac386a1b5d570daff36bba4232fb9e71e45d50/docs/spec/capabilities/com.docker.sandbox/agent-context%402.md#composition-and-selection)は、選択された `@1` と `@2` の合成を禁止している。sbx の gitlab kit が `@1` を使っているため、ビルドできるよう personal kit も `@1` にそろえる。`@1` では共有テンプレートが必要に応じて参照されるため、将来は内容を直接渡す `@2` を使いたい。以下は当時の決定を記録したもの。
 
 ## Context
 

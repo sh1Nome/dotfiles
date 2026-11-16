@@ -4,7 +4,7 @@ kind: mixin
 displayName: Personal Codex config
 requires: ["codex"]
 capabilities:
-  - type: com.docker.sandbox/agent-context@2
+  - type: com.docker.sandbox/agent-context@1
     config:
       content: |
 {{ includeTemplate "AGENTS.md" . | indent 8 }}
