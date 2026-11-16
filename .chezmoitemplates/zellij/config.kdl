@@ -7,7 +7,7 @@ pane_frame_style "full"
 // マウスを使わないため、マウス操作を無効化する
 mouse_mode false
 
-default_layout "half-stacked"
+stacked_pane_list_orientation "horizontal"
 
 // キーバインド衝突を避ける Unlock-First (non-colliding) プリセットを適用したもの。
 // 反映方法: zellij起動中に Ctrl o (Session モード) → c (Configuration 画面) →
@@ -18,4 +18,8 @@ default_layout "half-stacked"
 //   pane { bind "w" { ToggleFloatingPanes; ... } }
 //   shared_among "normal" "locked" { bind "Alt f" { ToggleFloatingPanes; } }
 default_mode "locked"
-keybinds preset="unlock-first"
+keybinds preset="unlock-first" {
+    pane {
+        bind "n" { NewPane "stacked"; SwitchToMode "Locked"; }
+    }
+}
