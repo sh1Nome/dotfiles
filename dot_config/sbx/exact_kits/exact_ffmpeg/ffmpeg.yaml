@@ -3,3 +3,7 @@ schemaVersion: "3"
 kind: mixin
 displayName: FFmpeg
 description: FFmpeg, ffprobe, and Japanese fonts for Debian-based sandboxes.
+capabilities:
+  - type: com.docker.sandbox/agent-skill@1
+    config:
+      path: /usr/local/share/ffmpeg/skills/create-short-video
