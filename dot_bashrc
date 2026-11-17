@@ -168,3 +168,12 @@ sbx-skills-refresh() {
     printf '%s\n' "$skills" | xargs -r sbx skills rm -f || return
     sbx skills import -f
 }
+
+sbx-ffmpeg() {
+    local workspace=$PWD
+    if command -v cygpath >/dev/null 2>&1; then
+        workspace=$(cygpath -m "$workspace") || return
+    fi
+    sbx env run "$HOME/.config/sbx/envs/ffmpeg.sbxenv.yaml" \
+        --env-arg "workspace=$workspace"
+}

@@ -1,0 +1,14 @@
+schemaVersion: "1"
+agent: codex
+
+args:
+  workspace:
+    required: true
+
+workspace: ${{ env.args.workspace }}
+
+kits:
+  - ../kits/codex-personal
+  - ../kits/ffmpeg
+  - docker.io/sbx/playwright:latest
+  - docker.io/sbx/codex-sessions:latest
