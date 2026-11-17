@@ -58,6 +58,7 @@ sbx run codex \
   --kit ~/.config/sbx/kits/codex-personal \
   --kit ~/.config/sbx/kits/ffmpeg \
   --kit ~/.config/sbx/kits/hunk \
+  --kit ~/.config/sbx/kits/pstack \
   --kit sbx/codex-sessions .
 ```
 

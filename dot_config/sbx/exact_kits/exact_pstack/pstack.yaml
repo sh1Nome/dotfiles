@@ -1,0 +1,44 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: pstack
+requires: ["codex"]
+capabilities:
+  - type: com.docker.sandbox/network-policy@1
+    config:
+      install:
+        allow: [github.com]
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        - description: Prepare the Codex configuration for pstack
+          user: "0"
+          command:
+            - /usr/bin/python3
+            - -c
+            - |
+              from pathlib import Path
+              import subprocess
+              import time
+              import tomllib
+
+              directory = Path("/home/agent/.codex")
+              for _ in range(60):
+                  try:
+                      settings = tomllib.loads((directory / "config.toml").read_text())
+                  except (FileNotFoundError, UnicodeDecodeError, tomllib.TOMLDecodeError):
+                      pass
+                  else:
+                      if "approval_policy" in settings:
+                          break
+                  time.sleep(1)
+              else:
+                  raise SystemExit("pstack: Codex configuration was not initialized")
+
+              subprocess.run(["chown", "-R", "agent:agent", str(directory)], check=True)
+        - description: Add the pstack marketplace
+          user: agent
+          command: [codex, plugin, marketplace, add, michael-denyer/pstack-claude]
+        - description: Install the pstack plugin
+          user: agent
+          command: [codex, plugin, add, pstack@pstack-claude]
