@@ -73,15 +73,3 @@ capabilities:
                       except OSError:
                           # 所有者の復元に失敗しても、待機・マージで起きたエラーを隠さない。
                           pass
-        - description: Configure tgrep after merging personal Codex settings
-          user: "agent"
-          command:
-            - /bin/bash
-            - /usr/local/share/tgrep/install-agent.sh
-            - install
-            - --agent
-            - codex
-            - --scope
-            - user
-            - --binary
-            - /usr/local/bin/tgrep

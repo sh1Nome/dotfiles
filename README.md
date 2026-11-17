@@ -50,19 +50,28 @@ Neovim のキーマップでは leader キーに続けて使うキーを1文字�
 
 ## sbx の kit
 
-複数の kit を使うには、`--kit` を繰り返し指定します。
+プロジェクトのディレクトリで `sbx env run` を実行すると、`~/.sbxenv.yaml` の個人設定を使って Codex が起動します。
+
+```sh
+sbx env run
+```
+
+プロジェクト直下の `sbxenv.yaml` は個人設定とマージされます。
+
+`sbx run` で複数の kit を直接使うには、`--kit` を繰り返し指定します。
 
 ```sh
 sbx run codex \
   --kit ~/.config/sbx/kits/git-personal \
   --kit ~/.config/sbx/kits/codex-personal \
-  --kit ~/.config/sbx/kits/ffmpeg \
   --kit ~/.config/sbx/kits/hunk \
   --kit ~/.config/sbx/kits/pstack \
-  --kit sbx/codex-sessions .
+  --kit ~/.config/sbx/kits/tgrep \
+  --kit sbx/codex-sessions \
+  --kit sbx/playwright .
 ```
 
-### 公開 Kit
+### よく使う公開 Kit
 
 - `sbx/playwright` は Playwright と Chromium を追加します。
 - `sbx/codex-sessions` は Codex のセッションを Sandbox 名ごとにホストへ保存します。

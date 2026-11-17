@@ -1,0 +1,46 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: tgrep
+requires: ["codex"]
+capabilities:
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        - description: Prepare the Codex configuration for tgrep
+          user: "0"
+          command:
+            - /usr/bin/python3
+            - -c
+            - |
+              from pathlib import Path
+              import subprocess
+              import time
+              import tomllib
+
+              directory = Path("/home/agent/.codex")
+              for _ in range(60):
+                  try:
+                      settings = tomllib.loads((directory / "config.toml").read_text())
+                  except (FileNotFoundError, UnicodeDecodeError, tomllib.TOMLDecodeError):
+                      pass
+                  else:
+                      if "approval_policy" in settings:
+                          break
+                  time.sleep(1)
+              else:
+                  raise SystemExit("tgrep: Codex configuration was not initialized")
+
+              subprocess.run(["chown", "-R", "agent:agent", str(directory)], check=True)
+        - description: Configure tgrep for Codex
+          user: "agent"
+          command:
+            - /bin/bash
+            - /usr/local/share/tgrep/install-agent.sh
+            - install
+            - --agent
+            - codex
+            - --scope
+            - user
+            - --binary
+            - /usr/local/bin/tgrep
