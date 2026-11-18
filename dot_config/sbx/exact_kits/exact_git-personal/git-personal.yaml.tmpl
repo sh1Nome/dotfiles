@@ -35,7 +35,10 @@ capabilities:
               fi
 
               # .gitconfig を静的配置すると sbx の既定値を失うため、必要なキーだけ更新する。
+              git config --file "$CONFIG" --replace-all core.quotepath false
               git config --file "$CONFIG" --replace-all worktree.useRelativePaths true
+              git config --file "$CONFIG" --replace-all -- user.name "$1"
+              git config --file "$CONFIG" --replace-all -- user.email "$2"
               chown agent:agent "$CONFIG"
 
               for pattern in '.tgrep/' '.worktree/'
@@ -48,3 +51,6 @@ capabilities:
                   printf '%s\n' "$pattern" >> "$GLOBAL"
                 fi
               done
+            - git-personal
+            - {{ .gitUserName | toJson }}
+            - {{ .gitEmail | toJson }}
