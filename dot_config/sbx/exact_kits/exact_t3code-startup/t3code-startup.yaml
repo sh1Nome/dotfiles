@@ -1,0 +1,18 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: T3 Code startup
+description: Start the T3 Code web server installed by the sbx/t3code kit.
+capabilities:
+  - type: com.docker.sandbox/long-running@1
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      startup:
+        - description: Start the T3 Code web server
+          user: "agent"
+          background: true
+          env: [WORKSPACE_DIR]
+          command: |
+            exec flock --nonblock --no-fork --conflict-exit-code 0 "$HOME/.t3-sbx.lock" \
+              t3 start --host 0.0.0.0 --port 3773 --no-browser \
+                --auto-bootstrap-project-from-cwd "${WORKSPACE_DIR:?}"

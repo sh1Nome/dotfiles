@@ -177,3 +177,16 @@ sbx-ffmpeg() {
     sbx env run "$HOME/.config/sbx/envs/ffmpeg.sbxenv.yaml" \
         --env-arg "workspace=$workspace"
 }
+
+sbx-t3-pair() {
+    local pairing
+
+    if ! command -v jq >/dev/null 2>&1; then
+        printf 'sbx-t3-pair: jq が必要です。\n' >&2
+        return 1
+    fi
+
+    pairing=$(sbx env exec -- t3 auth pairing create \
+        --ttl 15m --base-url http://127.0.0.1:3773 --json) || return
+    jq -er '.pairUrl | strings | select(length > 0)' <<< "$pairing"
+}
