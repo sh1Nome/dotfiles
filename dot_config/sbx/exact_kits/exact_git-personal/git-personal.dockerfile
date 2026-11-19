@@ -1,8 +1,7 @@
-FROM docker.io/sbx/codex:latest AS build
-USER root
+FROM docker.io/library/debian:trixie-slim AS build
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       ca-certificates cargo curl gcc jq libc6-dev libcurl4-openssl-dev make \
+       ca-certificates cargo curl gcc jq libc6-dev libcurl4-openssl-dev libssl-dev make zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 RUN set -eu; \
     curl -fsSL 'https://api.github.com/repos/git/git/tags?per_page=100' -o /tmp/git-tags.json; \

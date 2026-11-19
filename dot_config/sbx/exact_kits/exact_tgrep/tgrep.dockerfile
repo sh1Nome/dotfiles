@@ -1,5 +1,4 @@
-FROM docker.io/sbx/codex:latest AS build
-USER root
+FROM docker.io/library/debian:trixie-slim AS build
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates curl jq \
     && rm -rf /var/lib/apt/lists/*
