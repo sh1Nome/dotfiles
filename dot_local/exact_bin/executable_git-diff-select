@@ -53,7 +53,8 @@ else
   git diff --no-index --color=always -- /dev/null "$file" | delta
 fi
 '
-if fzf \
+# PATH は引き継げるため、プレビューごとに BASH_ENV で外部コマンドを起動しない。
+if BASH_ENV= fzf \
   --read0 --print0 --no-multi --keep-right \
   --with-shell 'bash -c' \
   --preview "$preview_command" \
