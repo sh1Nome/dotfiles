@@ -179,14 +179,26 @@ sbx-ffmpeg() {
 }
 
 sbx-t3-pair() {
-    local pairing
+    local base_url=http://127.0.0.1:3773
+    local pairing pair_url encoded
 
     if ! command -v jq >/dev/null 2>&1; then
-        printf 'sbx-t3-pair: jq が必要です。\n' >&2
+        printf 'sbx-t3-pair: jq is required.\n' >&2
         return 1
     fi
-
     pairing=$(sbx env exec -- t3 auth pairing create \
-        --ttl 15m --base-url http://127.0.0.1:3773 --json) || return
-    jq -er '.pairUrl | strings | select(length > 0)' <<< "$pairing"
+        --ttl 1m --base-url "$base_url" --json) || return
+    pair_url=$(jq -er '.pairUrl | strings | select(length > 0)' <<< "$pairing") || return
+
+    if [ "${OS:-}" = "Windows_NT" ]; then
+        printf '%s' "$pair_url" > /dev/clipboard || return
+        printf 'Pairing URL copied to the clipboard.\n'
+    else
+        encoded=$(printf '%s' "$pair_url" | base64) || return
+        printf '\033]52;c;%s\033\\' "${encoded//$'\n'/}" > /dev/tty || return
+        printf 'Clipboard copy request sent to the terminal.\n'
+    fi
+
+    printf 'T3 Code %s\n' "$base_url"
+    printf 'Import Codex history at %s/welcome.\n' "$base_url"
 }
