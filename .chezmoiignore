@@ -13,7 +13,6 @@ Makefile
 .config/xfce4
 .config/autostart
 .config/mimeapps.list
-.config/zellij
 .chezmoiscripts/*.sh
 {{- end }}
 

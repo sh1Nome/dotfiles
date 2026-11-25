@@ -20,5 +20,4 @@ command = { program = "{{ .chezmoi.homeDir }}/.local/bin/notify", args = ["Bell"
 program = "{{ .chezmoi.homeDir | replace "\\" "/" }}/AppData/Roaming/alacritty/start_ucrt64.cmd" # Windows環境でmsys2を使用
 {{- else }}
 program = "bash" # Unix環境でbashを使用
-args = ["-i", "-c", "exec zellij"]
 {{- end }}

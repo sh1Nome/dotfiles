@@ -5,3 +5,8 @@
 .config/wezterm
 .config/glab-cli/aliases.yml
 AppData/Local/glab-cli/aliases.yml
+{{- if eq .chezmoi.os "windows" }}
+AppData/Roaming/Zellij
+{{- else if eq .chezmoi.os "linux" }}
+.config/zellij
+{{- end }}
