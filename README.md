@@ -65,7 +65,6 @@ sbx run codex \
   --kit ~/.config/sbx/kits/git-personal \
   --kit ~/.config/sbx/kits/codex-personal \
   --kit ~/.config/sbx/kits/hunk \
-  --kit ~/.config/sbx/kits/pstack \
   --kit ~/.config/sbx/kits/tgrep \
   --kit sbx/codex-sessions \
   --kit sbx/playwright .
