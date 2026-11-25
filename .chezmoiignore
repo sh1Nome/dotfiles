@@ -9,6 +9,7 @@ Makefile
 .config/alacritty
 .config/fcitx5
 .config/nvim
+.config/herdr
 .config/dunst
 .config/xfce4
 .config/autostart

@@ -6,6 +6,7 @@ kits:
   - ./.config/sbx/kits/codex-personal
   - ./.config/sbx/kits/git-personal
   - ./.config/sbx/kits/hunk
+  - ./.config/sbx/kits/herdr
   - ./.config/sbx/kits/tgrep
   - docker.io/sbx/codex-sessions:latest
   - docker.io/sbx/playwright:latest

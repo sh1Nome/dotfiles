@@ -1,0 +1,7 @@
+[terminal]
+{{- if eq .chezmoi.os "windows" }}
+default_shell = "C:/msys64/usr/bin/bash.exe"
+shell_mode = "login"
+{{- else }}
+default_shell = "/bin/bash"
+{{- end }}

@@ -1,0 +1,13 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: Herdr over SSH
+capabilities:
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        - description: Create the Herdr configuration directory in the agent home
+          user: "0"
+          command: |
+            install -d -o agent -g agent -m 0700 /home/agent/.config/herdr
+  - type: com.docker.sandbox/long-running@1
