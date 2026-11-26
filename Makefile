@@ -1,4 +1,4 @@
-.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-neovim uninstall-neovim install-claude uninstall-claude install-rust uninstall-rust aqua-prune
+.PHONY: help build-zk install-zk uninstall-zk mkdir-local-bin install-neovim uninstall-neovim install-rust uninstall-rust aqua-prune
 
 UNAME_S := $(shell uname -s)
 
@@ -13,8 +13,6 @@ help:
 	@echo "uninstall-zk     Uninstall zk"
 	@echo "install-neovim   Install Neovim"
 	@echo "uninstall-neovim Uninstall Neovim"
-	@echo "install-claude   Install Claude Code"
-	@echo "uninstall-claude Uninstall Claude Code"
 	@echo "install-rust     Install Rust via rustup"
 	@echo "uninstall-rust   Uninstall Rust via rustup"
 	@echo "aqua-prune       Remove the aqua root directory"
@@ -68,18 +66,6 @@ ifeq ($(OS),Windows_NT)
 else
 	sudo dnf remove -y neovim
 endif
-
-
-install-claude:
-ifeq ($(OS),Windows_NT)
-	powershell -Command "irm https://claude.ai/install.ps1 | iex"
-else
-	curl -fsSL https://claude.ai/install.sh | bash
-endif
-
-uninstall-claude:
-	rm -f ~/.local/bin/claude
-	rm -rf ~/.local/share/claude
 
 
 install-rust:

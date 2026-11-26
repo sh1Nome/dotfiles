@@ -10,3 +10,10 @@ AppData/Roaming/Zellij
 {{- else if eq .chezmoi.os "linux" }}
 .config/zellij
 {{- end }}
+
+{{- if eq .chezmoi.os "windows" }}
+.local/bin/claude*
+{{- else }}
+.local/bin/claude
+{{- end }}
+.local/share/claude
