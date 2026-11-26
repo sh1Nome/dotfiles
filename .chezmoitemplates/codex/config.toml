@@ -6,6 +6,9 @@ notifications = true
 notification_method = "bel"
 notification_condition = "always"
 
+[tui.keymap.editor]
+insert_newline = ["ctrl-j", "ctrl-m", "enter", "shift-enter", "alt-enter", "ctrl-enter"]
+
 [tui.keymap.pager]
 page_up = []
 page_down = []
