@@ -5,3 +5,21 @@ shell_mode = "login"
 {{- else }}
 default_shell = "/bin/bash"
 {{- end }}
+
+[keys]
+prefix = "ctrl+g"
+new_tab = "prefix+n"
+next_agent = "prefix+j"
+previous_agent = "prefix+k"
+next_tab = "prefix+l"
+previous_tab = "prefix+h"
+navigate_workspace_down = "j"
+navigate_workspace_up = "k"
+focus_pane_left = []
+focus_pane_down = []
+focus_pane_up = []
+focus_pane_right = []
+navigate_pane_left = []
+navigate_pane_down = []
+navigate_pane_up = []
+navigate_pane_right = []
