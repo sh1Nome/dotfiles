@@ -1,3 +1,5 @@
+onboarding = false
+
 [terminal]
 {{- if eq .chezmoi.os "windows" }}
 default_shell = "C:/msys64/usr/bin/bash.exe"
@@ -23,3 +25,10 @@ navigate_pane_left = []
 navigate_pane_down = []
 navigate_pane_up = []
 navigate_pane_right = []
+
+[ui]
+agent_panel_sort = "priority"
+status_indicators = "symbols"
+
+[ui.toast]
+delivery = "herdr"
