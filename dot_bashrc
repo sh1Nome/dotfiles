@@ -169,6 +169,40 @@ sbx-skills-refresh() {
     sbx skills import -f
 }
 
+sbx-herdr() {
+    local machines names name targets ids id
+    local -a entries
+
+    if [[ $# != 1 || ( $1 != connect && $1 != disconnect ) ]]; then
+        printf 'Usage: sbx-herdr {connect|disconnect}\n' >&2
+        return 2
+    fi
+
+    machines=$(herdr machine list --json) || return
+    case $1 in
+        connect)
+            names=$(sbx ls -q) || return
+            targets=$(jq -r '.[].target' <<< "$machines") || return
+            sbx setup ssh || return
+            mapfile -t entries <<< "$names"
+            for name in "${entries[@]}"; do
+                [[ -n $name ]] || continue
+                grep -Fxq -- "$name.sbx" <<< "$targets" && continue
+                herdr machine add "$name.sbx" || return
+            done
+            ;;
+        disconnect)
+            ids=$(jq -r '.[].id' <<< "$machines") || return
+            mapfile -t entries <<< "$ids"
+            for id in "${entries[@]}"; do
+                [[ -n $id ]] || continue
+                herdr machine remove "$id" || return
+            done
+            sbx setup ssh remove
+            ;;
+    esac
+}
+
 sbx-ffmpeg() {
     local workspace=$PWD
     if command -v cygpath >/dev/null 2>&1; then
